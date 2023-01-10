@@ -16,25 +16,13 @@ class _DetailsPageState extends State<DetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Details'),
+          title: const Text('\$vehicleName'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(children: [
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    '\$vehicleName',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
               //vehicle images to be here.
               ConstrainedBox(
                 constraints:
@@ -68,6 +56,39 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Price :',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Ksh 30,000 per day',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Ksh 200,000 per week',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '__ per month',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               const Text(

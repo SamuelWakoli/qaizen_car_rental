@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 class HomeCard extends StatefulWidget {
   String id, image, name, price;
@@ -75,22 +77,36 @@ class _HomeCardState extends State<HomeCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.onClickFav;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        iconToLoad,
-                        const SizedBox(width: 8),
-                        const Text('Like', style: TextStyle(fontSize: 18))
-                      ],
-                    ),
+                LikeButton(
+                  isLiked: widget.isLiked,
+                  bubblesColor: BubblesColor(
+                      dotPrimaryColor: Theme.of(context).primaryColor,
+                      dotSecondaryColor: Colors.white),
+                  circleColor: CircleColor(
+                    start: Theme.of(context).primaryColor,
+                    end: Colors.white,
                   ),
+                  likeBuilder: (bool isLiked) {
+                    return Icon(
+                      Icons.favorite,
+                      color: isLiked
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
+                      size: 32,
+                    );
+                  },
+                  onTap: ((isLiked) async {
+                    String likeMessage = "";
+                    isLiked
+                        ? likeMessage = "removed from"
+                        : likeMessage = "added to";
+
+                    showSnackbar(
+                        context: context,
+                        duration: 2,
+                        message: "\$vehicleName $likeMessage to favorites");
+                    return !isLiked;
+                  }),
                 ),
                 GestureDetector(
                   onTap: widget.onClickDetails,

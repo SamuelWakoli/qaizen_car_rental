@@ -74,6 +74,7 @@ class _HirePageState extends State<HirePage> {
   }
 
   bool delivery = false;
+  bool acceptedTerms = false;
   //
   //
   //
@@ -83,7 +84,7 @@ class _HirePageState extends State<HirePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Hire'),
+          title: const Text('\$vehicleName'),
           centerTitle: true,
         ),
         body: _isLoading
@@ -104,11 +105,6 @@ class _HirePageState extends State<HirePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              const Text(
-                                '\$vehicleName',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(height: 20),
                               const Text(
                                 'Duration',
                                 style: TextStyle(fontSize: 18),
@@ -215,7 +211,6 @@ class _HirePageState extends State<HirePage> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 10),
                               Divider(color: Theme.of(context).primaryColor),
                               const SizedBox(height: 10),
                               const Text(
@@ -226,35 +221,42 @@ class _HirePageState extends State<HirePage> {
                               const Text(
                                   'Do you want the vehicle to be delivered to you? (Delivery fee applied)'),
                               const SizedBox(height: 10),
-                              Column(
+                              Row(
                                 children: [
-                                  RadioListTile(
-                                    title: const Text("Yes"),
-                                    value: true,
-                                    groupValue: delivery,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        delivery = value!;
-                                        deliveryService = value;
-                                      });
-                                    },
-                                    activeColor: Theme.of(context).primaryColor,
+                                  SizedBox(
+                                    width: 120,
+                                    child: RadioListTile(
+                                      title: const Text("Yes"),
+                                      value: true,
+                                      groupValue: delivery,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          delivery = value!;
+                                          deliveryService = value;
+                                        });
+                                      },
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                    ),
                                   ),
-                                  RadioListTile(
-                                    title: const Text("No"),
-                                    value: false,
-                                    groupValue: delivery,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        delivery = value!;
-                                        deliveryService = value;
-                                      });
-                                    },
-                                    activeColor: Theme.of(context).primaryColor,
+                                  SizedBox(
+                                    width: 120,
+                                    child: RadioListTile(
+                                      title: const Text("No"),
+                                      value: false,
+                                      groupValue: delivery,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          delivery = value!;
+                                          deliveryService = value;
+                                        });
+                                      },
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: MaterialButton(
@@ -294,11 +296,17 @@ class _HirePageState extends State<HirePage> {
                                 ),
                               ),
                               Divider(color: Theme.of(context).primaryColor),
-                              const SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Checkbox(value: false, onChanged: null),
+                                  Checkbox(
+                                    value: acceptedTerms,
+                                    onChanged: ((value) {
+                                      setState(() {
+                                        acceptedTerms = value!;
+                                      });
+                                    }),
+                                  ),
                                   Text.rich(TextSpan(
                                     text: "I accept the ",
                                     style: const TextStyle(fontSize: 14),
@@ -324,14 +332,19 @@ class _HirePageState extends State<HirePage> {
                                   )),
                                 ],
                               ),
-                              const SizedBox(height: 20),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: MaterialButton(
                                   onPressed: () {
-                                    nextPage(
-                                        context: context,
-                                        page: const HireSummary());
+                                    acceptedTerms
+                                        ? nextPage(
+                                            context: context,
+                                            page: const HireSummary())
+                                        : showSnackbar(
+                                            context: context,
+                                            duration: 4,
+                                            message:
+                                                'Please accept the terms and conditions to continue.');
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),

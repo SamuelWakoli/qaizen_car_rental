@@ -4,6 +4,8 @@ import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../shared/constants.dart';
 import '../widgets/widgets.dart';
 import '../pages/favorites.dart';
@@ -83,7 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                onTap: () => nextPage(context: context, page: const UserProfile()),
+                onTap: () =>
+                    nextPage(context: context, page: const UserProfile()),
               ),
               const Divider(),
               ListTile(
@@ -92,7 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: _iconColor,
                 ),
                 title: const Text("Favorites"),
-                onTap: () => nextPage(context: context, page: const FavoritesPage()),
+                onTap: () =>
+                    nextPage(context: context, page: const FavoritesPage()),
               ),
               ListTile(
                 leading: Icon(
@@ -100,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: _iconColor,
                 ),
                 title: const Text("Records"),
-                onTap: () => nextPage(context: context, page: const RecordsPage()),
+                onTap: () =>
+                    nextPage(context: context, page: const RecordsPage()),
               ),
               ListTile(
                 leading: Icon(
@@ -108,7 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: _iconColor,
                 ),
                 title: const Text("Report Issue"),
-                onTap: () => nextPage(context: context, page: const ReportIssuePage()),
+                onTap: () =>
+                    nextPage(context: context, page: const ReportIssuePage()),
               ),
               ListTile(
                 leading: Icon(
@@ -116,7 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: _iconColor,
                 ),
                 title: const Text("Terms and Conditions"),
-                onTap: () => nextPage(context: context, page: const TermsConditionsPage()),
+                onTap: () => nextPage(
+                    context: context, page: const TermsConditionsPage()),
               ),
               const Divider(),
               ListTile(
@@ -141,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () => nextPage(context: context, page: const Emergency()),
+              onPressed: () =>
+                  nextPage(context: context, page: const Emergency()),
               icon: const Icon(
                 Icons.emergency_outlined,
               ),
