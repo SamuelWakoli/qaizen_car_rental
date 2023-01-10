@@ -64,8 +64,7 @@ class _HireSummaryState extends State<HireSummary> {
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
             summaryItem(
                 name: 'Delivery Location: ', data: locationData?.address),
-            const SizedBox(height: 20),
-            
+            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
