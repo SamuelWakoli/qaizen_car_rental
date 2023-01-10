@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/hire_vehicle_data.dart';
-import '../widgets/outlined_button.dart';
-import '../widgets/widgets.dart';
 
 class HireSummary extends StatefulWidget {
   const HireSummary({super.key});
@@ -64,7 +62,7 @@ class _HireSummaryState extends State<HireSummary> {
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
             summaryItem(
                 name: 'Delivery Location: ', data: locationData?.address),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
