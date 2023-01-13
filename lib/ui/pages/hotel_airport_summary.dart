@@ -55,17 +55,22 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
             summaryItem(name: 'National ID Number: ', data: '\$natIDnum'),
             summaryItem(name: 'Email Address: ', data: '\$email'),
             const SizedBox(height: 20),
-            summaryItem(name: 'Organisation Name: ', data: orgName),
+            summaryItem(name: 'Service Type: ', data: serviceType),
+            summaryItem(name: 'Name: ', data: hotelAirportName),
             summaryItem(
-                name: 'Organisation Location: ',
-                data: locationAddress),
+                name: 'Service description: ', data: tranferDescription),
             const SizedBox(height: 20),
-            summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
-            summaryItem(name: 'Price: ', data: '\$price'),
-            summaryItem(name: 'Driver: ', data: locationData?.address),
-            summaryItem(name: 'Time: ', data: '$driverName'),
+            summaryItem(
+                name: 'Location: ', data: locationData?.address.toString()),
+            summaryItem(
+                name: 'Vehicle(s): ', data: selectedVehicles.toString()),
+            summaryItem(name: 'Driver(s): ', data: driversNames.toString()),
+            summaryItem(
+                name: 'Duration: ', data: "From $selectedTime $selectedDate"),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            summaryItem(name: "TOTAL COST: ", data: "Ksh. \$totalCost"),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(

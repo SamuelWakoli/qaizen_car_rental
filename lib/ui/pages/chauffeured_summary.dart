@@ -56,11 +56,13 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
             summaryItem(name: 'Email Address: ', data: '\$email'),
             const SizedBox(height: 20),
             summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
-            summaryItem(name: 'Price: ', data: '\$price'),
-            summaryItem(name: 'Driver: ', data: locationData?.address),
+            
+            summaryItem(name: 'Driver: ', data: driverName),
             summaryItem(name: 'Time: ', data: '$driverName'),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(

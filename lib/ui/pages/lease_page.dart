@@ -10,20 +10,18 @@ class LeasePage extends StatefulWidget {
 class _LeasePageState extends State<LeasePage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Lease with us'),
-          centerTitle: true,
-        ),
-        body: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 810),
-          child: Center(
-            child: Column(
-              children: [
-                Text('Lease with us'),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lease with us'),
+        centerTitle: true,
+      ),
+      body: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 810),
+        child: Center(
+          child: Column(
+            children: [
+              Text('Lease with us'),
+            ],
           ),
         ),
       ),

@@ -10,12 +10,10 @@ class PrivacyPolicyPage extends StatefulWidget {
 class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Privacy Policy'),
-          centerTitle: true,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Privacy Policy'),
+        centerTitle: true,
       ),
     );
   }

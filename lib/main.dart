@@ -1,5 +1,6 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qaizen_car_rental/shared/theming.dart';
 import 'package:qaizen_car_rental/ui/pages/splash_screen.dart';
 //init the app
@@ -10,7 +11,13 @@ import 'package:qaizen_car_rental/ui/pages/splash_screen.dart';
 //then login page.
 
 //if user is signed in, from splash screen, go home
-void main() async => runApp(EasyDynamicThemeWidget(child: const MyApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(EasyDynamicThemeWidget(child: const MyApp()));
+  });
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);

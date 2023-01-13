@@ -6,13 +6,28 @@ class Theming {
       primaryColor: Constants().primaryColor(),
       textTheme: const TextTheme(button: TextStyle(color: Colors.white70)),
       brightness: Brightness.light,
-      appBarTheme: AppBarTheme(
-        color: Constants().primaryColor(),
-      ));
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+      ),
+      scaffoldBackgroundColor: Colors.white,
+      tabBarTheme: const TabBarTheme(labelColor: Colors.black),
+      indicatorColor: Constants().primaryColor(),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: Constants().primaryColor(),
+      ),
+      useMaterial3: true);
 
   var darkThemeData = ThemeData(
-    primaryColor: Constants().primaryColorDark(),
-    textTheme: const TextTheme(button: TextStyle(color: Colors.black54)),
-    brightness: Brightness.dark,
-  );
+      primaryColor: Constants().primaryColorDark(),
+      textTheme: const TextTheme(button: TextStyle(color: Colors.black54)),
+      brightness: Brightness.dark,
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+      ),
+      navigationBarTheme: const NavigationBarThemeData(
+        indicatorColor: Colors.lightBlueAccent,
+      ),
+      tabBarTheme: const TabBarTheme(labelColor: Colors.white),
+      indicatorColor: Constants().primaryColor(),
+      useMaterial3: true);
 }

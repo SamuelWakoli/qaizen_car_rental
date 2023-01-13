@@ -17,7 +17,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    nextPageReplace(context: context, page:  const CreateAccountPage());
+    nextPageReplace(context: context, page: const CreateAccountPage());
   }
 
   Widget _buildImage(String assetName, [double width = 350]) {
@@ -28,14 +28,12 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(
       fontSize: 19.0,
-      color: Colors.black87,
     );
 
     const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
         fontSize: 24.0,
         fontWeight: FontWeight.w500,
-        color: Colors.black87,
       ),
       bodyTextStyle: bodyStyle,
       bodyPadding: EdgeInsets.fromLTRB(16.0, 64.0, 16.0, 16.0),
@@ -45,7 +43,6 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
     return IntroductionScreen(
       key: introKey,
       autoScrollDuration: 4500,
-      globalBackgroundColor: Colors.white,
       pages: [
         PageViewModel(
           title: "Less paperwork 📝",

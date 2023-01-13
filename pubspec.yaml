@@ -46,6 +46,9 @@ dependencies:
   pdf: ^3.8.4
   location_picker_flutter_map: ^1.1.5
   like_button: ^2.0.5
+  scroll_loop_auto_scroll: ^0.0.5
+  url_launcher: ^6.1.7
+  flutter_phone_direct_caller: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +76,7 @@ flutter:
   assets:
     - assets/
     - assets/cars/
+    - assets/vehiclecategories/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

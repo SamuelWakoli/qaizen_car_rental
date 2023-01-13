@@ -7,10 +7,12 @@ Widget textFormField({
   required String hintText,
   required dynamic onChanged,
   required dynamic validator,
+  required TextInputType textInputType,
 }) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: TextFormField(
+      keyboardType : textInputType,
       onChanged: onChanged,
       validator: validator,
       minLines: 1,

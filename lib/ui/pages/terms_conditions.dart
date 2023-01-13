@@ -10,20 +10,19 @@ class TermsConditionsPage extends StatefulWidget {
 class _TermsConditionsPageState extends State<TermsConditionsPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Terms and Conditions'),
-          centerTitle: true,
-        ),
-        body: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 810),
-            child: ListView(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("""
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Terms and Conditions'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 810),
+          child: ListView(
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("""
 1. QAIZEN CAR RENTAL (the company) hereby agrees to let on hire the person named in the overleaf (the hirer) and agrees to issue on hire the motor
 vehicle described in the overleaf together with the accessories earned with it or fixed on it hereafter called (the vehicle) upon the terms and conditions
 set out in the overleaf and here under.
@@ -76,9 +75,8 @@ I FULLY UNDERSTAND THAT;
 2. I SHALL BE WHOLY AND FULLY RESPONSIBLE FOR ANY DAMAGE OCCASIONED TO THE VEHICLE IF USED OR OPERATED IN VIOLATION OR BREACH OF THE TERMS AND CONDITIONS OF THIS CONTRACT AS STIPULATED.
 3. I AM THE AUTHORIZED PERSON TO DRIVE THIS VEHICLE UNLESS OTHER DRIVERS ARE SPECIFIED ABOVE IN THE AGREEMENT.
 """),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

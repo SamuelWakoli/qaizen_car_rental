@@ -31,418 +31,324 @@ class _HomePageState extends State<HomePage> {
   bool isLiked14 = false;
   bool isLiked15 = false;
 
+  bool isnotifyON1 = false;
+  bool isnotifyON2 = false;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 810),
-        child: ListView(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 0,
+          bottom: const TabBar(
+            
+            tabs: [
+              Tab(text: 'Available Vehicles'),
+              Tab(text: 'Returning Vehicles'),
+            ],
+          ),
+        ),
+        body: TabBarView(
           children: [
-            const Center(
-                child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Available Vehicles',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+            ListView(
+              children: [
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/teslamodelx.jpg',
+                    name: 'Tesla Model X',
+                    price: '30,000',
+                    isLiked: isLiked0,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/note.jpg',
+                    name: 'Nissan Note',
+                    price: '30,000',
+                    isLiked: isLiked1,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/axio.jpeg',
+                    name: 'Toyota Axio',
+                    price: '0,000',
+                    isLiked: isLiked2,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/crown.jpg',
+                    name: 'Toyota Crown',
+                    price: '6,000',
+                    isLiked: isLiked3,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/teslamodelx.jpg',
+                    name: 'Tesla Model X',
+                    price: '30,000',
+                    isLiked: isLiked4,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/note.jpg',
+                    name: 'Nissan Note',
+                    price: '30,000',
+                    isLiked: isLiked5,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/axio.jpeg',
+                    name: 'Toyota Axio',
+                    price: '0,000',
+                    isLiked: isLiked6,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/crown.jpg',
+                    name: 'Toyota Crown',
+                    price: '6,000',
+                    isLiked: isLiked7,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/teslamodelx.jpg',
+                    name: 'Tesla Model X',
+                    price: '30,000',
+                    isLiked: isLiked8,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/note.jpg',
+                    name: 'Nissan Note',
+                    price: '30,000',
+                    isLiked: isLiked9,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/axio.jpeg',
+                    name: 'Toyota Axio',
+                    price: '0,000',
+                    isLiked: isLiked10,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/crown.jpg',
+                    name: 'Toyota Crown',
+                    price: '6,000',
+                    isLiked: isLiked11,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/teslamodelx.jpg',
+                    name: 'Tesla Model X',
+                    price: '30,000',
+                    isLiked: isLiked12,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/note.jpg',
+                    name: 'Nissan Note',
+                    price: '30,000',
+                    isLiked: isLiked13,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/axio.jpeg',
+                    name: 'Toyota Axio',
+                    price: '0,000',
+                    isLiked: isLiked14,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+                AvailableVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/crown.jpg',
+                    name: 'Toyota Crown',
+                    price: '6,000',
+                    isLiked: isLiked15,
+                    onClickHire: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+              ],
+            ),
+            ListView(
+              children: [
+                ReturningVehicleCard(
+                  id: 'KDA',
+                  image: 'assets/cars/axio.jpeg',
+                  name: 'Toyota Axio',
+                  price: '0,000',
+                  isLiked: isLiked2,
+                  availabilityNotification: isnotifyON1,
+                  onClickNotifyMe: () {
+                    setState(() {
+                      hire(context: context, vehicleID: null);
+                    });
+                  },
+                  onClickDetails: () {
+                    setState(() {
+                      details(context: context, vehicleID: null);
+                    });
+                  },
                 ),
-              ),
-            )),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/teslamodelx.jpg',
-                name: 'Tesla Model X',
-                price: '30,000',
-                isLiked: isLiked0,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked0);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/note.jpg',
-                name: 'Nissan Note',
-                price: '30,000',
-                isLiked: isLiked1,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked1);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/axio.jpeg',
-                name: 'Toyota Axio',
-                price: '0,000',
-                isLiked: isLiked2,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked2);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/crown.jpg',
-                name: 'Toyota Crown',
-                price: '6,000',
-                isLiked: isLiked3,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked3);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/teslamodelx.jpg',
-                name: 'Tesla Model X',
-                price: '30,000',
-                isLiked: isLiked4,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked4);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/note.jpg',
-                name: 'Nissan Note',
-                price: '30,000',
-                isLiked: isLiked5,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked5);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/axio.jpeg',
-                name: 'Toyota Axio',
-                price: '0,000',
-                isLiked: isLiked6,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked6);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/crown.jpg',
-                name: 'Toyota Crown',
-                price: '6,000',
-                isLiked: isLiked7,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked7);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/teslamodelx.jpg',
-                name: 'Tesla Model X',
-                price: '30,000',
-                isLiked: isLiked8,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked8);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/note.jpg',
-                name: 'Nissan Note',
-                price: '30,000',
-                isLiked: isLiked9,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked9);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/axio.jpeg',
-                name: 'Toyota Axio',
-                price: '0,000',
-                isLiked: isLiked10,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked10);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/crown.jpg',
-                name: 'Toyota Crown',
-                price: '6,000',
-                isLiked: isLiked11,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked11);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/teslamodelx.jpg',
-                name: 'Tesla Model X',
-                price: '30,000',
-                isLiked: isLiked12,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked12);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/note.jpg',
-                name: 'Nissan Note',
-                price: '30,000',
-                isLiked: isLiked13,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked13);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/axio.jpeg',
-                name: 'Toyota Axio',
-                price: '0,000',
-                isLiked: isLiked14,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked14);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            HomeCard(
-                id: 'KDA',
-                image: 'assets/cars/crown.jpg',
-                name: 'Toyota Crown',
-                price: '6,000',
-                isLiked: isLiked15,
-                onClickFav: () {
-                  setState(() {
-                    like(
-                        context: context,
-                        vehicleID: null,
-                        likeStatus: isLiked15);
-                  });
-                },
-                onClickHire: () {
-                  setState(() {
-                    hire(context: context, vehicleID: null);
-                  });
-                },
-                onClickDetails: () {
-                  setState(() {
-                    details(context: context, vehicleID: null);
-                  });
-                }),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                onPressed: () {
-                  nextPage(context: context, page: const ReturningVehicles());
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Show Returning Vehicles'),
-                ),
-              ),
+                ReturningVehicleCard(
+                    id: 'KDA',
+                    image: 'assets/cars/crown.jpg',
+                    name: 'Toyota Crown',
+                    price: '6,000',
+                    isLiked: isLiked3,
+                    availabilityNotification: isnotifyON2,
+                    onClickNotifyMe: () {
+                      setState(() {
+                        hire(context: context, vehicleID: null);
+                      });
+                    },
+                    onClickDetails: () {
+                      setState(() {
+                        details(context: context, vehicleID: null);
+                      });
+                    }),
+              ],
             ),
           ],
         ),

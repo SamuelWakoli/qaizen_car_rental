@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
 class Constants {
   //COLORS
@@ -16,5 +15,4 @@ class Constants {
   Color errorColor() {
     return const Color(0xffc52121);
   }
-
 }

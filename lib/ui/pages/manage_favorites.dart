@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ManageFavoritesPage extends StatefulWidget {
-  const ManageFavoritesPage({super.key});
+class PriceList extends StatefulWidget {
+  const PriceList({super.key});
 
   @override
-  State<ManageFavoritesPage> createState() => _ManageFavoritesPageState();
+  State<PriceList> createState() => _PriceListState();
 }
 
-class _ManageFavoritesPageState extends State<ManageFavoritesPage> {
+class _PriceListState extends State<PriceList> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Manage Favorites'),
-          centerTitle: true,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Price List'),
+        centerTitle: true,
       ),
     );
   }

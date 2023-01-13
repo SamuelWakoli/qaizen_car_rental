@@ -60,7 +60,9 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
             summaryItem(name: 'Driver(s): ', data: locationData?.address),
             summaryItem(name: 'Time: ', data: '$driverName'),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(

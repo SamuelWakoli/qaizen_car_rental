@@ -10,12 +10,10 @@ class ReturningVehicles extends StatefulWidget {
 class _ReturningVehiclesState extends State<ReturningVehicles> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Returning Vehicles'),
-          centerTitle: true,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Returning Vehicles'),
+        centerTitle: true,
       ),
     );
   }

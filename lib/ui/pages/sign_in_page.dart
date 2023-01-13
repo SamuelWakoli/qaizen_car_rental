@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/create_account_page.dart';
 
-import '../widgets/outlined_button.dart';
+import '../widgets/material_button.dart';
 import '../widgets/text_form_field.dart';
 import '../widgets/widgets.dart';
 import '../pages/home_screen.dart';
@@ -30,9 +30,10 @@ class _SignInPageState extends State<SignInPage> {
                   color: Theme.of(context).primaryColor),
             )
           : SingleChildScrollView(
-            child: Center(
-              child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400, minWidth: 300),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints:
+                      const BoxConstraints(maxWidth: 400, minWidth: 300),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 80),
@@ -58,12 +59,14 @@ class _SignInPageState extends State<SignInPage> {
                                         decoration: TextDecoration.underline),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        nextPage(context: context, page: const CreateAccountPage());
+                                        nextPage(
+                                            context: context,
+                                            page: const CreateAccountPage());
                                       }),
                               ],
                             )),
                             const SizedBox(height: 24),
-                            outlinedButton(
+                            materialButton(
                               context: context,
                               icon: FontAwesomeIcons.google,
                               text: 'Sign in with Google',
@@ -74,6 +77,7 @@ class _SignInPageState extends State<SignInPage> {
                             const SizedBox(height: 10),
                             const Text('Sign in with email: '),
                             textFormField(
+                              textInputType: TextInputType.emailAddress,
                               context: context,
                               icon: Icons.email_outlined,
                               labelText: "Email: ",
@@ -92,6 +96,7 @@ class _SignInPageState extends State<SignInPage> {
                               },
                             ),
                             textFormField(
+                              textInputType: TextInputType.visiblePassword,
                               context: context,
                               icon: Icons.lock_outline_rounded,
                               labelText: "Password: ",
@@ -114,14 +119,16 @@ class _SignInPageState extends State<SignInPage> {
                               text: "Create account",
                               onPressed:
                                   //login()
-                                  () => nextPageReplace(context: context, page: const HomeScreen()),
+                                  () => nextPageReplace(
+                                      context: context,
+                                      page: const HomeScreen()),
                             ),
                           ],
                         )),
                   ),
                 ),
+              ),
             ),
-          ),
     );
   }
 

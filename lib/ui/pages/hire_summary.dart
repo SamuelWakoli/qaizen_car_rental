@@ -56,13 +56,14 @@ class _HireSummaryState extends State<HireSummary> {
             summaryItem(name: 'Email Address: ', data: '\$email'),
             const SizedBox(height: 20),
             summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
-            summaryItem(name: 'Price: ', data: '\$price'),
             summaryItem(
                 name: 'Duration: ', data: 'From $selectedTime $selectedDate'),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
             summaryItem(
                 name: 'Delivery Location: ', data: locationData?.address),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            summaryItem(name: "COST: ", data: "Ksh. $totalCost"),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(

@@ -55,11 +55,6 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
             summaryItem(name: 'National ID Number: ', data: '\$natIDnum'),
             summaryItem(name: 'Email Address: ', data: '\$email'),
             const SizedBox(height: 20),
-            summaryItem(name: 'Organisation Name: ', data: orgName),
-            summaryItem(
-                name: 'Organisation Location: ',
-                data: locationAddress),
-            const SizedBox(height: 20),
             summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
             summaryItem(name: 'Price: ', data: '\$price'),
             summaryItem(name: 'Driver: ', data: locationData?.address),

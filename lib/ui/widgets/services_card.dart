@@ -7,7 +7,7 @@ Widget servicesCard({
   required dynamic onTap,
 }) {
   return ConstrainedBox(
-    constraints: const BoxConstraints(minHeight: 180, minWidth: 180),
+    constraints: const BoxConstraints(minHeight: 190, minWidth: 180),
     child: GestureDetector(
       onTap: onTap,
       child: Card(
