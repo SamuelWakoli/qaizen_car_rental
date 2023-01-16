@@ -7,12 +7,12 @@ bool? needDriver;
 String serviceType = "";
 dynamic locationData;
 String locationAddress = '';
-String selectedTime = '${TimeOfDay.now().hour}:${TimeOfDay.now().minute}';
-String selectedDate =
+String? selectedTime = '${TimeOfDay.now().hour}:${TimeOfDay.now().minute}';
+String? selectedDate =
     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
-List<String> driversNames = [];
-List<String> selectedVehicles = [];
-String numberOfDays = '';
+List<String>? driversNames = [];
+List<String>? selectedVehicles = [];
+String? numberOfDays = '';
 double? totalCost = 0.00;
 
 /// Hire

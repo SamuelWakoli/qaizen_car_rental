@@ -22,7 +22,7 @@ class _TermsConditionsPageState extends State<TermsConditionsPage> {
             children: const [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("""
+                child: Text(style: TextStyle(fontSize: 16), """
 1. QAIZEN CAR RENTAL (the company) hereby agrees to let on hire the person named in the overleaf (the hirer) and agrees to issue on hire the motor
 vehicle described in the overleaf together with the accessories earned with it or fixed on it hereafter called (the vehicle) upon the terms and conditions
 set out in the overleaf and here under.

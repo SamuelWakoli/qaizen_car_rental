@@ -1,3 +1,4 @@
+import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -27,27 +28,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  bool _isThereProfileImg = false;
-  var _iconColor = Constants().primaryColor();
-
-  final List<Widget> _titles = [
-    CircleAvatar(
-        radius: 22,
-        backgroundColor: Colors.white,
-        child: Image.asset('assets/ic_launcher.png')),
-    const Text('Services'),
-    const Text('Notifications'),
-    const Text('More')
-  ];
-  final List<Widget> _pages = const [
-    HomePage(),
-    ServicesPage(),
-    NotificationsPage(),
-    MorePage()
-  ];
-  int currentPage = 0;
-
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -65,11 +46,81 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  static const int totalPage = 4;
+
+  // appbar title:
+  final List<Widget> _titles = [
+    CircleAvatar(
+        radius: 22,
+        backgroundColor: Colors.white,
+        child: Image.asset('assets/ic_launcher.png')),
+    const Text('Services'),
+    const Text('Notifications'),
+    const Text('More')
+  ];
+
+  // icons for bottomNav
+  List<IconData> icons = [
+    Icons.car_rental_outlined,
+    Icons.cases_outlined,
+    Icons.notifications_outlined,
+    Icons.more_outlined,
+  ];
+
+  // labels for bottom navigation
+  static const List<String> names = [
+    'Home',
+    'Services',
+    'Notifications',
+    'More',
+  ];
+
+  // body
+  final List<Widget> _pages = const [
+    HomePage(),
+    ServicesPage(),
+    NotificationsPage(),
+    MorePage()
+  ];
+
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  String? profileImage = "https://source.unsplash.com/random";
+  Widget _getImage() {
+    if (profileImage != null) {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100.0),
+          child: SizedBox(
+            height: 48,
+            width: 48,
+            child: Image.network(
+              profileImage!,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return const SizedBox(height: 30);
+    }
+  }
+
+  var _iconColor = Constants().primaryColor();
+
   @override
   Widget build(BuildContext context) {
-    bool _isNightModeOn = Theme.of(context).brightness == Brightness.dark;
+    bool isNightModeOn = Theme.of(context).brightness == Brightness.dark;
 
-    if (_isNightModeOn) {
+    if (isNightModeOn) {
       _iconColor = Constants().primaryColorDark();
     }
     return Scaffold(
@@ -91,11 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               //if user created profile, use image
               //else use icon
-              leading: const CircleAvatar(
-                backgroundImage: AssetImage(
-                  "assets/cars/teslamodelx.jpg",
-                ),
-              ),
+              leading: _getImage(),
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
               trailing: Switch(
                 activeColor: _iconColor,
                 inactiveThumbColor: _iconColor,
-                value: _isNightModeOn,
+                value: isNightModeOn,
                 onChanged: (bool value) {
                   setState(() {
                     EasyDynamicTheme.of(context).changeTheme();
@@ -179,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appBar: AppBar(
-        title: _titles[currentPage],
+        title: _titles[_currentPage],
         centerTitle: true,
         actions: [
           IconButton(
@@ -193,13 +240,56 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton(
             onSelected: (position) async {
               if (position == 0) {
-                //call
-                //when call permission is granted:
-                await FlutterPhoneDirectCaller.callNumber('+254797228948');
-                //else not granted, just show phone number
-                if (await Permission.phone.isDenied) {
-                  _makePhoneCall('+254797228948');
-                }
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text(
+                      "Call Us",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    content: const Text(
+                      "We're here to help with any questions or concerns you may have. Do you want to proceed with the call?",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        onPressed: () async {
+                          Navigator.of(ctx).pop();
+
+                          //call
+                          //when call permission is granted:
+                          await FlutterPhoneDirectCaller.callNumber(
+                              '+254797228948');
+                          //else not granted, just show phone number
+                          if (await Permission.phone.isDenied) {
+                            _makePhoneCall('+254797228948');
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          child: Text(
+                            "okay",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          child: Text(
+                            "cancel",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               }
               if (position == 1) {
                 //WhatsApp
@@ -234,34 +324,39 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: _pages[currentPage],
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.car_rental_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.cases_outlined),
-            label: 'Services',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.notifications_outlined),
-            label: 'Notifications',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.more_outlined),
-            label: 'More',
-          ),
-        ],
-        selectedIndex: currentPage,
-        onDestinationSelected: (position) {
-          setState(() {
-            currentPage = position;
-          });
-        },
-        height: 60,
+      body: BottomBarPageTransition(
+        builder: (_, index) => _getBody(index),
+        currentIndex: _currentPage,
+        totalLength: totalPage,
+        transitionType: TransitionType.fade,
+        transitionDuration: const Duration(milliseconds: 100),
+        transitionCurve: Curves.ease,
       ),
+      bottomNavigationBar: _getBottomBar(),
+    );
+  }
+
+  Widget _getBottomBar() {
+    return BottomNavigationBar(
+        currentIndex: _currentPage,
+        onTap: (index) {
+          _currentPage = index;
+          setState(() {});
+        },
+        backgroundColor:
+            Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        type: BottomNavigationBarType.fixed,
+        items: List.generate(
+            totalPage,
+            (index) => BottomNavigationBarItem(
+                  icon: Icon(icons[index]),
+                  label: names[index],
+                )));
+  }
+
+  Widget _getBody(int index) {
+    return Scaffold(
+      body: _pages[_currentPage],
     );
   }
 }

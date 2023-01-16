@@ -29,119 +29,117 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           ? Center(
               child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor))
-          : SingleChildScrollView(
-              child: Center(
+          : Center(
+              child: SingleChildScrollView(
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
-                  child: Form(
-                      key: formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Image.asset("assets/qaizenlogo.png"),
-                          const SizedBox(height: 10),
-                          Text.rich(TextSpan(
-                            text: "Already have an account? ",
-                            style: const TextStyle(fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "Sign in",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16,
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      nextPage(
-                                          context: context,
-                                          page: const SignInPage());
-                                    }),
-                            ],
-                          )),
-                          const SizedBox(height: 24),
-                          materialButton(
-                            context: context,
-                            icon: FontAwesomeIcons.google,
-                            text: 'Create account with Google',
-                            onPressed: () {},
-                          ),
-                          const SizedBox(height: 10),
-                          const Divider(),
-                          const SizedBox(height: 10),
-                          const Text('Create account with email: '),
-                          textFormField(
-                            textInputType: TextInputType.name,
-                            context: context,
-                            icon: Icons.person_outline_outlined,
-                            labelText: "Full Name: ",
-                            hintText: "",
-                            onChanged: (val) {
-                              setState(() {
-                                fullName = val;
-                              });
-                            },
-                            validator: (val) {
-                              if (val!.isNotEmpty) {
-                                return null;
-                              } else {
-                                return "Name cannot be empty";
-                              }
-                            },
-                          ),
-                          textFormField(
-                            textInputType: TextInputType.emailAddress,
-                            context: context,
-                            icon: Icons.email_outlined,
-                            labelText: "Email: ",
-                            hintText: "",
-                            onChanged: (val) {
-                              setState(() {
-                                email = val;
-                              });
-                            },
-                            validator: (val) {
-                              return RegExp(
-                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                      .hasMatch(val!)
-                                  ? null
-                                  : "Please enter a valid email";
-                            },
-                          ),
-                          textFormField(
-                            textInputType: TextInputType.visiblePassword,
-                            context: context,
-                            icon: Icons.lock_outline_rounded,
-                            labelText: "Password: ",
-                            hintText: "",
-                            onChanged: (val) {
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                            validator: (val) {
-                              if (val!.isNotEmpty) {
-                                return null;
-                              } else {
-                                return "Password cannot be empty";
-                              }
-                            },
-                          ),
-                          normalWiderButton(
-                            context: context,
-                            text: "Create account",
-                            onPressed:
-                                //login()
-                                () {
-                              nextPageReplace(
-                                  context: context, page: const HomeScreen());
-                            },
-                          ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/qaizenlogo.png"),
+                      const SizedBox(height: 10),
+                      Text.rich(TextSpan(
+                        text: "Already have an account? ",
+                        style: const TextStyle(fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: "Sign in",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  nextPage(
+                                      context: context,
+                                      page: const SignInPage());
+                                }),
                         ],
                       )),
+                      const SizedBox(height: 24),
+                      materialButton(
+                        context: context,
+                        icon: FontAwesomeIcons.google,
+                        text: 'Create account with Google',
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      const Text('Create account with email: '),
+                      textFormField(
+                        textInputType: TextInputType.name,
+                        context: context,
+                        icon: Icons.person_outline_outlined,
+                        labelText: "Full Name: ",
+                        hintText: "",
+                        onChanged: (val) {
+                          setState(() {
+                            fullName = val;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "Name cannot be empty";
+                          }
+                        },
+                      ),
+                      textFormField(
+                        textInputType: TextInputType.emailAddress,
+                        context: context,
+                        icon: Icons.email_outlined,
+                        labelText: "Email: ",
+                        hintText: "",
+                        onChanged: (val) {
+                          setState(() {
+                            email = val;
+                          });
+                        },
+                        validator: (val) {
+                          return RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val!)
+                              ? null
+                              : "Please enter a valid email";
+                        },
+                      ),
+                      textFormField(
+                        textInputType: TextInputType.visiblePassword,
+                        context: context,
+                        icon: Icons.lock_outline_rounded,
+                        labelText: "Password: ",
+                        hintText: "",
+                        onChanged: (val) {
+                          setState(() {
+                            password = val;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "Password cannot be empty";
+                          }
+                        },
+                      ),
+                      normalWiderButton(
+                        context: context,
+                        text: "Create account",
+                        onPressed:
+                            //login()
+                            () {
+                          nextPageReplace(
+                              context: context, page: const HomeScreen());
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

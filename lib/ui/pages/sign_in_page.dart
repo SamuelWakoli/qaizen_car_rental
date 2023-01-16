@@ -29,102 +29,95 @@ class _SignInPageState extends State<SignInPage> {
               child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor),
             )
-          : SingleChildScrollView(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints(maxWidth: 400, minWidth: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 80),
-                    child: Form(
-                        key: formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset("assets/qaizenlogo.png"),
-                            const SizedBox(height: 10),
-                            Text.rich(TextSpan(
-                              text: "Don't have an account? ",
-                              style: const TextStyle(fontSize: 14),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: "Create account here",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 16,
-                                        decoration: TextDecoration.underline),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        nextPage(
-                                            context: context,
-                                            page: const CreateAccountPage());
-                                      }),
-                              ],
-                            )),
-                            const SizedBox(height: 24),
-                            materialButton(
-                              context: context,
-                              icon: FontAwesomeIcons.google,
-                              text: 'Sign in with Google',
-                              onPressed: () {},
-                            ),
-                            const SizedBox(height: 10),
-                            const Divider(),
-                            const SizedBox(height: 10),
-                            const Text('Sign in with email: '),
-                            textFormField(
-                              textInputType: TextInputType.emailAddress,
-                              context: context,
-                              icon: Icons.email_outlined,
-                              labelText: "Email: ",
-                              hintText: "",
-                              onChanged: (val) {
-                                setState(() {
-                                  email = val;
-                                });
-                              },
-                              validator: (val) {
-                                return RegExp(
-                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(val!)
-                                    ? null
-                                    : "Please enter a valid email";
-                              },
-                            ),
-                            textFormField(
-                              textInputType: TextInputType.visiblePassword,
-                              context: context,
-                              icon: Icons.lock_outline_rounded,
-                              labelText: "Password: ",
-                              hintText: "",
-                              onChanged: (val) {
-                                setState(() {
-                                  password = val;
-                                });
-                              },
-                              validator: (val) {
-                                if (val!.isNotEmpty) {
-                                  return null;
-                                } else {
-                                  return "Password cannot be empty";
-                                }
-                              },
-                            ),
-                            normalWiderButton(
-                              context: context,
-                              text: "Create account",
-                              onPressed:
-                                  //login()
-                                  () => nextPageReplace(
+          : Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset("assets/qaizenlogo.png"),
+                      const SizedBox(height: 10),
+                      Text.rich(TextSpan(
+                        text: "Don't have an account? ",
+                        style: const TextStyle(fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: "Create account here",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  nextPage(
                                       context: context,
-                                      page: const HomeScreen()),
-                            ),
-                          ],
-                        )),
+                                      page: const CreateAccountPage());
+                                }),
+                        ],
+                      )),
+                      const SizedBox(height: 24),
+                      materialButton(
+                        context: context,
+                        icon: FontAwesomeIcons.google,
+                        text: 'Sign in with Google',
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      const Text('Sign in with email: '),
+                      textFormField(
+                        textInputType: TextInputType.emailAddress,
+                        context: context,
+                        icon: Icons.email_outlined,
+                        labelText: "Email: ",
+                        hintText: "",
+                        onChanged: (val) {
+                          setState(() {
+                            email = val;
+                          });
+                        },
+                        validator: (val) {
+                          return RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val!)
+                              ? null
+                              : "Please enter a valid email";
+                        },
+                      ),
+                      textFormField(
+                        textInputType: TextInputType.visiblePassword,
+                        context: context,
+                        icon: Icons.lock_outline_rounded,
+                        labelText: "Password: ",
+                        hintText: "",
+                        onChanged: (val) {
+                          setState(() {
+                            password = val;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isNotEmpty) {
+                            return null;
+                          } else {
+                            return "Password cannot be empty";
+                          }
+                        },
+                      ),
+                      normalWiderButton(
+                        context: context,
+                        text: "Create account",
+                        onPressed:
+                            //login()
+                            () => nextPageReplace(
+                                context: context, page: const HomeScreen()),
+                      ),
+                    ],
                   ),
                 ),
               ),

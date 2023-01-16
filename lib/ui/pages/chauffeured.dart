@@ -51,7 +51,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
     }
   }
 
-  String formatedTime() {
+  String? formatedTime() {
     if (currentTime.hour < 10 && currentTime.minute < 10) {
       selectedTime = '0${currentTime.hour}:0${currentTime.minute}';
       return selectedTime;
@@ -136,7 +136,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               ),
             ),
             subtitle: Text(
-              formatedTime(),
+              formatedTime()!,
               style: const TextStyle(fontSize: 16),
             ),
             onTap: () => _selectTime(context),

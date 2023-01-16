@@ -62,6 +62,16 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
           image: _buildImage('slide3.png'),
           decoration: pageDecoration,
         ),
+        PageViewModel(
+          title: "Profile Verification",
+          body: "Get your profile verified to enjoy our services.",
+          image: Icon(
+            Icons.verified_outlined,
+            color: Theme.of(context).primaryColor,
+            size: 180,
+          ),
+          decoration: pageDecoration,
+        ),
       ],
       onDone: () => _onIntroEnd(context),
       onSkip: () => _onIntroEnd(context), // You can override onSkip callback

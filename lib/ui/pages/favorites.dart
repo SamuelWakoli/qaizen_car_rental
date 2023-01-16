@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helper/vehicle_card_func.dart';
-import '../widgets/vehicle_card.dart';
+import '../widgets/vehicle_cards.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);

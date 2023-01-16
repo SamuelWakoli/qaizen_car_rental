@@ -46,7 +46,9 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
       child: Card(
         child: Column(
           children: [
-            Image.asset(widget.image),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.asset(widget.image)),
             const SizedBox(height: 8),
             Text(
               widget.name,
@@ -164,7 +166,9 @@ Widget favCard({
     child: Card(
       child: Column(
         children: [
-          Image.asset(image),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Image.asset(image)),
           const SizedBox(height: 8),
           Text(
             name,
@@ -173,33 +177,36 @@ Widget favCard({
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Ksh. ',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    const Text(
+                      'Ksh. ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      price,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(' /day'),
+                  ],
                 ),
-                Text(
-                  price,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const SizedBox(
+                  width: 10,
                 ),
-                const Text(' /day'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-            child: Row(
-              children: [
-                const Text('Status: '),
-                Text(availabity
-                    ? "Available"
-                    : "Not avalable, expected at \$availableTime")
+                Row(
+                  children: [
+                    const Text('Status: '),
+                    Text(availabity ? "Available" : "Not avalable")
+                  ],
+                ),
               ],
             ),
           ),
@@ -288,7 +295,9 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
       child: Card(
         child: Column(
           children: [
-            Image.asset(widget.image),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.asset(widget.image)),
             const SizedBox(height: 8),
             Text(
               widget.name,
@@ -426,7 +435,9 @@ Widget selectVehiclesList({
     child: Card(
       child: Column(
         children: [
-          Image.asset(image),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Image.asset(image)),
           const SizedBox(height: 8),
           Text(
             name,

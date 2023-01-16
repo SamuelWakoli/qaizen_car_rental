@@ -49,6 +49,9 @@ dependencies:
   scroll_loop_auto_scroll: ^0.0.5
   url_launcher: ^6.1.7
   flutter_phone_direct_caller: ^2.1.1
+  image_picker: ^0.8.6
+  page_transition: ^2.0.9
+  bottom_bar_page_transition: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -53,7 +53,7 @@ class _HirePageState extends State<HirePage> {
     }
   }
 
-  String formatedTime() {
+  String? formatedTime() {
     if (currentTime.hour < 10 && currentTime.minute < 10) {
       selectedTime = '0${currentTime.hour}:0${currentTime.minute}';
       return selectedTime;
@@ -154,7 +154,7 @@ class _HirePageState extends State<HirePage> {
                                 ),
                               ),
                               subtitle: Text(
-                                formatedTime(),
+                                formatedTime()!,
                                 style: const TextStyle(fontSize: 16),
                               ),
                               onTap: () => _selectTime(context),
@@ -232,8 +232,7 @@ class _HirePageState extends State<HirePage> {
                                         deliveryService = value;
                                       });
                                     },
-                                    activeColor:
-                                        Theme.of(context).primaryColor,
+                                    activeColor: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 SizedBox(
@@ -248,8 +247,7 @@ class _HirePageState extends State<HirePage> {
                                         deliveryService = value;
                                       });
                                     },
-                                    activeColor:
-                                        Theme.of(context).primaryColor,
+                                    activeColor: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ],
@@ -274,8 +272,8 @@ class _HirePageState extends State<HirePage> {
                                     TextSpan(
                                         text: "terms and conditions",
                                         style: TextStyle(
-                                            color: Theme.of(context)
-                                                .primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.italic,
                                             fontSize: 16,
@@ -309,15 +307,13 @@ class _HirePageState extends State<HirePage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         ///use this location in the driver app
                                         'Next',
                                         style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                       const SizedBox(width: 10),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/vehicle_card.dart';
+import '../widgets/vehicle_cards.dart';
 
 class CatWagons extends StatefulWidget {
   const CatWagons({super.key});

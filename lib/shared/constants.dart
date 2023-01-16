@@ -8,7 +8,7 @@ class Constants {
   }
 
   Color primaryColorDark() {
-    return const Color(0xFF0066FF);
+    return const Color.fromARGB(255, 39, 125, 255);
   }
 
   // Error Color

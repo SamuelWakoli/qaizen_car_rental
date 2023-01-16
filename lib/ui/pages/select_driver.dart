@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/drivers_card.dart';
+
 class SelectDriver extends StatefulWidget {
   const SelectDriver({super.key});
 
@@ -12,10 +14,88 @@ class _SelectDriverState extends State<SelectDriver> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Drivers'),
+        title: const Text('Select Driver'),
         centerTitle: true,
       ),
-      body: ListView(children: []),
+      body: ListView(children: [
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female"),
+        driverCard(
+            context: context,
+            id: "",
+            name: "\$driverName",
+            image: "assets/driverholder.jpg",
+            availabity: true,
+            gender: "Female")
+      ]),
     );
   }
 }

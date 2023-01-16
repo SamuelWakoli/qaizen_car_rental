@@ -52,7 +52,7 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
     }
   }
 
-  String formatedTime() {
+  String? formatedTime() {
     if (currentTime.hour < 10 && currentTime.minute < 10) {
       selectedTime = '0${currentTime.hour}:0${currentTime.minute}';
       return selectedTime;
@@ -242,7 +242,7 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
               ),
             ),
             subtitle: Text(
-              formatedTime(),
+              formatedTime()!,
               style: const TextStyle(fontSize: 16),
             ),
             onTap: () => _selectTime(context),

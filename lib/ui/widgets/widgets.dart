@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../shared/constants.dart';
 
@@ -24,23 +25,18 @@ var textInputDecoration = InputDecoration(
   ),
 );
 
-dynamic nextPage({required context, required page, data}) {
+dynamic nextPage({required context, required page}) {
   Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => page,
-          settings: RouteSettings(arguments: data)));
+      context, PageTransition(type: PageTransitionType.fade, child: page));
 }
 
-dynamic nextPageReplace({required context, required page, data}) {
+dynamic nextPageReplace({required context, required page}) {
   Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => page,
-          settings: RouteSettings(arguments: data)));
+      context, PageTransition(type: PageTransitionType.fade, child: page));
 }
 
-void showSnackbar({required context, message, required duration, actionOnPressed}) {
+void showSnackbar(
+    {required context, message, required duration, actionOnPressed}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

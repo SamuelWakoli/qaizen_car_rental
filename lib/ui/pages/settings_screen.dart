@@ -36,17 +36,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SettingsSection(
               title: const Text('General'),
               tiles: <SettingsTile>[
-                SettingsTile.navigation(
-                  leading: const CircleAvatar(
-                    backgroundImage: AssetImage(
-                      "assets/cars/teslamodelx.jpg",
-                    ),
-                  ),
-                  title: const Text('Profile'),
-                  onPressed: (context) {
-                    nextPage(context: context, page: const UserProfile());
-                  },
-                ),
                 SettingsTile.switchTile(
                   onToggle: (value) {},
                   initialValue: true,

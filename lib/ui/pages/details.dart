@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/ui/pages/hire.dart';
 import 'package:qaizen_car_rental/ui/widgets/material_button.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 
@@ -38,44 +40,56 @@ class _DetailsPageState extends State<DetailsPage> {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxHeight: 300, minHeight: 50),
-                        child: Image.asset(
-                          'assets/cars/teslamodelx.jpg',
-                          fit: BoxFit.fill,
+                        constraints:
+                            const BoxConstraints(maxHeight: 300, minHeight: 50),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(
+                            'assets/cars/teslamodelx.jpg',
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxHeight: 300, minHeight: 50),
-                        child: Image.asset(
-                          'assets/cars/axio.jpeg',
-                          fit: BoxFit.fill,
+                        constraints:
+                            const BoxConstraints(maxHeight: 300, minHeight: 50),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(
+                            'assets/cars/axio.jpeg',
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxHeight: 300, minHeight: 50),
-                        child: Image.asset(
-                          'assets/cars/crown.jpg',
-                          fit: BoxFit.fill,
+                        constraints:
+                            const BoxConstraints(maxHeight: 300, minHeight: 50),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(
+                            'assets/cars/crown.jpg',
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxHeight: 300, minHeight: 50),
-                        child: Image.asset(
-                          'assets/cars/note.jpg',
-                          fit: BoxFit.fill,
+                        constraints:
+                            const BoxConstraints(maxHeight: 300, minHeight: 50),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(
+                            'assets/cars/note.jpg',
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),
@@ -123,10 +137,12 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
             const SizedBox(height: 20),
             materialButton(
-                context: context,
-                icon: Icons.assignment_outlined,
-                text: 'Hire',
-                onPressed: null),
+              context: context,
+              icon: Icons.assignment_outlined,
+              text: 'Hire',
+              onPressed: () =>
+                  nextPage(context: context, page: const HirePage()),
+            ),
           ]),
         ),
       ),

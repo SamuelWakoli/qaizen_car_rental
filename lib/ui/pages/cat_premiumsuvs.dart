@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/vehicle_card.dart';
+import '../widgets/vehicle_cards.dart';
 
 class CatPremiumSuvs extends StatefulWidget {
   const CatPremiumSuvs({super.key});

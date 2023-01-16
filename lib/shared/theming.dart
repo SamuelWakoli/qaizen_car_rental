@@ -12,8 +12,15 @@ class Theming {
       scaffoldBackgroundColor: Colors.white,
       tabBarTheme: const TabBarTheme(labelColor: Colors.black),
       indicatorColor: Constants().primaryColor(),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: Constants().primaryColor(),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      cardTheme:
+          CardTheme(elevation: 8, shadowColor: Constants().primaryColor()),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Colors.white,
+        selectedItemColor: Constants().primaryColor(),
+        selectedIconTheme: const IconThemeData(size: 32),
+        selectedLabelStyle: const TextStyle(fontSize: 16),
+        unselectedItemColor: Colors.grey[900],
       ),
       useMaterial3: true);
 
@@ -24,10 +31,20 @@ class Theming {
       appBarTheme: const AppBarTheme(
         elevation: 0,
       ),
+      drawerTheme: const DrawerThemeData(),
       navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: Colors.lightBlueAccent,
       ),
       tabBarTheme: const TabBarTheme(labelColor: Colors.white),
       indicatorColor: Constants().primaryColor(),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      cardTheme:
+          CardTheme(elevation: 8, shadowColor: Constants().primaryColor()),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: Constants().primaryColorDark(),
+        selectedIconTheme: const IconThemeData(size: 32),
+        selectedLabelStyle: const TextStyle(fontSize: 16),
+        unselectedItemColor: Colors.white70,
+      ),
       useMaterial3: true);
 }

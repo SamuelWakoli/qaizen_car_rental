@@ -40,7 +40,9 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                         maxHeight: 180,
                         maxWidth: 160,
                       ),
-                      child: Image.asset(image, fit: BoxFit.fill)),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: Image.asset(image, fit: BoxFit.fill))),
                 ],
               ),
             ),
@@ -131,8 +133,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                         onTap: () {
                           Navigator.pop(context);
                           nextPage(
-                              context: context,
-                              page: const CatPremiumSedans());
+                              context: context, page: const CatPremiumSedans());
                         }),
                   ],
                 ),
