@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/text_form_field.dart';
 import '../widgets/widgets.dart';
 import 'acc_verification_page1b.dart';
-import 'acc_verification_page2.dart';
 
 class AccVerificationPage1 extends StatefulWidget {
   const AccVerificationPage1({super.key});
@@ -89,8 +88,8 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
               textInputType: TextInputType.number,
               context: context,
               icon: Icons.drive_eta_outlined,
-              labelText: 'Years of driving experience: ',
-              hintText: '',
+              labelText: 'Driving experience: ',
+              hintText: '(Years)',
               onChanged: (val) {
                 setState(() {
                   //fullName = val;
@@ -128,7 +127,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
               context: context,
               icon: Icons.home_work_outlined,
               labelText: 'Residence: ',
-              hintText: 'User Name',
+              hintText: '',
               onChanged: (val) {
                 setState(() {
                   //fullName = val;

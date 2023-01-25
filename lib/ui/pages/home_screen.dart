@@ -2,15 +2,14 @@ import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:qaizen_car_rental/ui/pages/emergency.dart';
-import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
-import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qaizen_car_rental/ui/pages/emergency.dart';
+import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
+import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/constants.dart';
-import '../widgets/widgets.dart';
 import '../pages/favorites.dart';
 import '../pages/home_page.dart';
 import '../pages/more_page.dart';
@@ -19,6 +18,7 @@ import '../pages/records.dart';
 import '../pages/report_issue.dart';
 import '../pages/services_page.dart';
 import '../pages/terms_conditions.dart';
+import '../widgets/widgets.dart';
 import 'active_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -310,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 optionMenuItem(
                   position: 1,
-                  icon: Icons.whatsapp,
+                  icon: FontAwesomeIcons.whatsapp,
                   color: Colors.green,
                   text: 'WhatsApp',
                 ),

@@ -24,6 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(toolbarHeight: 0),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(

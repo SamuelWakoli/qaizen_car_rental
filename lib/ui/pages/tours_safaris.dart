@@ -69,8 +69,6 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
 // end date time
 //
 
-  bool acceptedTerms = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,52 +203,11 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
               keyboardType: TextInputType.number,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Checkbox(
-                value: acceptedTerms,
-                onChanged: ((value) {
-                  setState(() {
-                    acceptedTerms = value!;
-                  });
-                }),
-              ),
-              Text.rich(TextSpan(
-                text: "I accept the ",
-                style: const TextStyle(fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: "terms and conditions",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 16,
-                          decoration: TextDecoration.underline),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          nextPage(
-                              context: context,
-                              page: const TermsConditionsPage());
-                        }),
-                ],
-              )),
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MaterialButton(
-              onPressed: () {
-                acceptedTerms
-                    ? nextPage(
-                        context: context, page: const ToursSafarisSummary())
-                    : showSnackbar(
-                        context: context,
-                        duration: 4,
-                        message:
-                            'Accept the terms and conditions to continue.');
-              },
+              onPressed: () =>
+                  nextPage(context: context, page: const ToursSafarisSummary()),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
