@@ -26,8 +26,8 @@ class _PickLocationState extends State<PickLocation> {
             selectLocationButtonText: 'Select Pinned Location',
             onError: (e) => print(e),
             onPicked: (pickedData) {
-              // print(pickedData.latLong.latitude);
-              // print(pickedData.latLong.longitude);
+              print(pickedData.latLong.latitude);
+              print(pickedData.latLong.longitude);
               // print(pickedData.address);
               // print(pickedData.addressData['country']);
               locationAddress = pickedData.address.toString();

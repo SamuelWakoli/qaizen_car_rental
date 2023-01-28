@@ -6,15 +6,20 @@ class Theming {
       primaryColor: Constants().primaryColor(),
       textTheme: const TextTheme(button: TextStyle(color: Colors.white70)),
       brightness: Brightness.light,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 0,
+        surfaceTintColor: Constants().primaryColor(),
+        color: Colors.white,
       ),
       scaffoldBackgroundColor: Colors.white,
       tabBarTheme: const TabBarTheme(labelColor: Colors.black),
       indicatorColor: Constants().primaryColor(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      cardTheme:
-          CardTheme(elevation: 8, shadowColor: Constants().primaryColor()),
+      cardTheme: CardTheme(
+        elevation: 8,
+        shadowColor: Constants().primaryColor(),
+        surfaceTintColor: Constants().primaryColor(),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         selectedItemColor: Constants().primaryColor(),
@@ -28,7 +33,7 @@ class Theming {
       primaryColor: Constants().primaryColorDark(),
       textTheme: const TextTheme(button: TextStyle(color: Colors.black54)),
       brightness: Brightness.dark,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 0,
       ),
       drawerTheme: const DrawerThemeData(),
@@ -36,10 +41,13 @@ class Theming {
         indicatorColor: Colors.lightBlueAccent,
       ),
       tabBarTheme: const TabBarTheme(labelColor: Colors.white),
-      indicatorColor: Constants().primaryColor(),
+      indicatorColor: Constants().primaryColorDark(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      cardTheme:
-          CardTheme(elevation: 8, shadowColor: Constants().primaryColor()),
+      cardTheme: CardTheme(
+        elevation: 8,
+        shadowColor: Constants().primaryColorDark(),
+        surfaceTintColor: Constants().primaryColorDark(),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedItemColor: Constants().primaryColorDark(),
         selectedIconTheme: const IconThemeData(size: 32),

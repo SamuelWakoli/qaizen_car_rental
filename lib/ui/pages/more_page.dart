@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
-import 'package:qaizen_car_rental/ui/pages/manage_favorites.dart';
 import 'package:qaizen_car_rental/ui/pages/privacy_policy.dart';
 import 'package:qaizen_car_rental/ui/pages/referral_program.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/constants.dart';
@@ -27,6 +27,15 @@ class _MorePageState extends State<MorePage> {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       // can't launch url
+    }
+  }
+
+  _onShareData(context, text, subject) async {
+    final RenderBox box = context.findRenderObject();
+    {
+      await Share.share(text,
+          subject: subject,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     }
   }
 
@@ -94,9 +103,11 @@ class _MorePageState extends State<MorePage> {
                   color: _iconColor,
                 ),
                 title: const Text('Share App Link'),
-                onTap: () {
-                  _openLink(
-                      "https://play.google.com/store/apps/details?id=com.qaizencarrental.qaizen_car_rental");
+                onTap: () async {
+                  _onShareData(
+                      context,
+                      "https://play.google.com/store/apps/details?id=com.qaizencarrental.qaizen_car_rental",
+                      'Qaizen Car Rental App Link');
                 },
               ),
             ),

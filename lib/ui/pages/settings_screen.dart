@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/widgets.dart';
 import '../pages/about_page.dart';
 import '../pages/terms_conditions.dart';
+import '../widgets/widgets.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -32,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           centerTitle: true,
         ),
         body: SettingsList(
+          lightTheme:
+              const SettingsThemeData(settingsListBackground: Colors.white),
           sections: [
             SettingsSection(
               title: const Text('General'),
@@ -39,6 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SettingsTile.switchTile(
                   onToggle: (value) {},
                   initialValue: true,
+                  activeSwitchColor: Theme.of(context).primaryColor,
                   leading: const Icon(Icons.notifications_active_outlined),
                   title: const Text('Notifications'),
                 ),

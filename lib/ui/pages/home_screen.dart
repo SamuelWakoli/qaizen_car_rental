@@ -212,8 +212,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               leading: const Icon(Icons.nights_stay_outlined),
               title: const Text("Night Mode"),
               trailing: Switch(
-                activeColor: _iconColor,
                 inactiveThumbColor: _iconColor,
+                activeTrackColor: Theme.of(context).primaryColor,
                 value: isNightModeOn,
                 onChanged: (bool value) {
                   setState(() {

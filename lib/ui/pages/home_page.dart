@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qaizen_car_rental/ui/pages/returning_vehicles.dart';
 import 'package:qaizen_car_rental/ui/widgets/vehicle_cards.dart';
 
 import '../../helper/vehicle_card_func.dart';
-import '../widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,15 +35,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 0,
-          bottom: const TabBar(
-            tabs: [
+          bottom: TabBar(
+            tabs: const [
               Tab(text: 'Available Vehicles'),
               Tab(text: 'Returning Vehicles'),
             ],
+            indicatorColor: Theme.of(context).primaryColor,
           ),
         ),
         body: TabBarView(
