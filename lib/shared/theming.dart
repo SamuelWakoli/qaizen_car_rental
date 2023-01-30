@@ -27,6 +27,11 @@ class Theming {
         selectedLabelStyle: const TextStyle(fontSize: 16),
         unselectedItemColor: Colors.grey[900],
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
       useMaterial3: true);
 
   var darkThemeData = ThemeData(
@@ -53,6 +58,11 @@ class Theming {
         selectedIconTheme: const IconThemeData(size: 32),
         selectedLabelStyle: const TextStyle(fontSize: 16),
         unselectedItemColor: Colors.white70,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
       useMaterial3: true);
 }

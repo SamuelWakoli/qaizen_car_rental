@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "166127006317",
+    "project_id": "qaizen-car-rental-2023",
+    "storage_bucket": "qaizen-car-rental-2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166127006317:android:f116ec610e595407de0564",
+        "android_client_info": {
+          "package_name": "com.qaizencarrental.qaizen_car_rental"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNeHhDpgD94UG727Z3UezXdGjwPqprBJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "166127006317-ht9pqokb3t5uq02hffufp66035okc16e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qaizencarrental.qaizencarrentaldriver.qaizenCarRentalDriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166127006317:android:9c52af14d0636fc7de0564",
+        "android_client_info": {
+          "package_name": "com.qaizencarrental.qaizen_car_rental_adm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNeHhDpgD94UG727Z3UezXdGjwPqprBJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "166127006317-ht9pqokb3t5uq02hffufp66035okc16e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qaizencarrental.qaizencarrentaldriver.qaizenCarRentalDriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166127006317:android:1f370956e58daa15de0564",
+        "android_client_info": {
+          "package_name": "com.qaizencarrental.qaizen_car_rental_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNeHhDpgD94UG727Z3UezXdGjwPqprBJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166127006317-ojhjcg5ggib6stupda9hp788ob8dk7lh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "166127006317-ht9pqokb3t5uq02hffufp66035okc16e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qaizencarrental.qaizencarrentaldriver.qaizenCarRentalDriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

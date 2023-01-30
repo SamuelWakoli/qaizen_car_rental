@@ -1,5 +1,6 @@
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +30,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  String userName = '';
+  String getUserName() {
+    if (FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty) {
+      userName = FirebaseAuth.instance.currentUser!.displayName!.toString();
+      if (userName == 'null') userName = '';
+      return userName;
+    } else {
+      return userName;
+    }
+  }
+
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
@@ -146,9 +158,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'User Name',
+                    getUserName(),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 4),

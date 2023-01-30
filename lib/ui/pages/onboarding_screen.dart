@@ -4,7 +4,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 
 import '../../shared/constants.dart';
 import '../widgets/widgets.dart';
-import 'create_account_page.dart';
+import 'auth_gate.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -17,7 +17,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    nextPageReplace(context: context, page: const CreateAccountPage());
+    nextPageReplace(context: context, page: const AuthGate());
   }
 
   Widget _buildImage(String assetName, [double width = 350]) {
