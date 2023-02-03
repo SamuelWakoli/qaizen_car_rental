@@ -29,7 +29,22 @@ class Theming {
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Constants().primaryColor())),
+      ),
+      drawerTheme:
+          DrawerThemeData(surfaceTintColor: Constants().primaryColor()),
+      popupMenuTheme:
+          PopupMenuThemeData(surfaceTintColor: Constants().primaryColor()),
+      dialogTheme: DialogTheme(surfaceTintColor: Constants().primaryColor()),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          surfaceTintColor: MaterialStateProperty.resolveWith((states) {
+            return Constants().primaryColor();
+          }),
+          textStyle: MaterialStateProperty.resolveWith((states) {
+            return TextStyle(color: Constants().primaryColor());
+          }),
         ),
       ),
       useMaterial3: true);
@@ -41,7 +56,6 @@ class Theming {
       appBarTheme: AppBarTheme(
         elevation: 0,
       ),
-      drawerTheme: const DrawerThemeData(),
       navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: Colors.lightBlueAccent,
       ),
@@ -61,7 +75,22 @@ class Theming {
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Constants().primaryColor())),
+      ),
+      drawerTheme:
+          DrawerThemeData(surfaceTintColor: Constants().primaryColor()),
+      popupMenuTheme:
+          PopupMenuThemeData(surfaceTintColor: Constants().primaryColor()),
+      dialogTheme: DialogTheme(surfaceTintColor: Constants().primaryColor()),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          surfaceTintColor: MaterialStateProperty.resolveWith((states) {
+            return Constants().primaryColor();
+          }),
+          textStyle: MaterialStateProperty.resolveWith((states) {
+            return TextStyle(color: Constants().primaryColor());
+          }),
         ),
       ),
       useMaterial3: true);

@@ -8,14 +8,7 @@ import 'package:qaizen_car_rental/shared/theming.dart';
 import 'package:qaizen_car_rental/ui/pages/splash_screen.dart';
 
 import 'firebase_options.dart';
-//init the app
-//init firebase
 
-//start with splash
-//if user is not signed in, show onboarding screen
-//then login page.
-
-//if user is signed in, from splash screen, go home
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -47,8 +40,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Qaizen Car Rental',
       debugShowCheckedModeBanner: false,
-      //if user is signed in, set home: to MainScreen.
-      //else set home: OnboardingScreen, then LoginScreen
       home: const MainScreen(),
       theme: Theming().lightThemeData,
       darkTheme: Theming().darkThemeData,

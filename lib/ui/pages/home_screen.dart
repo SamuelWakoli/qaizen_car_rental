@@ -10,6 +10,7 @@ import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../db/user.dart';
 import '../../shared/constants.dart';
 import '../pages/favorites.dart';
 import '../pages/home_page.dart';
@@ -114,10 +115,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: SizedBox(
             height: 48,
             width: 48,
-            child: Image.network(
-              profileImage!,
-              fit: BoxFit.fill,
-            ),
+            child: StreamBuilder(
+                stream: UserImages.snapshots(),
+                builder: (context, snapshot) {
+                  String profileImageURL =
+                      snapshot.data!.get('passport URL').toString();
+                  // if profileImageURL empty, use holder image
+                  if (profileImageURL == "") {
+                    profileImageURL =
+                        "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
+                  }
+
+                  return Image.network(
+                    profileImageURL,
+                    fit: BoxFit.fitHeight,
+                    filterQuality: FilterQuality.high,
+                    scale: 1,
+                  );
+                }),
           ),
         ),
       );
@@ -161,13 +176,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 children: [
                   Text(
                     getUserName(),
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
-                  Icon(
-                    Icons.verified_outlined,
-                    size: 16,
-                  ),
+                  const SizedBox(height: 4),
+                  StreamBuilder(
+                      stream: UserPersonalData.snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.get('verified')) {
+                            return Icon(
+                              Icons.verified_outlined,
+                              size: 18,
+                              color: Theme.of(context).primaryColor,
+                            );
+                          } else {
+                            return const Text(
+                              'Verify your profile',
+                            );
+                          }
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
                 ],
               ),
               onTap: () =>
@@ -179,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Icons.supervised_user_circle_outlined,
                 color: _iconColor,
               ),
-              title: const Text("Active Sevice"),
+              title: const Text("Active Service"),
               onTap: () =>
                   nextPage(context: context, page: const ActiveService()),
             ),

@@ -19,15 +19,6 @@ class AuthGate extends StatefulWidget {
 class _AuthGateState extends State<AuthGate> {
   @override
   Widget build(BuildContext context) {
-    Future<void> openLink(url) async {
-      final uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        // can't launch url
-      }
-    }
-
     Future<void> makePhoneCall(String phoneNumber) async {
       final Uri launchUri = Uri(
         scheme: 'tel',
@@ -50,8 +41,9 @@ class _AuthGateState extends State<AuthGate> {
                   child: Text.rich(TextSpan(text: 'Need help? ', children: [
                     TextSpan(
                         text: 'Call Us',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                        style: const TextStyle(
+                          //color: Theme.of(context).primaryColor,
+                          color: Colors.deepPurple,
                           fontSize: 16,
                           decoration: TextDecoration.underline,
                           fontStyle: FontStyle.italic,
@@ -75,7 +67,6 @@ class _AuthGateState extends State<AuthGate> {
                                         ElevatedButton(
                                           onPressed: () async {
                                             Navigator.of(ctx).pop();
-
                                             //call
                                             //when call permission is granted:
                                             await FlutterPhoneDirectCaller
@@ -121,7 +112,6 @@ class _AuthGateState extends State<AuthGate> {
                 if (!state.user!.emailVerified) {
                   nextPageReplace(context: context, page: const AuthGate());
                 } else {
-                  //go to another layer of driver's security
                   nextPage(context: context, page: const HomeScreen());
                 }
               }),
