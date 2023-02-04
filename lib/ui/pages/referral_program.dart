@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../db/user.dart';
 import '../widgets/text_form_field.dart';
 
 class ReferralProgramPage extends StatefulWidget {
@@ -52,6 +53,15 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
     }
   }
 
+  String getCode() {
+    String code = "";
+    UserPersonalData.get().then((value) {
+      final data = value.data() as Map<String, dynamic>;
+      code = data["referral code"].toString();
+    });
+    return code;
+  }
+
   Widget _body() {
     if (currentButtonText == 4) {
       return Column(
@@ -62,11 +72,19 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             'Your referral code is:',
             style: TextStyle(fontSize: 16),
           ),
-          Text(
-            '00X00Xx00',
-            style:
-                TextStyle(fontSize: 20, color: Theme.of(context).primaryColor),
-          ),
+          StreamBuilder(
+              stream: UserPersonalData.snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    snapshot.data!.get('referral code').toString(),
+                    style: TextStyle(
+                        fontSize: 20, color: Theme.of(context).primaryColor),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              }),
           SizedBox(height: 20),
           const Text(
             'Refer a friend to our car rental app and get a reward on your next rental. Simply share your unique referral code with a friend and have them enter it at the time of their first rental. Once they complete their rental, you will receive your discount notification. Start referring now and save on your next rental!',
@@ -110,6 +128,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
       Column(
         children: [
           textFormField(
+            textInputAction: TextInputAction.next,
             textInputType: TextInputType.name,
             context: context,
             icon: Icons.person_outline,
@@ -129,6 +148,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             },
           ),
           textFormField(
+            textInputAction: TextInputAction.next,
             textInputType: TextInputType.phone,
             context: context,
             icon: Icons.phone_outlined,
@@ -148,10 +168,11 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             },
           ),
           textFormField(
+            textInputAction: null,
             textInputType: TextInputType.number,
             context: context,
             icon: Icons.numbers,
-            labelText: 'Referral code: ',
+            labelText: 'Friend\'s referral code: ',
             hintText: '',
             onChanged: (val) {
               setState(() {

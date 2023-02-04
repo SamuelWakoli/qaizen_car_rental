@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../db/user.dart';
 import '../widgets/widgets.dart';
 import 'acc_verification_page2.dart';
-import 'acc_verification_page3.dart';
 
 class AccVerificationPage1b extends StatefulWidget {
   const AccVerificationPage1b({super.key});
@@ -59,7 +59,12 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [Text('Page 2 out of 5')],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -121,8 +126,23 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-                onPressed: () => nextPage(
-                    context: context, page: const AccVerificationPage2()),
+                onPressed: () async {
+                  if (image != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing data...')),
+                    );
+
+                    await UserStorageFolder.child('passport').putFile(image!);
+
+                    nextPage(
+                        context: context, page: const AccVerificationPage2());
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('Passport image cannot be empty')),
+                    );
+                  }
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

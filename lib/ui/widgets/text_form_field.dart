@@ -8,11 +8,12 @@ Widget textFormField({
   required dynamic onChanged,
   required dynamic validator,
   required TextInputType textInputType,
+  required TextInputAction? textInputAction,
 }) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: TextFormField(
-      keyboardType : textInputType,
+      keyboardType: textInputType,
       onChanged: onChanged,
       validator: validator,
       minLines: 1,
@@ -39,6 +40,7 @@ Widget textFormField({
           ),
         ),
       ),
+      textInputAction: textInputAction,
     ),
   );
 }
