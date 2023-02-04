@@ -132,7 +132,15 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                       const SnackBar(content: Text('Processing data...')),
                     );
 
-                    await UserStorageFolder.child('passport').putFile(image!);
+                    Map<String, String> passportURL = {
+                      'passport URL': await UserStorageFolder.child('passport')
+                          .putFile(image!)
+                          .snapshot
+                          .ref
+                          .getDownloadURL()
+                    };
+
+                    await UserImages.update(passportURL);
 
                     nextPage(
                         context: context, page: const AccVerificationPage2());

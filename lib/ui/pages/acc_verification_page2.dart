@@ -131,8 +131,18 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing data...')),
                     );
-                    await UserStorageFolder.child('national ID')
-                        .putFile(image!);
+
+                    Map<String, String> nationalidURL = {
+                      'national ID URL':
+                          await UserStorageFolder.child('national ID')
+                              .putFile(image!)
+                              .snapshot
+                              .ref
+                              .getDownloadURL()
+                    };
+
+                    await UserImages.update(nationalidURL);
+
                     nextPage(
                         context: context, page: const AccVerificationPage3());
                   } else {

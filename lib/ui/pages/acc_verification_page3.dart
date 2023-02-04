@@ -131,8 +131,18 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing data...')),
                     );
-                    await UserStorageFolder.child('driving licence')
-                        .putFile(image!);
+
+                    Map<String, String> drivingLicenceURL = {
+                      'driving licence URL':
+                          await UserStorageFolder.child('driving licence')
+                              .putFile(image!)
+                              .snapshot
+                              .ref
+                              .getDownloadURL()
+                    };
+
+                    await UserImages.update(drivingLicenceURL);
+
                     nextPage(
                         context: context, page: const AccVerificationPage4());
                   } else {

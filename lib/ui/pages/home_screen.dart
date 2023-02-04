@@ -1,4 +1,5 @@
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -125,6 +126,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     profileImageURL =
                         "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
                   }
+
+                  return CachedNetworkImage(
+                    imageUrl: profileImageURL,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress, color: Theme.of(context).primaryColor,),
+                    errorWidget: (context, url, downloadProgress) =>
+                        const Icon(Icons.error_outline),
+                  );
 
                   return Image.network(
                     profileImageURL,

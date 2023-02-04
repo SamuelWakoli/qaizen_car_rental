@@ -96,7 +96,7 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
               },
             ),
             textFormField(
-              textInputAction: null,
+              textInputAction: TextInputAction.next,
               textInputType: TextInputType.phone,
               context: context,
               icon: Icons.phone_outlined,

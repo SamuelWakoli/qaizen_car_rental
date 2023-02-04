@@ -130,7 +130,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
             textInputAction: TextInputAction.next,
             textInputType: TextInputType.text,
             context: context,
-            icon: Icons.location_city_rounded,
+            icon: Icons.cases_outlined,
             labelText: 'Occupation: ',
             hintText: '',
             onChanged: (val) {
@@ -160,7 +160,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
           ),
           const SizedBox(height: 10),
           textFormField(
-            textInputAction: null,
+            textInputAction: TextInputAction.next,
             textInputType: TextInputType.name,
             context: context,
             icon: Icons.account_box_rounded,

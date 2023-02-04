@@ -11,6 +11,10 @@ final UserData = FirebaseFirestore.instance
 final UserStorageFolder =
     FirebaseStorage.instance.ref("users_images/${User!.displayName}");
 
+Future<String> getUserProfileImageURL() async {
+  return UserStorageFolder.child('passport').getDownloadURL().toString();
+}
+
 final UserImages = UserData.collection('data').doc('images');
 
 final UserPersonalData = UserData.collection('data').doc('personal data');
