@@ -122,7 +122,11 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
+                      const SnackBar(
+                          content: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ))),
                     );
 
                     final refData = <String, dynamic>{
@@ -132,8 +136,8 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "referee phone 2": refPhone2,
                     };
 
-                    await UserReferees.update(refData);
-
+                    await UserReferees.set(refData);
+                    await CurrentUser!.sendEmailVerification();
                     showDialog(
                       context: context,
                       builder: (ctx) => AlertDialog(
@@ -143,7 +147,7 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                               TextStyle(color: Theme.of(context).primaryColor),
                         ),
                         content: const Text(
-                          "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. We will get back to you as soon as possible",
+                          "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
                           style: TextStyle(fontSize: 18),
                         ),
                         actions: <Widget>[

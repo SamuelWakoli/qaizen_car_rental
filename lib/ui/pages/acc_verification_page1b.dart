@@ -129,7 +129,11 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                 onPressed: () async {
                   if (image != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing data...')),
+                      const SnackBar(
+                          content: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ))),
                     );
 
                     Map<String, String> passportURL = {
@@ -140,7 +144,7 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           .getDownloadURL()
                     };
 
-                    await UserImages.update(passportURL);
+                    await UserImages.set(passportURL);
 
                     nextPage(
                         context: context, page: const AccVerificationPage2());

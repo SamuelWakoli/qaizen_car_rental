@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/privacy_policy.dart';
 import 'package:qaizen_car_rental/ui/pages/referral_program.dart';
+import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../db/user.dart';
 import '../../shared/constants.dart';
 import '../widgets/widgets.dart';
+import 'account_verification.dart';
 import 'lease_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -62,11 +64,10 @@ class _MorePageState extends State<MorePage> {
                   color: _iconColor,
                 ),
                 title: const Text('Profile Verification'),
-                onTap: () {
-                  setState(() {
-                    nextPage(context: context, page: const VerificationPage());
-                  });
-                },
+                onTap: () => dbHasData
+                    ? nextPage(context: context, page: const UserProfile())
+                    : nextPage(
+                        context: context, page: const VerificationPage()),
               ),
             ),
             const SizedBox(height: 14),

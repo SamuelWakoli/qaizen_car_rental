@@ -1,11 +1,11 @@
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
@@ -32,16 +32,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  String userName = '';
-  String getUserName() {
-    if (FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty) {
-      userName = FirebaseAuth.instance.currentUser!.displayName!.toString();
-      if (userName == 'null') userName = '';
-      return userName;
-    } else {
-      return userName;
-    }
-  }
+  // String getUserName() {
+  //   if (FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty) {
+  //     return FirebaseAuth.instance.currentUser!.displayName!.toString();
+  //   } else {
+  //     return FirebaseAuth.instance.currentUser!.email!.toString();
+  //   }
+  // }
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -99,9 +96,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   int _currentPage = 0;
 
+  // bool dbHasData = false;
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(Duration.zero, () async {
+      var snapshot = await UserImages.get();
+      // Update state with the result of the async operation
+
+      setState(() {
+        dbHasData = snapshot.exists;
+      });
+    });
   }
 
   String? profileImage = "https://source.unsplash.com/random";
@@ -114,37 +121,55 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100.0),
           child: SizedBox(
-            height: 48,
-            width: 48,
-            child: StreamBuilder(
-                stream: UserImages.snapshots(),
-                builder: (context, snapshot) {
-                  String profileImageURL =
-                      snapshot.data!.get('passport URL').toString();
-                  // if profileImageURL empty, use holder image
-                  if (profileImageURL == "") {
-                    profileImageURL =
-                        "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-                  }
+              height: 48,
+              width: 48,
+              child: dbHasData
+                  ? StreamBuilder(
+                      stream: UserImages.snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          String profileImageURL =
+                              snapshot.data!.get('passport URL').toString();
+                          // if profileImageURL empty, use holder image
+                          if (profileImageURL.isEmpty) {
+                            profileImageURL =
+                                "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
+                          }
 
-                  return CachedNetworkImage(
-                    imageUrl: profileImageURL,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                            CircularProgressIndicator(
-                                value: downloadProgress.progress, color: Theme.of(context).primaryColor,),
-                    errorWidget: (context, url, downloadProgress) =>
-                        const Icon(Icons.error_outline),
-                  );
-
-                  return Image.network(
-                    profileImageURL,
-                    fit: BoxFit.fitHeight,
-                    filterQuality: FilterQuality.high,
-                    scale: 1,
-                  );
-                }),
-          ),
+                          return CachedNetworkImage(
+                            imageUrl: profileImageURL,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    CircularProgressIndicator(
+                              value: downloadProgress.progress,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).primaryColor),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error_outline),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Container(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : CachedNetworkImage(
+                      imageUrl:
+                          "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9",
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Icon(Icons.error_outline),
+                    )),
         ),
       );
     } else {
@@ -161,6 +186,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (isNightModeOn) {
       _iconColor = Constants().primaryColorDark();
     }
+
+    //if db has data, return this screen
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -191,29 +218,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  StreamBuilder(
-                      stream: UserPersonalData.snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.get('verified')) {
-                            return Icon(
-                              Icons.verified_outlined,
-                              size: 18,
-                              color: Theme.of(context).primaryColor,
-                            );
-                          } else {
-                            return const Text(
-                              'Verify your profile',
-                            );
-                          }
-                        } else {
-                          return const SizedBox();
-                        }
-                      }),
+                  dbHasData
+                      ? StreamBuilder(
+                          stream: UserPersonalData.snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data!.get('verified')) {
+                                return Icon(
+                                  Icons.verified_outlined,
+                                  size: 18,
+                                  color: Theme.of(context).primaryColor,
+                                );
+                              } else {
+                                return const Text(
+                                  'awaiting verification',
+                                );
+                              }
+                            } else {
+                              return const SizedBox();
+                            }
+                          })
+                      : const Text(
+                          'click here to verify your profile',
+                        ),
                 ],
               ),
-              onTap: () =>
-                  nextPage(context: context, page: const UserProfile()),
+              onTap: () => dbHasData
+                  ? nextPage(context: context, page: const UserProfile())
+                  : nextPage(context: context, page: const VerificationPage()),
             ),
             const Divider(),
             ListTile(

@@ -129,9 +129,12 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                 onPressed: () async {
                   if (image != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing data...')),
+                      const SnackBar(
+                          content: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ))),
                     );
-
                     Map<String, String> drivingLicenceURL = {
                       'driving licence URL':
                           await UserStorageFolder.child('driving licence')
@@ -141,7 +144,7 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                               .getDownloadURL()
                     };
 
-                    await UserImages.update(drivingLicenceURL);
+                    await UserImages.set(drivingLicenceURL);
 
                     nextPage(
                         context: context, page: const AccVerificationPage4());
