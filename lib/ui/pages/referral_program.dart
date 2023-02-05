@@ -55,7 +55,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
   String getCode() {
     String code = "";
-    UserPersonalData.get().then((value) {
+    UserData.get().then((value) {
       final data = value.data() as Map<String, dynamic>;
       code = data["referral code"].toString();
     });
@@ -73,7 +73,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             style: TextStyle(fontSize: 16),
           ),
           StreamBuilder(
-              stream: UserPersonalData.snapshots(),
+              stream: UserData.snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Text(

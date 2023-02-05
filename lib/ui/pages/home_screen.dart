@@ -96,18 +96,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   int _currentPage = 0;
 
-  // bool dbHasData = false;
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () async {
-      var snapshot = await UserImages.get();
-      // Update state with the result of the async operation
+    Future.delayed(const Duration(), () async {
+      var snapshot = await UserData.get();
 
-      setState(() {
-        dbHasData = snapshot.exists;
-      });
+      bool data;
+      if (snapshot.exists && snapshot.data()!.isNotEmpty) {
+        data = true;
+      } else {
+        data = false;
+      }
+
+      updateDbHasData(data);
+    });
+  }
+
+  void updateDbHasData(bool value) {
+    setState(() {
+      dbHasData = value;
     });
   }
 
@@ -125,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               width: 48,
               child: dbHasData
                   ? StreamBuilder(
-                      stream: UserImages.snapshots(),
+                      stream: UserData.snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           String profileImageURL =
@@ -137,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           }
 
                           return CachedNetworkImage(
+                            fit: BoxFit.fill,
                             imageUrl: profileImageURL,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) =>
@@ -220,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(height: 4),
                   dbHasData
                       ? StreamBuilder(
-                          stream: UserPersonalData.snapshots(),
+                          stream: UserData.snapshots(),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               if (snapshot.data!.get('verified')) {

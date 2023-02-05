@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
-import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../db/user.dart';
 import 'auth_gate.dart';
@@ -100,7 +98,7 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
       body: StreamBuilder(
-        stream: UserImages.snapshots(),
+        stream: UserData.snapshots(),
         builder: (context, snapshot) {
           String profileImageURL =
               snapshot.data!.get('passport URL').toString();
@@ -130,7 +128,7 @@ class _UserProfileState extends State<UserProfile> {
                             height: 160,
                             width: 160,
                             child: StreamBuilder(
-                                stream: UserImages.snapshots(),
+                                stream: UserData.snapshots(),
                                 builder: (context, snapshot) {
                                   String profileImageURL = snapshot.data!
                                       .get('passport URL')
@@ -142,6 +140,7 @@ class _UserProfileState extends State<UserProfile> {
                                   }
 
                                   return CachedNetworkImage(
+                                    fit: BoxFit.fill,
                                     imageUrl: profileImageURL,
                                     progressIndicatorBuilder:
                                         (context, url, downloadProgress) =>
@@ -170,7 +169,7 @@ class _UserProfileState extends State<UserProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             StreamBuilder(
-                                stream: UserPersonalData.snapshots(),
+                                stream: UserData.snapshots(),
                                 builder: (context, snapshot) {
                                   bool verified =
                                       snapshot.data!.get('verified');
@@ -193,18 +192,12 @@ class _UserProfileState extends State<UserProfile> {
                                       ],
                                     );
                                   } else {
-                                    return GestureDetector(
-                                      onTap: () => nextPage(
-                                          context: context,
-                                          page: const VerificationPage()),
-                                      child: Text(
-                                        'Not Verified.\nClick here to verify your profile',
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                    return Text(
+                                      'Awaiting verification',
+                                      style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     );
                                   }
                                 }),

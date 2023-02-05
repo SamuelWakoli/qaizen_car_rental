@@ -144,7 +144,7 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           .getDownloadURL()
                     };
 
-                    await UserImages.set(passportURL);
+                    await UserData.update(passportURL);
 
                     nextPage(
                         context: context, page: const AccVerificationPage2());

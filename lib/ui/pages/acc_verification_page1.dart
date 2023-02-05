@@ -250,7 +250,10 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                     // you'd often call a server or save the information in a database.
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Center(child: CircularProgressIndicator(color: Colors.white,))),
+                          content: Center(
+                              child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ))),
                     );
 
                     final userData = <String, dynamic>{
@@ -265,7 +268,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "referral code": generateRandomString(10),
                     };
 
-                    await UserPersonalData.set(userData);
+                    await UserData.set(userData);
 
                     nextPage(
                         context: context, page: const AccVerificationPage1b());

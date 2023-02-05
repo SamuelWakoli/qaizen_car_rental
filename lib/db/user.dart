@@ -13,7 +13,7 @@ String getUserName() {
 
   String? displayName = user.displayName;
   if (displayName != null) {
-    return displayName;
+    return displayName.toString();
   }
 
   String? email = user.email;
@@ -21,30 +21,24 @@ String getUserName() {
     return "";
   }
 
-  String removeSpecialSymbols(String input) {
-    int index = input.indexOf("@");
-    return index >= 0 ? input.substring(0, index) : input;
-  }
-
-  //return removeSpecialSymbols(email);
-  return email;
+  // String removeSpecialSymbols(String input) {
+  //   int index = input.indexOf("@");
+  //   return index >= 0 ? input.substring(0, index) : input;
+  // }
+  //
+  // return removeSpecialSymbols(email).toString();
+  return email.toString();
 }
 
 final UserData =
     FirebaseFirestore.instance.collection('users').doc(getUserName());
 
 final UserStorageFolder =
-    FirebaseStorage.instance.ref("users_images/${CurrentUser!.displayName}");
+    FirebaseStorage.instance.ref("users_images/${getUserName()}");
 
 Future<String> getUserProfileImageURL() async {
   return UserStorageFolder.child('passport').getDownloadURL().toString();
 }
-
-final UserImages = UserData.collection('data').doc('images');
-
-final UserPersonalData = UserData.collection('data').doc('personal data');
-
-final UserReferees = UserData.collection('data').doc('referees');
 
 //temporary var
 bool dbHasData = false;

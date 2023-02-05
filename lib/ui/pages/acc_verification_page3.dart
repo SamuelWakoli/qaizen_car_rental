@@ -144,7 +144,7 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                               .getDownloadURL()
                     };
 
-                    await UserImages.set(drivingLicenceURL);
+                    await UserData.update(drivingLicenceURL);
 
                     nextPage(
                         context: context, page: const AccVerificationPage4());

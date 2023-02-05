@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../db/user.dart';
 import '../widgets/text_form_field.dart';
@@ -134,9 +137,10 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "referee phone 1": refPhone1,
                       "referee name 2": refName2,
                       "referee phone 2": refPhone2,
+                      "verified": false
                     };
 
-                    await UserReferees.set(refData);
+                    await UserData.update(refData);
                     await CurrentUser!.sendEmailVerification();
                     showDialog(
                       context: context,
@@ -170,6 +174,8 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                         ],
                       ),
                     );
+                    Timer(Duration(seconds: 5), () => Restart.restartApp());
+                    Restart.restartApp();
                   }
                 },
                 child: Row(
