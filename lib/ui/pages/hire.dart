@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/hire_summary.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
 import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
+
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
 
@@ -106,7 +108,17 @@ class _HirePageState extends State<HirePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('\$vehicleName'),
+        title: StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection('vehicles').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                );
+              }
+              return const Text('\$VehicleName');
+            }),
         centerTitle: true,
       ),
       body: _isLoading

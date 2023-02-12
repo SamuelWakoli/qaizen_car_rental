@@ -120,71 +120,64 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
-  String? profileImage = "https://source.unsplash.com/random";
   Widget _getImage() {
-    if (profileImage != null) {
-      return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100.0),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(100.0),
-          child: SizedBox(
-              height: 48,
-              width: 48,
-              child: dbHasData
-                  ? StreamBuilder(
-                      stream: UserData.snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          String profileImageURL =
-                              snapshot.data!.get('passport URL').toString();
-                          // if profileImageURL empty, use holder image
-                          if (profileImageURL.isEmpty) {
-                            profileImageURL =
-                                "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-                          }
-
-                          return CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl: profileImageURL,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                    CircularProgressIndicator(
-                              value: downloadProgress.progress,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).primaryColor),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error_outline),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return Container(
-                            child: CircularProgressIndicator(),
-                          );
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(100.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: SizedBox(
+            height: 48,
+            width: 48,
+            child: dbHasData
+                ? StreamBuilder(
+                    stream: UserData.snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        String profileImageURL =
+                            snapshot.data!.get('passport URL').toString();
+                        // if profileImageURL empty, use holder image
+                        if (profileImageURL.isEmpty) {
+                          profileImageURL =
+                              "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
                         }
-                      },
-                    )
-                  : CachedNetworkImage(
-                      imageUrl:
-                          "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9",
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) =>
-                              CircularProgressIndicator(
-                        value: downloadProgress.progress,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).primaryColor),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          Icon(Icons.error_outline),
-                    )),
-        ),
-      );
-    } else {
-      return const SizedBox(height: 30);
-    }
+
+                        return CachedNetworkImage(
+                          fit: BoxFit.fill,
+                          imageUrl: profileImageURL,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).primaryColor),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error_outline),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  )
+                : CachedNetworkImage(
+                    imageUrl:
+                        "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9",
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error_outline),
+                  )),
+      ),
+    );
   }
 
   var _iconColor = Constants().primaryColor();

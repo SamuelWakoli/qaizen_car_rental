@@ -256,6 +256,10 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       ))),
                     );
 
+                    if (phoneNumber!.startsWith("07")) {
+                      phoneNumber = "2547" + phoneNumber!.substring(2);
+                    }
+
                     final userData = <String, dynamic>{
                       "name": fullName,
                       "phone": phoneNumber,

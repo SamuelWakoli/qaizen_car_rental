@@ -137,7 +137,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                     );
 
                     Map<String, String> passportURL = {
-                      'passport URL': await UserStorageFolder.child('passport')
+                      'passport URL': await UserStorageFolder.child(
+                              '${getUserName()}\'s passport.png')
                           .putFile(image!)
                           .snapshot
                           .ref

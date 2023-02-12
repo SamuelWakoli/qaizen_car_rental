@@ -174,7 +174,7 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                         ],
                       ),
                     );
-                    Timer(Duration(seconds: 5), () => Restart.restartApp());
+                    Timer(const Duration(seconds: 5), () => Restart.restartApp());
                     Restart.restartApp();
                   }
                 },

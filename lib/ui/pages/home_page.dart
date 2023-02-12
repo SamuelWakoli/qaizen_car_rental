@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/widgets/vehicle_cards.dart';
 
@@ -47,309 +48,59 @@ class _HomePageState extends State<HomePage> {
             indicatorColor: Theme.of(context).primaryColor,
           ),
         ),
-        body: TabBarView(
-          children: [
-            ListView(
-              children: [
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/teslamodelx.jpg',
-                    name: 'Tesla Model X',
-                    price: '30,000',
-                    isLiked: isLiked0,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/note.jpg',
-                    name: 'Nissan Note',
-                    price: '30,000',
-                    isLiked: isLiked1,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/axio.jpeg',
-                    name: 'Toyota Axio',
-                    price: '0,000',
-                    isLiked: isLiked2,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/crown.jpg',
-                    name: 'Toyota Crown',
-                    price: '6,000',
-                    isLiked: isLiked3,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/teslamodelx.jpg',
-                    name: 'Tesla Model X',
-                    price: '30,000',
-                    isLiked: isLiked4,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/note.jpg',
-                    name: 'Nissan Note',
-                    price: '30,000',
-                    isLiked: isLiked5,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/axio.jpeg',
-                    name: 'Toyota Axio',
-                    price: '0,000',
-                    isLiked: isLiked6,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/crown.jpg',
-                    name: 'Toyota Crown',
-                    price: '6,000',
-                    isLiked: isLiked7,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/teslamodelx.jpg',
-                    name: 'Tesla Model X',
-                    price: '30,000',
-                    isLiked: isLiked8,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/note.jpg',
-                    name: 'Nissan Note',
-                    price: '30,000',
-                    isLiked: isLiked9,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/axio.jpeg',
-                    name: 'Toyota Axio',
-                    price: '0,000',
-                    isLiked: isLiked10,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/crown.jpg',
-                    name: 'Toyota Crown',
-                    price: '6,000',
-                    isLiked: isLiked11,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/teslamodelx.jpg',
-                    name: 'Tesla Model X',
-                    price: '30,000',
-                    isLiked: isLiked12,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/note.jpg',
-                    name: 'Nissan Note',
-                    price: '30,000',
-                    isLiked: isLiked13,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/axio.jpeg',
-                    name: 'Toyota Axio',
-                    price: '0,000',
-                    isLiked: isLiked14,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-                AvailableVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/crown.jpg',
-                    name: 'Toyota Crown',
-                    price: '6,000',
-                    isLiked: isLiked15,
-                    onClickHire: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-              ],
-            ),
-            ListView(
-              children: [
-                ReturningVehicleCard(
-                  id: 'KDA',
-                  image: 'assets/cars/axio.jpeg',
-                  name: 'Toyota Axio',
-                  price: '0,000',
-                  isLiked: isLiked2,
-                  availabilityNotification: isnotifyON1,
-                  onClickNotifyMe: () {
-                    setState(() {
-                      hire(context: context, vehicleID: null);
-                    });
-                  },
-                  onClickDetails: () {
-                    setState(() {
-                      details(context: context, vehicleID: null);
-                    });
-                  },
-                ),
-                ReturningVehicleCard(
-                    id: 'KDA',
-                    image: 'assets/cars/crown.jpg',
-                    name: 'Toyota Crown',
-                    price: '6,000',
-                    isLiked: isLiked3,
-                    availabilityNotification: isnotifyON2,
-                    onClickNotifyMe: () {
-                      setState(() {
-                        hire(context: context, vehicleID: null);
-                      });
-                    },
-                    onClickDetails: () {
-                      setState(() {
-                        details(context: context, vehicleID: null);
-                      });
-                    }),
-              ],
-            ),
-          ],
-        ),
+        body: StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection('vehicles').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                );
+              }
+
+              return TabBarView(
+                children: [
+                  ListView(
+                      children: snapshot.data!.docs.map((document) {
+                    return AvailableVehicleCard(
+                        id: document.id,
+                        availability: document['availability'],
+                        image: document['displayImageURL'],
+                        name: document['name'],
+                        price: document['priceDay'],
+                        isLiked: isLiked0,
+                        onClickHire: () {
+                          hire(context: context, vehicleID: document.id);
+                        },
+                        onClickDetails: () {
+                          setState(() {
+                            details(context: context, vehicleID: null);
+                          });
+                        });
+                  }).toList()),
+                  ListView(
+                      children: snapshot.data!.docs.map((document) {
+                    return ReturningVehicleCard(
+                      id: document.id,
+                      availability: document['availability'],
+                      image: document['displayImageURL'],
+                      name: document['name'],
+                      price: document['priceDay'],
+                      isLiked: isLiked0,
+                      onClickDetails: () {
+                        setState(() {
+                          details(context: context, vehicleID: null);
+                        });
+                      },
+                      availabilityNotification: false,
+                      onClickNotifyMe: null,
+                    );
+                  }).toList()),
+                ],
+              );
+            }),
       ),
     );
   }

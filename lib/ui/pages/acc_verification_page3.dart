@@ -136,12 +136,12 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                       ))),
                     );
                     Map<String, String> drivingLicenceURL = {
-                      'driving licence URL':
-                          await UserStorageFolder.child('driving licence')
-                              .putFile(image!)
-                              .snapshot
-                              .ref
-                              .getDownloadURL()
+                      'driving licence URL': await UserStorageFolder.child(
+                              '${getUserName()}\'s driving licence.png')
+                          .putFile(image!)
+                          .snapshot
+                          .ref
+                          .getDownloadURL()
                     };
 
                     await UserData.update(drivingLicenceURL);

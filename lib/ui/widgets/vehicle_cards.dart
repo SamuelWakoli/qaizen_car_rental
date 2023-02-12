@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
@@ -7,7 +8,7 @@ import '../../shared/hire_vehicle_data.dart';
 //ToDo: make these cards to only take vehicle IDs and extract data.
 class AvailableVehicleCard extends StatefulWidget {
   String id, image, name, price;
-  bool isLiked;
+  bool isLiked, availability;
 
   dynamic onClickHire, onClickDetails;
 
@@ -20,6 +21,7 @@ class AvailableVehicleCard extends StatefulWidget {
     required this.isLiked,
     required this.onClickHire,
     required this.onClickDetails,
+    required this.availability,
   }) : super(key: key);
 
   @override
@@ -41,109 +43,123 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
     //   }
     // }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
+    if (widget.availability) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          child: Column(
+            children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: Image.asset(widget.image)),
-            const SizedBox(height: 8),
-            Text(
-              widget.name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: widget.image,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Ksh. ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.price,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(' /day'),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  LikeButton(
+                    isLiked: widget.isLiked,
+                    bubblesColor: BubblesColor(
+                        dotPrimaryColor: Theme.of(context).primaryColor,
+                        dotSecondaryColor: Colors.white),
+                    circleColor: CircleColor(
+                      start: Theme.of(context).primaryColor,
+                      end: Colors.white,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        Icons.favorite,
+                        color: isLiked
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                        size: 32,
+                      );
+                    },
+                    onTap: ((isLiked) async {
+                      String likeMessage = "";
+                      isLiked
+                          ? likeMessage = "removed from"
+                          : likeMessage = "added to";
+
+                      showSnackbar(
+                          context: context,
+                          duration: 2,
+                          message: "\$vehicleName $likeMessage to favorites");
+                      return !isLiked;
+                    }),
+                  ),
+                  GestureDetector(
+                    onTap: widget.onClickDetails,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.info_outline_rounded),
+                          SizedBox(width: 8),
+                          Text('Details', style: TextStyle(fontSize: 18))
+                        ],
+                      ),
                     ),
                   ),
-                  Text(
-                    widget.price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: widget.onClickHire,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.assignment_outlined),
+                          SizedBox(width: 8),
+                          Text('Hire', style: TextStyle(fontSize: 18))
+                        ],
+                      ),
                     ),
                   ),
-                  const Text(' /day'),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                LikeButton(
-                  isLiked: widget.isLiked,
-                  bubblesColor: BubblesColor(
-                      dotPrimaryColor: Theme.of(context).primaryColor,
-                      dotSecondaryColor: Colors.white),
-                  circleColor: CircleColor(
-                    start: Theme.of(context).primaryColor,
-                    end: Colors.white,
-                  ),
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.favorite,
-                      color: isLiked
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey,
-                      size: 32,
-                    );
-                  },
-                  onTap: ((isLiked) async {
-                    String likeMessage = "";
-                    isLiked
-                        ? likeMessage = "removed from"
-                        : likeMessage = "added to";
-
-                    showSnackbar(
-                        context: context,
-                        duration: 2,
-                        message: "\$vehicleName $likeMessage to favorites");
-                    return !isLiked;
-                  }),
-                ),
-                GestureDetector(
-                  onTap: widget.onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: widget.onClickHire,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
-                        Text('Hire', style: TextStyle(fontSize: 18))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else
+      return SizedBox();
   }
 }
 
@@ -255,7 +271,7 @@ Widget favCard({
 ///
 class ReturningVehicleCard extends StatefulWidget {
   String id, image, name, price;
-  bool isLiked, availabilityNotification;
+  bool isLiked, availabilityNotification, availability;
 
   dynamic onClickNotifyMe, onClickDetails;
 
@@ -269,6 +285,7 @@ class ReturningVehicleCard extends StatefulWidget {
     required this.availabilityNotification,
     required this.onClickNotifyMe,
     required this.onClickDetails,
+    required this.availability,
   }) : super(key: key);
 
   @override
@@ -290,129 +307,144 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
     //   }
     // }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
+    if (!widget.availability) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          child: Column(
+            children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: Image.asset(widget.image)),
-            const SizedBox(height: 8),
-            Text(
-              widget.name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: widget.image,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Ksh. ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      widget.price,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(' /day'),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  LikeButton(
+                    isLiked: widget.isLiked,
+                    bubblesColor: BubblesColor(
+                        dotPrimaryColor: Theme.of(context).primaryColor,
+                        dotSecondaryColor: Colors.white),
+                    circleColor: CircleColor(
+                      start: Theme.of(context).primaryColor,
+                      end: Colors.white,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        Icons.favorite,
+                        color: isLiked
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                        size: 32,
+                      );
+                    },
+                    onTap: ((isLiked) async {
+                      String likeMessage = "";
+                      isLiked
+                          ? likeMessage = "removed from"
+                          : likeMessage = "added to";
+
+                      showSnackbar(
+                          context: context,
+                          duration: 2,
+                          message: "\$vehicleName $likeMessage to favorites");
+                      return !isLiked;
+                    }),
+                  ),
+                  GestureDetector(
+                    onTap: widget.onClickDetails,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.info_outline_rounded),
+                          SizedBox(width: 8),
+                          Text('Details', style: TextStyle(fontSize: 18))
+                        ],
+                      ),
                     ),
                   ),
-                  Text(
-                    widget.price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  LikeButton(
+                    isLiked: widget.availabilityNotification,
+                    bubblesColor: BubblesColor(
+                        dotPrimaryColor: Theme.of(context).primaryColor,
+                        dotSecondaryColor: Colors.white),
+                    circleColor: CircleColor(
+                      start: Theme.of(context).primaryColor,
+                      end: Colors.white,
                     ),
+                    likeBuilder: (bool availabilityNotification) {
+                      return Icon(
+                        Icons.notification_add,
+                        color: availabilityNotification
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                        size: 32,
+                      );
+                    },
+                    onTap: ((availabilityNotification) async {
+                      ///add the vehivle to pending notifications
+                      String notifyMessage = "";
+                      availabilityNotification
+                          ? notifyMessage = "not get"
+                          : notifyMessage = "get";
+
+                      showSnackbar(
+                          context: context,
+                          duration: 2,
+                          message:
+                              "You will $notifyMessage a notification when $vehicleName is available");
+                      return !availabilityNotification;
+                    }),
                   ),
-                  const Text(' /day'),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                LikeButton(
-                  isLiked: widget.isLiked,
-                  bubblesColor: BubblesColor(
-                      dotPrimaryColor: Theme.of(context).primaryColor,
-                      dotSecondaryColor: Colors.white),
-                  circleColor: CircleColor(
-                    start: Theme.of(context).primaryColor,
-                    end: Colors.white,
-                  ),
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.favorite,
-                      color: isLiked
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey,
-                      size: 32,
-                    );
-                  },
-                  onTap: ((isLiked) async {
-                    String likeMessage = "";
-                    isLiked
-                        ? likeMessage = "removed from"
-                        : likeMessage = "added to";
-
-                    showSnackbar(
-                        context: context,
-                        duration: 2,
-                        message: "\$vehicleName $likeMessage to favorites");
-                    return !isLiked;
-                  }),
-                ),
-                GestureDetector(
-                  onTap: widget.onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
-                      ],
-                    ),
-                  ),
-                ),
-                LikeButton(
-                  isLiked: widget.availabilityNotification,
-                  bubblesColor: BubblesColor(
-                      dotPrimaryColor: Theme.of(context).primaryColor,
-                      dotSecondaryColor: Colors.white),
-                  circleColor: CircleColor(
-                    start: Theme.of(context).primaryColor,
-                    end: Colors.white,
-                  ),
-                  likeBuilder: (bool availabilityNotification) {
-                    return Icon(
-                      Icons.notification_add,
-                      color: availabilityNotification
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey,
-                      size: 32,
-                    );
-                  },
-                  onTap: ((availabilityNotification) async {
-                    ///add the vehivle to pending notifications
-                    String notifyMessage = "";
-                    availabilityNotification
-                        ? notifyMessage = "not get"
-                        : notifyMessage = "get";
-
-                    showSnackbar(
-                        context: context,
-                        duration: 2,
-                        message:
-                            "You will $notifyMessage a notification when $vehicleName is available");
-                    return !availabilityNotification;
-                  }),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }
 
