@@ -1,151 +1,177 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qaizen_car_rental/ui/pages/hire.dart';
-import 'package:qaizen_car_rental/ui/widgets/material_button.dart';
-import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
-import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
+import '../../db/user.dart';
 
-class DetailsPage extends StatefulWidget {
-  const DetailsPage({super.key});
+class VehicleDetailsPage extends StatefulWidget {
+  const VehicleDetailsPage({super.key});
 
   @override
-  State<DetailsPage> createState() => _DetailsPageState();
+  State<VehicleDetailsPage> createState() => _VehicleDetailsPageState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+String? displayImageUrl = "",
+    image1Url = "",
+    image2Url = "",
+    image3Url = "",
+    image4Url = "",
+    image5Url = "";
+
+Widget getVehicleImages(image) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12.0),
+      child: CachedNetworkImage(
+        fit: BoxFit.fill,
+        imageUrl: image,
+        progressIndicatorBuilder: (context, url, downloadProgress) =>
+            CircularProgressIndicator(
+          value: downloadProgress.progress,
+          valueColor:
+              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+      ),
+    ),
+  );
+}
+
+class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
+  Widget displayImage() {
+    if (displayImageUrl != null) {
+      return Center(
+        child: Card(
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: displayImageUrl.toString(),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.error_outline),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('\$vehicleName'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(children: [
-            //vehicle images to be here.
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ScrollLoopAutoScroll(
-                scrollDirection: Axis.horizontal,
-                delay: Duration(seconds: 5),
-                duration: Duration(seconds: 20),
-                reverseScroll: false,
-                duplicateChild: 1,
-                enableScrollInput: true,
-                delayAfterScrollInput: Duration(seconds: 6),
-                child: Row(
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('vehicles')
+            .doc(CurrentVehicleDocID)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+                child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ));
+          }
+
+          final document = snapshot.data!;
+
+          displayImageUrl = document.get('displayImageURL');
+          image1Url = document.get('image1URL');
+          image2Url = document.get('image2URL');
+          image3Url = document.get('image3URL');
+          image4Url = document.get('image4URL');
+          image5Url = document.get('image5URL');
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                document.get('name'),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxHeight: 300, minHeight: 50),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.asset(
-                            'assets/cars/teslamodelx.jpg',
-                            fit: BoxFit.fill,
-                          ),
+                    displayImage(),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        const Text(
+                          'Category: ',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxHeight: 300, minHeight: 50),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.asset(
-                            'assets/cars/axio.jpeg',
-                            fit: BoxFit.fill,
-                          ),
+                        Text(
+                          document.get('category'),
+                          style: const TextStyle(fontSize: 18),
                         ),
-                      ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxHeight: 300, minHeight: 50),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.asset(
-                            'assets/cars/crown.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
+                    const Center(
+                        child: Text('Price',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold))),
+                    Text.rich(
+                      TextSpan(
+                          text: 'Ksh. ',
+                          style: const TextStyle(fontSize: 16),
+                          children: <TextSpan>[
+                            TextSpan(text: document.get('priceDay')),
+                            const TextSpan(text: ' /day')
+                          ]),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxHeight: 300, minHeight: 50),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.asset(
-                            'assets/cars/note.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
+                    Text.rich(
+                      TextSpan(
+                          text: 'Ksh. ',
+                          style: const TextStyle(fontSize: 16),
+                          children: <TextSpan>[
+                            TextSpan(text: document.get('priceWeek')),
+                            const TextSpan(text: ' /week')
+                          ]),
                     ),
+                    Text.rich(
+                      TextSpan(
+                          text: 'Ksh. ',
+                          style: TextStyle(fontSize: 16),
+                          children: <TextSpan>[
+                            TextSpan(text: document.get('priceMonth')),
+                            const TextSpan(text: ' /month')
+                          ]),
+                    ),
+                    const SizedBox(height: 10),
+                    const Center(
+                        child: Text('Description',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold))),
+                    Text(
+                      document.get('shortDesc'),
+                    ),
+                    const SizedBox(height: 10),
+                    getVehicleImages(image1Url.toString()),
+                    getVehicleImages(image2Url.toString()),
+                    getVehicleImages(image3Url.toString()),
+                    getVehicleImages(image4Url.toString()),
+                    getVehicleImages(image5Url.toString()),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Text(
-                  'Price :',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Ksh 30,000 per day',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Ksh 50,000 per week',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  '__ per month',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              '(Short description sample text) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            materialButton(
-              context: context,
-              icon: Icons.assignment_outlined,
-              text: 'Hire',
-              onPressed: () =>
-                  nextPage(context: context, page: const HirePage()),
-            ),
-          ]),
-        ),
-      ),
-    );
+          );
+        });
   }
 }

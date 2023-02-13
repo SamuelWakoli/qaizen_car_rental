@@ -42,3 +42,5 @@ Future<String> getUserProfileImageURL() async {
 
 //temporary var
 bool dbHasData = false;
+
+String CurrentVehicleDocID = '';

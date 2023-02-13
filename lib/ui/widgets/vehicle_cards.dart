@@ -34,15 +34,6 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
     //default icon
     Widget iconToLoad = const Icon(Icons.favorite_outline_outlined);
 
-    // //checked by database and setState
-    // if (widget. == null) {
-    //   if (widget.isLiked == true) {
-    //     iconToLoad = const Icon(Icons.favorite_rounded);
-    //   } else {
-    //     iconToLoad = const Icon(Icons.favorite_outline_outlined);
-    //   }
-    // }
-
     if (widget.availability) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
