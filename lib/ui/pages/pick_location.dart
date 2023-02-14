@@ -25,14 +25,20 @@ class _PickLocationState extends State<PickLocation> {
             searchBarTextColor: Theme.of(context).primaryColor,
             selectLocationButtonText: 'Select Pinned Location',
             onError: (e) => print(e),
-            onPicked: (pickedData) {
+            onPicked: (pickedData) async {
               print(pickedData.latLong.latitude);
               print(pickedData.latLong.longitude);
               // print(pickedData.address);
               // print(pickedData.addressData['country']);
-              locationAddress = pickedData.address.toString();
-              locationData = pickedData;
+              setState(() {
+                locationAddress = pickedData.address.toString();
+                locationData = pickedData;
+              });
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(locationAddress),
+                duration: const Duration(seconds: 5),
+              ));
             }));
   }
 }

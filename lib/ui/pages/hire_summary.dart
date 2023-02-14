@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 
@@ -37,6 +40,8 @@ class _HireSummaryState extends State<HireSummary> {
     );
   }
 
+  String costDay = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,55 +49,113 @@ class _HireSummaryState extends State<HireSummary> {
         title: const Text('Summary'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            summaryItem(name: 'Name: ', data: '\$userName'),
-            summaryItem(name: 'Phone Number: ', data: '\$phone'),
-            summaryItem(name: 'National ID Number: ', data: '\$natIDnum'),
-            summaryItem(name: 'Email Address: ', data: '\$email'),
-            const SizedBox(height: 20),
-            summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
-            summaryItem(
-                name: 'Duration: ', data: 'From $selectedTime $selectedDate'),
-            summaryItem(name: 'Number of Days: ', data: numberOfDays),
-            summaryItem(
-                name: 'Delivery Location: ', data: locationData?.address),
-            const SizedBox(height: 30),
-            summaryItem(name: "COST: ", data: "Ksh. $totalCost"),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MaterialButton(
-                onPressed: () {},
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(getUserName())
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              );
+            }
+
+            final document = snapshot.data!;
+            return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        ///use this location in the driver app
-                        'Generate Agreement Document',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  summaryItem(name: 'Name: ', data: document['name']),
+                  summaryItem(name: 'Phone Number: ', data: document['phone']),
+                  summaryItem(
+                      name: 'Email Address: ',
+                      data:
+                          FirebaseAuth.instance.currentUser!.email.toString()),
+                  const SizedBox(height: 20),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('vehicles')
+                          .doc(CurrentVehicleDocID)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return summaryItem(
+                            name: 'Vehicle: ',
+                            data: snapshot.data!.get('name'));
+                      }),
+                  summaryItem(
+                      name: 'Service starts at: ',
+                      data: ' $selectedTime | $selectedDate'),
+                  delivery
+                      ? summaryItem(
+                          name: 'Delivery Location: ',
+                          data: locationData?.address.toString())
+                      : const SizedBox(),
+                  const SizedBox(height: 30),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('vehicles')
+                          .doc(CurrentVehicleDocID)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        String costDay = snapshot.data!.get('priceDay');
+                        //remove comma from priceDay
+                        costDay = costDay.replaceAll(',', '');
+                        totalCost = int.parse(costDay);
+                        totalCost = (totalCost! * int.parse(numberOfDays!));
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            summaryItem(
+                                name: 'Number of Days: ', data: numberOfDays),
+                            summaryItem(name: 'Price per day: ', data: costDay),
+                            summaryItem(
+                                name: "COST: ",
+                                data:
+                                    "Ksh. $totalCost (exclusive of delivery fee)")
+                          ],
+                        );
+                      }),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Center(
+                                  child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                                )));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Submit Request',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_forward_outlined,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Icon(
-                        Icons.arrow_forward_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
-      )),
+            ));
+          }),
     );
   }
 }

@@ -17,7 +17,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: Text(favoriteVehicles.isNotEmpty ? 'Favorites' : 'You have no favorites'),
         centerTitle: true,
       ),
       body: StreamBuilder(

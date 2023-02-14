@@ -13,10 +13,10 @@ String? selectedDate =
 List<String>? driversNames = [];
 List<String>? selectedVehicles = [];
 String? numberOfDays = '';
-double? totalCost = 0.00;
+int? totalCost = 00;
 
 /// Hire
-bool? deliveryService;
+bool delivery = false;
 
 /// Chauffeured
 String? driverName = '';
