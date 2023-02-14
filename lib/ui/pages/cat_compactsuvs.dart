@@ -23,7 +23,7 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/compactsuvs.jpg',
                 name: 'Toyota Harrier',
@@ -32,7 +32,7 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                 price: 'Ksh. 12000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/compactsuvs.jpg',
                 name: 'Toyota Harrier',
@@ -41,7 +41,7 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                 price: 'Ksh. 12000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/compactsuvs.jpg',
                 name: 'Toyota Harrier',
@@ -50,7 +50,7 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                 price: 'Ksh. 12000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/compactsuvs.jpg',
                 name: 'Toyota Harrier',

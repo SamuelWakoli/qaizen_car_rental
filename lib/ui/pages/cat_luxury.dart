@@ -23,7 +23,7 @@ class _CatLuxuryState extends State<CatLuxury> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/luxury.jpg',
                 name: 'Mercedes Benz S Class',
@@ -32,7 +32,7 @@ class _CatLuxuryState extends State<CatLuxury> {
                 price: 'Ksh. 75000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/luxury.jpg',
                 name: 'Mercedes Benz S Class',
@@ -41,7 +41,7 @@ class _CatLuxuryState extends State<CatLuxury> {
                 price: 'Ksh. 75000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/luxury.jpg',
                 name: 'Mercedes Benz S Class',
@@ -50,7 +50,7 @@ class _CatLuxuryState extends State<CatLuxury> {
                 price: 'Ksh. 75000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/luxury.jpg',
                 name: 'Mercedes Benz S Class',

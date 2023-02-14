@@ -24,7 +24,7 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/hatchbacks.jpg',
                 name: 'Nissan Note',
@@ -33,7 +33,7 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
                 price: 'Ksh. 3500'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/hatchbacks.jpg',
                 name: 'Nissan Note',
@@ -42,7 +42,7 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
                 price: 'Ksh. 3500'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/hatchbacks.jpg',
                 name: 'Nissan Note',
@@ -51,7 +51,7 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
                 price: 'Ksh. 3500'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/hatchbacks.jpg',
                 name: 'Nissan Note',

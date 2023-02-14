@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/widgets/vehicle_cards.dart';
@@ -18,6 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   bool isnotifyON1 = false;
   bool isnotifyON2 = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,10 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
+                UserData.get().then((value) {
+                  favoriteVehicles = value.get('favorites');
+                });
+
               return TabBarView(
                 children: [
                   ListView(
@@ -56,7 +64,6 @@ class _HomePageState extends State<HomePage> {
                         image: document['displayImageURL'],
                         name: document['name'],
                         price: document['priceDay'],
-                        isLiked: isLiked0,
                         onClickHire: () {
                           CurrentVehicleDocID = document.id;
                           hire(context: context);
@@ -76,7 +83,6 @@ class _HomePageState extends State<HomePage> {
                       image: document['displayImageURL'],
                       name: document['name'],
                       price: document['priceDay'],
-                      isLiked: isLiked0,
                       onClickDetails: () {
                         setState(() {
                           CurrentVehicleDocID = document.id;

@@ -270,12 +270,13 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "social media username": socMedAccName,
                       "social media type": socMedAccType,
                       "referral code": generateRandomString(10),
+                      "favorites": []
                     };
 
-                    await UserData.set(userData);
+                    await UserData.set(userData).whenComplete(() => nextPage(
+                        context: context, page: const AccVerificationPage1b()));
 
-                    nextPage(
-                        context: context, page: const AccVerificationPage1b());
+
                   }
                 },
                 child: Row(

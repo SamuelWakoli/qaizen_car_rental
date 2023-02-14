@@ -144,10 +144,8 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                           .getDownloadURL()
                     };
 
-                    await UserData.update(drivingLicenceURL);
-
-                    nextPage(
-                        context: context, page: const AccVerificationPage4());
+                    await UserData.update(drivingLicenceURL).whenComplete(() => nextPage(
+                        context: context, page: const AccVerificationPage4()));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

@@ -145,10 +145,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           .getDownloadURL()
                     };
 
-                    await UserData.update(passportURL);
-
-                    nextPage(
-                        context: context, page: const AccVerificationPage2());
+                    await UserData.update(passportURL).whenComplete(() => nextPage(
+                          context: context, page: const AccVerificationPage2()));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

@@ -23,7 +23,7 @@ class _CatWagonsState extends State<CatWagons> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/wagons.jpg',
                 name: 'Honda Fit Shuttle',
@@ -32,7 +32,7 @@ class _CatWagonsState extends State<CatWagons> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/wagons.jpg',
                 name: 'Honda Fit Shuttle',
@@ -41,7 +41,7 @@ class _CatWagonsState extends State<CatWagons> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/wagons.jpg',
                 name: 'Honda Fit Shuttle',
@@ -50,7 +50,7 @@ class _CatWagonsState extends State<CatWagons> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/wagons.jpg',
                 name: 'Honda Fit Shuttle',

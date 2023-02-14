@@ -40,6 +40,8 @@ Future<String> getUserProfileImageURL() async {
   return UserStorageFolder.child('passport').getDownloadURL().toString();
 }
 
+List favoriteVehicles = [];
+
 //temporary var
 bool dbHasData = false;
 

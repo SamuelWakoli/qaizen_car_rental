@@ -23,7 +23,7 @@ class _CatVansState extends State<CatVans> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/vans.jpg',
                 name: 'Toyota Voxy',
@@ -32,7 +32,7 @@ class _CatVansState extends State<CatVans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/vans.jpg',
                 name: 'Toyota Voxy',
@@ -41,7 +41,7 @@ class _CatVansState extends State<CatVans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/vans.jpg',
                 name: 'Toyota Voxy',
@@ -50,7 +50,7 @@ class _CatVansState extends State<CatVans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/vans.jpg',
                 name: 'Toyota Voxy',

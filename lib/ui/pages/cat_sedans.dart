@@ -23,7 +23,7 @@ class _CatSedansState extends State<CatSedans> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/sedans.jpg',
                 name: 'Toyota Allion',
@@ -32,7 +32,7 @@ class _CatSedansState extends State<CatSedans> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/sedans.jpg',
                 name: 'Toyota Allion',
@@ -41,7 +41,7 @@ class _CatSedansState extends State<CatSedans> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/sedans.jpg',
                 name: 'Toyota Allion',
@@ -50,7 +50,7 @@ class _CatSedansState extends State<CatSedans> {
                 price: 'Ksh. 4000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/sedans.jpg',
                 name: 'Toyota Allion',

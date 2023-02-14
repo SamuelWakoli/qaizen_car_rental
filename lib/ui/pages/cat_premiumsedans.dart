@@ -23,7 +23,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsedans.jpg',
                 name: 'Toyota Crown',
@@ -32,7 +32,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsedans.jpg',
                 name: 'Toyota Crown',
@@ -41,7 +41,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsedans.jpg',
                 name: 'Toyota Crown',
@@ -50,7 +50,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                 price: 'Ksh. 6000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsedans.jpg',
                 name: 'Toyota Crown',

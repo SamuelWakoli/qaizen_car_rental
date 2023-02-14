@@ -141,14 +141,13 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                     };
 
                     await UserData.update(refData);
-                    await CurrentUser!.sendEmailVerification();
-                    showDialog(
+                    await CurrentUser!.sendEmailVerification().whenComplete(() => showDialog(
                       context: context,
                       builder: (ctx) => AlertDialog(
                         title: Text(
                           "Form Submission Successful",
                           style:
-                              TextStyle(color: Theme.of(context).primaryColor),
+                          TextStyle(color: Theme.of(context).primaryColor),
                         ),
                         content: const Text(
                           "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
@@ -173,7 +172,7 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                           ),
                         ],
                       ),
-                    );
+                    ));
                     Timer(const Duration(seconds: 5), () => Restart.restartApp());
                     Restart.restartApp();
                   }

@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 
-//ToDo: make these cards to only take vehicle IDs and extract data.
 class AvailableVehicleCard extends StatefulWidget {
   String id, image, name, price;
-  bool isLiked, availability;
+  bool availability;
 
   dynamic onClickHire, onClickDetails;
 
@@ -18,7 +19,7 @@ class AvailableVehicleCard extends StatefulWidget {
     required this.image,
     required this.name,
     required this.price,
-    required this.isLiked,
+
     required this.onClickHire,
     required this.onClickDetails,
     required this.availability,
@@ -85,36 +86,51 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  LikeButton(
-                    isLiked: widget.isLiked,
-                    bubblesColor: BubblesColor(
-                        dotPrimaryColor: Theme.of(context).primaryColor,
-                        dotSecondaryColor: Colors.white),
-                    circleColor: CircleColor(
-                      start: Theme.of(context).primaryColor,
-                      end: Colors.white,
-                    ),
-                    likeBuilder: (bool isLiked) {
-                      return Icon(
-                        Icons.favorite,
-                        color: isLiked
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                        size: 32,
-                      );
-                    },
-                    onTap: ((isLiked) async {
-                      String likeMessage = "";
-                      isLiked
-                          ? likeMessage = "removed from"
-                          : likeMessage = "added to";
+                  StreamBuilder(
+                    stream: UserData.snapshots(),
+                    builder: (context, snapshot) {
+                      return LikeButton(
+                        isLiked: favoriteVehicles.contains(widget.id),
+                        bubblesColor: BubblesColor(
+                            dotPrimaryColor: Theme.of(context).primaryColor,
+                            dotSecondaryColor: Colors.white),
+                        circleColor: CircleColor(
+                          start: Theme.of(context).primaryColor,
+                          end: Colors.white,
+                        ),
+                        likeBuilder: (bool isLiked) {
+                          return Icon(
+                            Icons.favorite,
+                            color: isLiked
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                            size: 32,
+                          );
+                        },
+                        onTap: ((isLiked) async {
+                          if(!isLiked){
+                            favoriteVehicles.add(widget.id);} else {
+                            favoriteVehicles.remove(widget.id);
+                          }
+                          Map<String, dynamic> data = {
+                            "favorites": favoriteVehicles
+                          };
+                          await FirebaseFirestore.instance.collection('users').doc(getUserName()).update(data).whenComplete(() {
+                            String likeMessage = "";
+                            isLiked
+                                ? likeMessage = "removed from"
+                                : likeMessage = "added to";
 
-                      showSnackbar(
-                          context: context,
-                          duration: 2,
-                          message: "\$vehicleName $likeMessage to favorites");
-                      return !isLiked;
-                    }),
+                            showSnackbar(
+                                context: context,
+                                duration: 3,
+                                message: "${widget.name} $likeMessage to favorites");
+                          });
+
+                          return !isLiked;
+                        }),
+                      );
+                    }
                   ),
                   GestureDetector(
                     onTap: widget.onClickDetails,
@@ -164,18 +180,28 @@ Widget favCard({
   required String image,
   required String name,
   required String price,
-  required bool availabity,
+  required bool availability,
   required onClickHire,
   required onClickDetails,
 }) {
-  return Padding(
+  if (favoriteVehicles.contains(id)) {
+    return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Card(
       child: Column(
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset(image)),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+              ),),
           const SizedBox(height: 8),
           Text(
             name,
@@ -211,7 +237,7 @@ Widget favCard({
                 Row(
                   children: [
                     const Text('Status: '),
-                    Text(availabity ? "Available" : "Not avalable")
+                    Text(availability ? "Available" : "Not avalable")
                   ],
                 ),
               ],
@@ -253,6 +279,9 @@ Widget favCard({
       ),
     ),
   );
+  } else {
+    return const SizedBox();
+  }
 }
 
 ///
@@ -262,7 +291,7 @@ Widget favCard({
 ///
 class ReturningVehicleCard extends StatefulWidget {
   String id, image, name, price;
-  bool isLiked, availabilityNotification, availability;
+  bool availabilityNotification, availability;
 
   dynamic onClickNotifyMe, onClickDetails;
 
@@ -272,7 +301,6 @@ class ReturningVehicleCard extends StatefulWidget {
     required this.image,
     required this.name,
     required this.price,
-    required this.isLiked,
     required this.availabilityNotification,
     required this.onClickNotifyMe,
     required this.onClickDetails,
@@ -286,17 +314,6 @@ class ReturningVehicleCard extends StatefulWidget {
 class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
   @override
   Widget build(BuildContext context) {
-    //default icon
-    Widget iconToLoad = const Icon(Icons.favorite_outline_outlined);
-
-    // //checked by database and setState
-    // if (widget. == null) {
-    //   if (widget.isLiked == true) {
-    //     iconToLoad = const Icon(Icons.favorite_rounded);
-    //   } else {
-    //     iconToLoad = const Icon(Icons.favorite_outline_outlined);
-    //   }
-    // }
 
     if (!widget.availability) {
       return Padding(
@@ -349,37 +366,49 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  LikeButton(
-                    isLiked: widget.isLiked,
-                    bubblesColor: BubblesColor(
-                        dotPrimaryColor: Theme.of(context).primaryColor,
-                        dotSecondaryColor: Colors.white),
-                    circleColor: CircleColor(
-                      start: Theme.of(context).primaryColor,
-                      end: Colors.white,
-                    ),
-                    likeBuilder: (bool isLiked) {
-                      return Icon(
-                        Icons.favorite,
-                        color: isLiked
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                        size: 32,
-                      );
-                    },
-                    onTap: ((isLiked) async {
-                      String likeMessage = "";
-                      isLiked
-                          ? likeMessage = "removed from"
-                          : likeMessage = "added to";
+                       LikeButton(
+                        isLiked: favoriteVehicles.contains(widget.id),
+                        bubblesColor: BubblesColor(
+                            dotPrimaryColor: Theme.of(context).primaryColor,
+                            dotSecondaryColor: Colors.white),
+                        circleColor: CircleColor(
+                          start: Theme.of(context).primaryColor,
+                          end: Colors.white,
+                        ),
+                        likeBuilder: (bool isLiked) {
+                          return Icon(
+                            Icons.favorite,
+                            color: isLiked
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                            size: 32,
+                          );
+                        },
+                        onTap: ((isLiked) async {
 
-                      showSnackbar(
-                          context: context,
-                          duration: 2,
-                          message: "\$vehicleName $likeMessage to favorites");
-                      return !isLiked;
-                    }),
-                  ),
+                          if(!isLiked){
+                          favoriteVehicles.add(widget.id);} else {
+                            favoriteVehicles.remove(widget.id);
+                          }
+                          Map<String, dynamic> data = {
+                            "favorites": favoriteVehicles
+                          };
+                          await FirebaseFirestore.instance.collection('users').doc(getUserName()).update(data).whenComplete(() {
+                            String likeMessage = "";
+                            isLiked
+                                ? likeMessage = "removed from"
+                                : likeMessage = "added to";
+
+                            showSnackbar(
+                                context: context,
+                                duration: 3,
+                                message: "${widget.name} $likeMessage to favorites");
+                          });
+
+
+                          return !isLiked;
+                        }),
+                      ),
                   GestureDetector(
                     onTap: widget.onClickDetails,
                     child: Padding(
@@ -449,7 +478,7 @@ Widget selectVehiclesList({
   required String image,
   required String name,
   required String price,
-  required bool availabity,
+  required bool availability,
   required onClickSelect,
   required onClickDetails,
 }) {
@@ -493,7 +522,7 @@ Widget selectVehiclesList({
             child: Row(
               children: [
                 const Text('Status: '),
-                Text(availabity
+                Text(availability
                     ? "Available"
                     : "Not avalable, expected at \$availableTime")
               ],

@@ -23,7 +23,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
           children: [
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsuvs.jpg',
                 name: 'Toyota Land Cruiser Prado',
@@ -32,7 +32,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                 price: 'Ksh. 15000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsuvs.jpg',
                 name: 'Toyota Land Cruiser Prado',
@@ -41,7 +41,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                 price: 'Ksh. 15000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsuvs.jpg',
                 name: 'Toyota Land Cruiser Prado',
@@ -50,7 +50,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                 price: 'Ksh. 15000'),
             selectVehiclesList(
                 context: context,
-                availabity: true,
+                availability: true,
                 id: "",
                 image: 'assets/vehiclecategories/premiumsuvs.jpg',
                 name: 'Toyota Land Cruiser Prado',

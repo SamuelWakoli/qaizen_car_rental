@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
+import '../../helper/vehicle_card_func.dart';
 import '../widgets/vehicle_cards.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -17,28 +20,38 @@ class _FavoritesPageState extends State<FavoritesPage> {
         title: const Text('Favorites'),
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          favCard(
-            id: 'KDA',
-            image: 'assets/cars/teslamodelx.jpg',
-            name: 'Tesla Model X',
-            price: '30,000',
-            availabity: true,
-            onClickHire: () {
-              setState(() {
-                // CurrentVehicleDocID = document.id;
-                // hire(context: context, vehicleID: null);
-              });
-            },
-            onClickDetails: () {
-              setState(() {
-                // CurrentVehicleDocID = document.id;
-                // details(context: context, vehicleID: null);
-              });
-            },
-          ),
-        ],
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('vehicles').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                ),
+              );
+            }
+
+            return
+              ListView(
+                  children: snapshot.data!.docs.map((document) {
+                    return favCard(id: document.id,
+                        image: document['displayImageURL'],
+                        name: document['name'],
+                        price: document['priceDay'],
+                        availability: document['availability'],
+                        onClickHire: (){
+                          CurrentVehicleDocID = document.id;
+                          hire(context: context);
+                        },
+                        onClickDetails: (){
+                          CurrentVehicleDocID = document.id;
+                          details(context: context);
+                        });
+                  }).toList()
+              );
+          }
       ),
     );
   }
