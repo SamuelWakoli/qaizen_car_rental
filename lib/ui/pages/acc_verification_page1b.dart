@@ -17,6 +17,7 @@ class AccVerificationPage1b extends StatefulWidget {
 
 class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
   File? image;
+
   Future pickImageGallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -38,6 +39,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
       print('Failed to pick image: $e');
     }
   }
+
+  bool loading = false;
 
   Widget _getImage() {
     if (image != null) {
@@ -93,13 +96,17 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           children: [
                             Icon(
                               Icons.image_outlined,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
                             ),
                             const SizedBox(width: 10),
                             Text('Gallery',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Theme.of(context).primaryColor)),
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor)),
                           ],
                         )),
                     ElevatedButton(
@@ -109,13 +116,17 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           children: [
                             Icon(
                               Icons.camera_outlined,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
                             ),
                             const SizedBox(width: 10),
                             Text('Camera',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Theme.of(context).primaryColor)),
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor)),
                           ],
                         )),
                   ],
@@ -128,18 +139,27 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
-
+                    setState(() {
+                      loading = true;
+                    });
                     Map<String, String> passportURL = {
-                      'passport URL': await UserStorageFolder.child(
-                              '${getUserName()}\'s passport.png')
+                      'passport URL': await UserStorageFolder
+                          .child(
+                          '${getUserName()}\'s passport.png')
                           .putFile(image!)
                           .snapshot
                           .ref
                           .getDownloadURL()
                     };
 
-                    await UserData.update(passportURL).whenComplete(() => nextPage(
-                          context: context, page: const AccVerificationPage2()));
+                    await UserData.update(passportURL).whenComplete(() {
+                      setState(() {
+                        loading = false;
+                      });
+                      return nextPage(
+                            context: context,
+                            page: const AccVerificationPage2());
+                    });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -147,18 +167,22 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                     );
                   }
                 },
-                child: Row(
+                child: loading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,) : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Next',
                         style: TextStyle(
                             fontSize: 20,
-                            color: Theme.of(context).primaryColor)),
+                            color: Theme
+                                .of(context)
+                                .primaryColor)),
                     const SizedBox(width: 12),
                     Icon(
                       Icons.arrow_forward,
                       size: 32,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
                     )
                   ],
                 )),

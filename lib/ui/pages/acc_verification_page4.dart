@@ -18,6 +18,8 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
   String? refName2 = '';
   String? refPhone2 = '';
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,8 +122,12 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
             ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
+                    // If the form is valid, display a snack-bar. In the real world,
                     // you'd often call a server or save the information in a database.
+
+                    setState(() {
+                      loading = true;
+                    });
 
                     final refData = <String, dynamic>{
                       "referee name 1": refName1,
@@ -131,40 +137,54 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "verified": false
                     };
 
-                    await UserData.update(refData);
-                    await CurrentUser!
+                    await UserData.update(refData).whenComplete(() {
+
+                      return CurrentUser!
                         .sendEmailVerification()
-                        .whenComplete(() => showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text(
-                                  "Form Submission Successful",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                                content: const Text(
-                                  "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                actions: <Widget>[
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Restart.restartApp();
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(14),
-                                      child: Text(
-                                        "okay",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                        .whenComplete(() {
+
+                        setState(() {
+                          loading = false;
+                        });
+
+                          return showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(
+                          "Form Submission Successful",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor),
+                        ),
+                        content: const Text(
+                          "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.popUntil(context, (route) => route.isFirst);
+                              //Restart.restartApp();
+                              setState(() {
+                                dbHasData = true;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(14),
+                              child: Text(
+                                "okay",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color:
+                                    Theme.of(context).primaryColor),
                               ),
-                            ));
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                        });
+                    });
+
                   }
                 },
                 child: Row(

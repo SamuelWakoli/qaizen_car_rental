@@ -17,6 +17,7 @@ class AccVerificationPage2 extends StatefulWidget {
 
 class _AccVerificationPage2State extends State<AccVerificationPage2> {
   File? image;
+
   Future pickImageGallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -55,6 +56,8 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
       return const SizedBox(height: 30);
     }
   }
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +131,9 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
+                    setState(() {
+                      loading = true;
+                    });
 
                     Map<String, String> nationalIdURL = {
                       'national ID URL': await UserStorageFolder.child(
@@ -138,8 +144,13 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                           .getDownloadURL()
                     };
 
-                    await UserData.update(nationalIdURL).whenComplete(() => nextPage(
-                        context: context, page: const AccVerificationPage3()));
+                    await UserData.update(nationalIdURL).whenComplete(() {
+                      setState(() {
+                        loading = false;
+                      });
+                      return nextPage(
+                          context: context, page: const AccVerificationPage3());
+                    });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -147,21 +158,25 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                     );
                   }
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Next',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor)),
-                    const SizedBox(width: 12),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 32,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ],
-                )),
+                child: loading
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Next',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: 12),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
+                      )),
           ]),
         ),
       ),

@@ -36,9 +36,12 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
     return randomString; // return the generated string
   }
 
+  bool loading = false;
+
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,8 +253,12 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                     // you'd often call a server or save the information in a database.
 
                     if (phoneNumber!.startsWith("07")) {
-                      phoneNumber = "2547" + phoneNumber!.substring(2);
+                      phoneNumber = "2547${phoneNumber!.substring(2)}";
                     }
+
+                    setState(() {
+                      loading = true;
+                    });
 
                     final userData = <String, dynamic>{
                       "name": fullName,
@@ -263,16 +270,20 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "social media username": socMedAccName,
                       "social media type": socMedAccType,
                       "referral code": generateRandomString(10),
-                      "favorites": []
+                      "favorites": [],
+                      "verified by": "",
                     };
 
-                    await UserData.set(userData).whenComplete(() => nextPage(
-                        context: context, page: const AccVerificationPage1b()));
-
-
+                    await UserData.set(userData).whenComplete(() {
+                      setState(() {
+                        loading = false;
+                      });
+                      return nextPage(
+                        context: context, page: const AccVerificationPage1b());
+                    });
                   }
                 },
-                child: Row(
+                child: loading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,) : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Next',

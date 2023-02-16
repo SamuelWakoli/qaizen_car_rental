@@ -43,6 +43,7 @@ class _HireSummaryState extends State<HireSummary> {
   }
 
   String costDay = '';
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -123,16 +124,11 @@ class _HireSummaryState extends State<HireSummary> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
+                    child: ElevatedButton(
                       onPressed: () async {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                duration: Duration(seconds: 1),
-                                content: Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                )));
+                        setState(() {
+                          loading = true;
+                        });
 
                         Map<String, dynamic> data = {
                           'vehicle': CurrentVehicleDocID,
@@ -145,11 +141,13 @@ class _HireSummaryState extends State<HireSummary> {
                           'paid': false
                         };
 
-                        await FirebaseFirestore.instance
-                            .collection('bookings')
-                            .doc(getUserName())
-                            .set(data)
+                        await Bookings.set(data)
                             .whenComplete(() {
+
+                          setState(() {
+                            loading = false;
+                          });
+
                           showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
@@ -213,25 +211,29 @@ class _HireSummaryState extends State<HireSummary> {
                                   ));
                         });
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Submit Request',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                      child: loading
+                          ? CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Submit Request',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Icon(
+                                    Icons.arrow_forward_outlined,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            Icon(
-                              Icons.arrow_forward_outlined,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                 ],

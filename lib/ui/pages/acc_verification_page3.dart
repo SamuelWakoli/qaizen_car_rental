@@ -17,6 +17,7 @@ class AccVerificationPage3 extends StatefulWidget {
 
 class _AccVerificationPage3State extends State<AccVerificationPage3> {
   File? image;
+
   Future pickImageGallery() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -38,6 +39,8 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
       print('Failed to pick image: $e');
     }
   }
+
+  bool loading = false;
 
   Widget _getImage() {
     if (image != null) {
@@ -128,6 +131,10 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
+                    setState(() {
+                      loading = true;
+                    });
+
                     Map<String, String> drivingLicenceURL = {
                       'driving licence URL': await UserStorageFolder.child(
                               '${getUserName()}\'s driving licence.png')
@@ -137,8 +144,14 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                           .getDownloadURL()
                     };
 
-                    await UserData.update(drivingLicenceURL).whenComplete(() => nextPage(
-                        context: context, page: const AccVerificationPage4()));
+                    await UserData.update(drivingLicenceURL).whenComplete(() {
+                      setState(() {
+                        loading = false;
+                      });
+
+                      return nextPage(
+                          context: context, page: const AccVerificationPage4());
+                    });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -146,21 +159,25 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                     );
                   }
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Next',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor)),
-                    const SizedBox(width: 12),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 32,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ],
-                )),
+                child: loading
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Next',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: 12),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
+                      )),
           ]),
         ),
       ),
