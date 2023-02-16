@@ -110,6 +110,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         data = false;
       }
 
+      UserData.get().then((value) {
+        favoriteVehicles = value.get('favorites');
+      });
+
       updateDbHasData(data);
     });
   }

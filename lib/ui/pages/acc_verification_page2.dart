@@ -128,15 +128,8 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Center(
-                              child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ))),
-                    );
 
-                    Map<String, String> nationalidURL = {
+                    Map<String, String> nationalIdURL = {
                       'national ID URL': await UserStorageFolder.child(
                               '${getUserName()}\'s national ID.png')
                           .putFile(image!)
@@ -145,7 +138,7 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                           .getDownloadURL()
                     };
 
-                    await UserData.update(nationalidURL).whenComplete(() => nextPage(
+                    await UserData.update(nationalIdURL).whenComplete(() => nextPage(
                         context: context, page: const AccVerificationPage3()));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -128,13 +128,6 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Center(
-                              child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ))),
-                    );
 
                     Map<String, String> passportURL = {
                       'passport URL': await UserStorageFolder.child(

@@ -7,26 +7,12 @@ final CurrentUser = FirebaseAuth.instance.currentUser;
 String getUserName() {
   final user = FirebaseAuth.instance.currentUser;
 
-  if (user == null) {
-    return "";
-  }
+  String? displayName = user?.displayName;
+  String? email = user?.email;
 
-  String? displayName = user.displayName;
   if (displayName != null) {
     return displayName.toString();
   }
-
-  String? email = user.email;
-  if (email == null) {
-    return "";
-  }
-
-  // String removeSpecialSymbols(String input) {
-  //   int index = input.indexOf("@");
-  //   return index >= 0 ? input.substring(0, index) : input;
-  // }
-  //
-  // return removeSpecialSymbols(email).toString();
   return email.toString();
 }
 

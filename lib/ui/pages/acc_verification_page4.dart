@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -124,13 +122,6 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                   if (_formKey.currentState!.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Center(
-                              child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ))),
-                    );
 
                     final refData = <String, dynamic>{
                       "referee name 1": refName1,
@@ -141,40 +132,39 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                     };
 
                     await UserData.update(refData);
-                    await CurrentUser!.sendEmailVerification().whenComplete(() => showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(
-                          "Form Submission Successful",
-                          style:
-                          TextStyle(color: Theme.of(context).primaryColor),
-                        ),
-                        content: const Text(
-                          "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(ctx).pop();
-                              Navigator.of(context)
-                                  .popUntil((route) => route.isFirst);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(14),
-                              child: Text(
-                                "okay",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Theme.of(context).primaryColor),
+                    await CurrentUser!
+                        .sendEmailVerification()
+                        .whenComplete(() => showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text(
+                                  "Form Submission Successful",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                content: const Text(
+                                  "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Restart.restartApp();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(14),
+                                      child: Text(
+                                        "okay",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
-                    Timer(const Duration(seconds: 5), () => Restart.restartApp());
-                    Restart.restartApp();
+                            ));
                   }
                 },
                 child: Row(

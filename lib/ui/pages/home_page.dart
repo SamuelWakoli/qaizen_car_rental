@@ -50,9 +50,7 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-                UserData.get().then((value) {
-                  favoriteVehicles = value.get('favorites');
-                });
+
 
               return TabBarView(
                 children: [

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/db/user.dart';
+import 'package:qaizen_car_rental/ui/pages/active_service.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 
@@ -114,7 +116,7 @@ class _HireSummaryState extends State<HireSummary> {
                             summaryItem(
                                 name: "COST: ",
                                 data:
-                                    "Ksh. $totalCost (exclusive of delivery fee)")
+                                    "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}")
                           ],
                         );
                       }),
@@ -122,14 +124,94 @@ class _HireSummaryState extends State<HireSummary> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MaterialButton(
-                      onPressed: () {
+                      onPressed: () async {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
+                                duration: Duration(seconds: 1),
                                 content: Center(
                                   child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                                    color: Colors.white,
+                                  ),
                                 )));
+
+                        Map<String, dynamic> data = {
+                          'vehicle': CurrentVehicleDocID,
+                          'starts': '$selectedTime | $selectedDate',
+                          'days': numberOfDays,
+                          'delivery': delivery,
+                          'delivery address': locationData?.address,
+                          'delivery geo-points': locationData?.latLong,
+                          'total cost': totalCost,
+                          'paid': false
+                        };
+
+                        await FirebaseFirestore.instance
+                            .collection('bookings')
+                            .doc(getUserName())
+                            .set(data)
+                            .whenComplete(() {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: const Text('Submitted Successfully'),
+                                    content: const Text(
+                                        'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                          nextPage(
+                                              context: context,
+                                              page: const ActiveService());
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons
+                                                  .supervised_user_circle_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            const SizedBox(width: 20),
+                                            Text(
+                                              'View Active Service',
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context)
+                                            .popUntil((route) => route.isFirst),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.home_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            const SizedBox(width: 20),
+                                            Text(
+                                              'Go to Home Screen',
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ));
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

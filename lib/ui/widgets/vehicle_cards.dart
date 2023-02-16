@@ -31,9 +31,6 @@ class AvailableVehicleCard extends StatefulWidget {
 class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
   @override
   Widget build(BuildContext context) {
-    //default icon
-    Widget iconToLoad = const Icon(Icons.favorite_outline_outlined);
-
     if (widget.availability) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,10 +82,7 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  StreamBuilder(
-                      stream: UserData.snapshots(),
-                      builder: (context, snapshot) {
-                        return LikeButton(
+                         LikeButton(
                           isLiked: favoriteVehicles.contains(widget.id),
                           bubblesColor: BubblesColor(
                               dotPrimaryColor: Theme.of(context).primaryColor,
@@ -107,34 +101,43 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                             );
                           },
                           onTap: ((isLiked) async {
-                            if (!isLiked) {
-                              favoriteVehicles.add(widget.id);
-                            } else {
-                              favoriteVehicles.remove(widget.id);
-                            }
-                            Map<String, dynamic> data = {
-                              "favorites": favoriteVehicles
-                            };
-                            await FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(getUserName())
-                                .update(data)
-                                .whenComplete(() {
-                              String likeMessage = "";
-                              isLiked
-                                  ? likeMessage = "removed from"
-                                  : likeMessage = "added to";
-                              showSnackbar(
-                                  context: context,
-                                  duration: 3,
-                                  message:
-                                      "${widget.name} $likeMessage to favorites");
-                            });
+                            if (dbHasData) {
+                              if (!isLiked) {
+                                favoriteVehicles.add(widget.id);
+                              } else {
+                                favoriteVehicles.remove(widget.id);
+                              }
+                              Map<String, dynamic> data = {
+                                "favorites": favoriteVehicles
+                              };
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(getUserName())
+                                  .update(data)
+                                  .whenComplete(() {
+                                String likeMessage = "";
+                                isLiked
+                                    ? likeMessage = "removed from"
+                                    : likeMessage = "added to";
+                                showSnackbar(
+                                    context: context,
+                                    duration: 3,
+                                    message:
+                                        "${widget.name} $likeMessage to favorites");
+                              });
 
-                            return !isLiked;
+                              return !isLiked;
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Please verify your profile so as to save favorites'),
+                                ),
+                              );
+                            }
+                            return null;
                           }),
-                        );
-                      }),
+                        ),
                   GestureDetector(
                     onTap: widget.onClickDetails,
                     child: Padding(
@@ -168,8 +171,9 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
           ),
         ),
       );
-    } else
-      return SizedBox();
+    } else {
+      return const SizedBox();
+    }
   }
 }
 
@@ -388,32 +392,42 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                       );
                     },
                     onTap: ((isLiked) async {
-                      if (!isLiked) {
-                        favoriteVehicles.add(widget.id);
+                      if (dbHasData) {
+                        if (!isLiked) {
+                          favoriteVehicles.add(widget.id);
+                        } else {
+                          favoriteVehicles.remove(widget.id);
+                        }
+                        Map<String, dynamic> data = {
+                          "favorites": favoriteVehicles
+                        };
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(getUserName())
+                            .update(data)
+                            .whenComplete(() {
+                          String likeMessage = "";
+                          isLiked
+                              ? likeMessage = "removed from"
+                              : likeMessage = "added to";
+
+                          showSnackbar(
+                              context: context,
+                              duration: 3,
+                              message:
+                                  "${widget.name} $likeMessage to favorites");
+                        });
+
+                        return !isLiked;
                       } else {
-                        favoriteVehicles.remove(widget.id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                'Please verify your profile so as to save favorites'),
+                          ),
+                        );
                       }
-                      Map<String, dynamic> data = {
-                        "favorites": favoriteVehicles
-                      };
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(getUserName())
-                          .update(data)
-                          .whenComplete(() {
-                        String likeMessage = "";
-                        isLiked
-                            ? likeMessage = "removed from"
-                            : likeMessage = "added to";
-
-                        showSnackbar(
-                            context: context,
-                            duration: 3,
-                            message:
-                                "${widget.name} $likeMessage to favorites");
-                      });
-
-                      return !isLiked;
+                      return null;
                     }),
                   ),
                   GestureDetector(
@@ -470,7 +484,7 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
         ),
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 }
