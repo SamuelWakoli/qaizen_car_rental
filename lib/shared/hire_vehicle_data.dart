@@ -5,7 +5,9 @@ bool? needDriver;
 
 ///shared var
 String serviceType = "";
-dynamic locationData;
+dynamic locationData = '';
+dynamic locationDataLat;
+dynamic locationDataLon;
 String locationAddress = '';
 String? selectedTime = '${TimeOfDay.now().hour}:${TimeOfDay.now().minute}';
 String? selectedDate =

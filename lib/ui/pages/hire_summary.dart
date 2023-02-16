@@ -124,116 +124,119 @@ class _HireSummaryState extends State<HireSummary> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        setState(() {
-                          loading = true;
-                        });
-
-                        Map<String, dynamic> data = {
-                          'vehicle': CurrentVehicleDocID,
-                          'starts': '$selectedTime | $selectedDate',
-                          'days': numberOfDays,
-                          'delivery': delivery,
-                          'delivery address': locationData?.address,
-                          'delivery geo-points': locationData?.latLong,
-                          'total cost': totalCost,
-                          'paid': false
-                        };
-
-                        await Bookings.set(data)
-                            .whenComplete(() {
-
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
                           setState(() {
-                            loading = false;
+                            loading = true;
                           });
 
-                          showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                    title: const Text('Submitted Successfully'),
-                                    content: const Text(
-                                        'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).popUntil(
-                                              (route) => route.isFirst);
-                                          nextPage(
-                                              context: context,
-                                              page: const ActiveService());
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons
-                                                  .supervised_user_circle_outlined,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                            const SizedBox(width: 20),
-                                            Text(
-                                              'View Active Service',
-                                              style: TextStyle(
+                          Map<String, dynamic> data = {
+                            'vehicle': CurrentVehicleDocID,
+                            'starts': '$selectedTime | $selectedDate',
+                            'days': numberOfDays,
+                            'delivery': delivery,
+                            'delivery address': locationData?.address,
+                            'geo-point lat': locationDataLat.toString(),
+                            'geo-point lon': locationDataLon.toString(),
+                            'total cost': totalCost,
+                            'paid': false
+                          };
+
+                          await Bookings.set(data)
+                              .whenComplete(() {
+
+                            setState(() {
+                              loading = false;
+                            });
+
+                            showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                      title: const Text('Submitted Successfully'),
+                                      content: const Text(
+                                          'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).popUntil(
+                                                (route) => route.isFirst);
+                                            nextPage(
+                                                context: context,
+                                                page: const ActiveService());
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons
+                                                    .supervised_user_circle_outlined,
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(width: 20),
+                                              Text(
+                                                'View Active Service',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.of(context)
-                                            .popUntil((route) => route.isFirst),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.home_outlined,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                            const SizedBox(width: 20),
-                                            Text(
-                                              'Go to Home Screen',
-                                              style: TextStyle(
+                                        TextButton(
+                                          onPressed: () => Navigator.of(context)
+                                              .popUntil((route) => route.isFirst),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.home_outlined,
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(width: 20),
+                                              Text(
+                                                'Go to Home Screen',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
+                                      ],
+                                    ));
+                          });
+                        },
+                        child: loading
+                            ? CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Submit Request',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
                                       ),
-                                    ],
-                                  ));
-                        });
-                      },
-                      child: loading
-                          ? CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Submit Request',
-                                    style: TextStyle(
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Icon(
+                                      Icons.arrow_forward_outlined,
                                       color: Theme.of(context).primaryColor,
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Icon(
-                                    Icons.arrow_forward_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
                 ],

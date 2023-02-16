@@ -32,7 +32,8 @@ class _PickLocationState extends State<PickLocation> {
               // print(pickedData.addressData['country']);
               setState(() {
                 locationAddress = pickedData.address.toString();
-                locationData = pickedData;
+                locationDataLat = pickedData.latLong.latitude;
+                locationDataLon = pickedData.latLong.longitude;
               });
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
