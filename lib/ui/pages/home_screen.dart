@@ -260,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 Icons.supervised_user_circle_outlined,
                 color: _iconColor,
               ),
-              title: const Text("Active Service"),
+              title: const Text("My Service"),
               onTap: () =>
                   nextPage(context: context, page: const ActiveService()),
             ),

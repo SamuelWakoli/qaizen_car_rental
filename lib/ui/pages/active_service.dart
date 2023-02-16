@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../db/user.dart';
+
 //todo: if a record was approved, get last entry
 
 class ActiveService extends StatefulWidget {
@@ -14,23 +16,38 @@ class _ActiveServiceState extends State<ActiveService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Active Service'),
+        title: const Text('My Service'),
         centerTitle: true,
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 810),
-          child: ListView(
-            children: const [
-              ListTile(
-                title: Text('Lexus LFA'),
-                subtitle: Text("""
-Duration: 08:00pm 21/02/2023 to 08:00pm 21/02/2023
-Service: Self Drive
-"""),
-              ),
-            ],
-          ),
+          child: StreamBuilder(
+              stream: Bookings.snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  );
+                }
+
+                return ListView(
+                  children:
+                  [
+                    ListTile(
+                      title: Text(snapshot.data!.get('vehicle name'), style: const TextStyle(fontSize: 22),),
+                      subtitle: Text("""
+Commencing: ${snapshot.data!.get('starts')}
+Duration: ${snapshot.data!.get('days')} day(s)
+Total cost: ${snapshot.data!.get('total cost')}
+${snapshot.data!.get('paid') ? 'Paid' : 'Not paid' }
+
+Status: ${snapshot.data!.get('status')}
+""", style: const TextStyle(fontSize: 20),),
+                    ),
+                  ],
+                );
+              }),
         ),
       ),
     );

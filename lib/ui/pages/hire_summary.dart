@@ -108,6 +108,7 @@ class _HireSummaryState extends State<HireSummary> {
                         costDay = costDay.replaceAll(',', '');
                         totalCost = int.parse(costDay);
                         totalCost = (totalCost! * int.parse(numberOfDays!));
+                        vehicleName = snapshot.data!.get('name');
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -132,7 +133,8 @@ class _HireSummaryState extends State<HireSummary> {
                           });
 
                           Map<String, dynamic> data = {
-                            'vehicle': CurrentVehicleDocID,
+                            'vehicle id': CurrentVehicleDocID,
+                            'vehicle name': vehicleName,
                             'starts': '$selectedTime | $selectedDate',
                             'days': numberOfDays,
                             'delivery': delivery,
@@ -140,7 +142,8 @@ class _HireSummaryState extends State<HireSummary> {
                             'geo-point lat': locationDataLat.toString(),
                             'geo-point lon': locationDataLon.toString(),
                             'total cost': totalCost,
-                            'paid': false
+                            'paid': false,
+                            'status': 'Pending'
                           };
 
                           await Bookings.set(data)
