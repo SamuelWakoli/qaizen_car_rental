@@ -34,3 +34,5 @@ List favoriteVehicles = [];
 bool dbHasData = false;
 
 String CurrentVehicleDocID = '';
+
+bool notificationOn = true;

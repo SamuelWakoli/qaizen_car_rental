@@ -103,16 +103,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Future.delayed(const Duration(), () async {
       var snapshot = await UserData.get();
 
-      bool data;
+      bool data = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        data = true;
+        if (!snapshot.get('verified')){
+          data = true;
+        }
+        favoriteVehicles = snapshot.get('favorites');
+        notificationOn = snapshot.get('notifications');
       } else {
         data = false;
+        favoriteVehicles = [];
       }
-
-      UserData.get().then((value) {
-        favoriteVehicles = value.get('favorites');
-      });
 
       updateDbHasData(data);
     });
@@ -389,6 +390,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 _openWhatsApp();
               }
               if (position == 2) {
+                //Report Issue
+                nextPage(context: context, page: const ReportIssuePage());
+              }
+              if (position == 3) {
                 //Settings
                 nextPage(context: context, page: const SettingsScreen());
               }
@@ -409,6 +414,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 optionMenuItem(
                   position: 2,
+                  icon: Icons.help_outline_rounded,
+                  color: _iconColor,
+                  text: 'Report Issue',
+                ),
+                optionMenuItem(
+                  position: 3,
                   icon: Icons.settings_outlined,
                   text: 'Settings',
                 ),

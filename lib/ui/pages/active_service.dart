@@ -37,6 +37,7 @@ class _ActiveServiceState extends State<ActiveService> {
                     ListTile(
                       title: Text(snapshot.data!.get('vehicle name'), style: const TextStyle(fontSize: 22),),
                       subtitle: Text("""
+Type: ${snapshot.data!.get('type')}
 Commencing: ${snapshot.data!.get('starts')}
 Duration: ${snapshot.data!.get('days')} day(s)
 Total cost: ${snapshot.data!.get('total cost')}
@@ -45,6 +46,7 @@ ${snapshot.data!.get('paid') ? 'Paid' : 'Not paid' }
 Status: ${snapshot.data!.get('status')}
 """, style: const TextStyle(fontSize: 20),),
                     ),
+                    //TODO DOWNLOAD PDF HERE
                   ],
                 );
               }),

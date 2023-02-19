@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../db/user.dart';
 import '../pages/about_page.dart';
 import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
+import 'auth_gate.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -38,8 +42,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: const Text('General'),
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
-                  onToggle: (value) {},
-                  initialValue: true,
+                  onToggle: (value) async {
+                    Map<String, dynamic> data = {
+                      'notifications': value
+                    };
+                    await UserData.update(data); //update data in db
+                    setState(() {notificationOn = value;});
+                    String messageText = value ? "on" : "off";
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Notifications turned $messageText'),),);
+                  },
+                  initialValue: notificationOn,
                   activeSwitchColor: Theme.of(context).primaryColor,
                   leading: const Icon(Icons.notifications_active_outlined),
                   title: const Text('Notifications'),
@@ -47,6 +59,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SettingsTile.navigation(
                   leading: const Icon(Icons.output_outlined),
                   title: const Text('Sign Out'),
+                  onPressed: (context) {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            icon: const Icon(
+                              FontAwesomeIcons.arrowRightFromBracket,
+                              color: Colors.red,
+                            ),
+                            title: const Text('Sign Out'),
+                            content: const Text(
+                                "You are about to sign out of this app. Do you want to continue?"),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  FirebaseAuth.instance.signOut();
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return const AuthGate();
+                                          }), (r) {
+                                        return false;
+                                      });
+                                },
+                                child: const Text('Yes'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () => Navigator.pop(ctx),
+                                child: const Text('No'),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                 ),
               ],
             ),

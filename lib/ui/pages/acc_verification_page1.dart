@@ -272,6 +272,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "referral code": generateRandomString(10),
                       "favorites": [],
                       "verified by": "",
+                      "notifications": true,
                     };
 
                     await UserData.set(userData).whenComplete(() {

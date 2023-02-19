@@ -133,17 +133,19 @@ class _HireSummaryState extends State<HireSummary> {
                           });
 
                           Map<String, dynamic> data = {
-                            'vehicle id': CurrentVehicleDocID,
-                            'vehicle name': vehicleName,
+                            'type': 'Self Drive',
                             'starts': '$selectedTime | $selectedDate',
-                            'days': numberOfDays,
+                            'duration': numberOfDays,
+                            'vehiclesList': [CurrentVehicleDocID], //get vehicle ids
+                            'driversList': [], //get driver names
+                            'orgName': '',
                             'delivery': delivery,
                             'delivery address': locationData?.address,
                             'geo-point lat': locationDataLat.toString(),
                             'geo-point lon': locationDataLon.toString(),
                             'total cost': totalCost,
                             'paid': false,
-                            'status': 'Pending'
+                            'status': 'Pending',
                           };
 
                           await Bookings.set(data)

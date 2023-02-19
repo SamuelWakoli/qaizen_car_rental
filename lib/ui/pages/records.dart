@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 //todo: if service request is/was approved(bool), show records
+//TODO use PDFs only for records
 class RecordsPage extends StatefulWidget {
   const RecordsPage({Key? key}) : super(key: key);
 
