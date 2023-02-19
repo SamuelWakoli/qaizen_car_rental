@@ -249,7 +249,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
+                    // If the form is valid, display a snack bar. In the real world,
                     // you'd often call a server or save the information in a database.
 
                     if (phoneNumber!.startsWith("07")) {

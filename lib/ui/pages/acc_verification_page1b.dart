@@ -25,7 +25,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -36,7 +37,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -96,17 +98,13 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           children: [
                             Icon(
                               Icons.image_outlined,
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             const SizedBox(width: 10),
                             Text('Gallery',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor)),
+                                    color: Theme.of(context).primaryColor)),
                           ],
                         )),
                     ElevatedButton(
@@ -116,17 +114,13 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           children: [
                             Icon(
                               Icons.camera_outlined,
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             const SizedBox(width: 10),
                             Text('Camera',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor)),
+                                    color: Theme.of(context).primaryColor)),
                           ],
                         )),
                   ],
@@ -135,17 +129,24 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                 _getImage(),
               ]),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Uploading image...'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+
                     setState(() {
                       loading = true;
                     });
                     Map<String, String> passportURL = {
-                      'passport URL': await UserStorageFolder
-                          .child(
-                          '${getUserName()}\'s passport.png')
+                      'passport URL': await UserStorageFolder.child(
+                              '${getUserName()}\'s passport.png')
                           .putFile(image!)
                           .snapshot
                           .ref
@@ -157,8 +158,12 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                         loading = false;
                       });
                       return nextPage(
-                            context: context,
-                            page: const AccVerificationPage2());
+                          context: context, page: const AccVerificationPage2());
+                    }).onError((error, stackTrace) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              'Please try again. An error occurred: $error')));
+                      loading = false;
                     });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -167,25 +172,25 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                     );
                   }
                 },
-                child: loading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,) : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Next',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Theme
-                                .of(context)
-                                .primaryColor)),
-                    const SizedBox(width: 12),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 32,
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
-                    )
-                  ],
-                )),
+                child: loading
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Next',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: 12),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
+                      )),
           ]),
         ),
       ),
