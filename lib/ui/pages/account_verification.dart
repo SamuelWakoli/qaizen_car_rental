@@ -134,6 +134,8 @@ Click "Get Started" to proceed.
                         )
                       ]),
                 ),
+                const SizedBox(height: 10),
+                const Text("Please note that this process needs a strong internet connection when uploading your images.", style: TextStyle(fontSize: 17),),
                 const SizedBox(height: 20),
                 ElevatedButton(
                     onPressed: () => nextPage(
@@ -153,7 +155,7 @@ Click "Get Started" to proceed.
                         )
                       ],
                     )),
-                const SizedBox(height: 30),
+
               ],
             ),
           ],

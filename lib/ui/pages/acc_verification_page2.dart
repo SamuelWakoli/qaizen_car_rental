@@ -25,7 +25,8 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -36,7 +37,8 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -131,6 +133,13 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Uploading image...'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+
                     setState(() {
                       loading = true;
                     });
@@ -150,6 +159,11 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                       });
                       return nextPage(
                           context: context, page: const AccVerificationPage3());
+                    }).onError((error, stackTrace) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              'Please try again. An error occurred: $error')));
+                      loading = false;
                     });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

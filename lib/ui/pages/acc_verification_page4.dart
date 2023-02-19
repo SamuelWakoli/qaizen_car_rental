@@ -138,53 +138,57 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                     };
 
                     await UserData.update(refData).whenComplete(() {
-
                       return CurrentUser!
-                        .sendEmailVerification()
-                        .whenComplete(() {
-
+                          .sendEmailVerification()
+                          .whenComplete(() {
                         setState(() {
                           loading = false;
                         });
 
-                          return showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text(
-                          "Form Submission Successful",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor),
-                        ),
-                        content: const Text(
-                          "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.popUntil(context, (route) => route.isFirst);
-                              //Restart.restartApp();
-                              setState(() {
-                                dbHasData = true;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(14),
-                              child: Text(
-                                "okay",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color:
-                                    Theme.of(context).primaryColor),
-                              ),
+                        return showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              "Form Submission Successful",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
                             ),
+                            content: const Text(
+                              "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.popUntil(
+                                      context, (route) => route.isFirst);
+                                  //Restart.restartApp();
+                                  setState(() {
+                                    dbHasData = true;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          ' You can now access our services through this app while awaiting for verification'),
+                                      duration: Duration(seconds: 5),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Text(
+                                    "okay",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                        });
+                        );
+                      });
                     });
-
                   }
                 },
                 child: Row(
