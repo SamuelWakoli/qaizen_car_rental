@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:like_button/like_button.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/hire_vehicle_data.dart';
+import '../pages/account_verification.dart';
 
 class AvailableVehicleCard extends StatefulWidget {
   String id, image, name, price;
@@ -128,12 +132,41 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
 
                               return !isLiked;
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Please verify your profile so as to save favorites'),
-                                ),
-                              );
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return AlertDialog(
+                                      title: const Text('Profile Verification Required'),
+                                      content: const Text(
+                                        'Please get your profile verified to perform this action.',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).popUntil((route) => route.isFirst);
+                                            nextPage(context: context, page: const VerificationPage());
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.verified_outlined,
+                                                color: Theme.of(context).primaryColor,
+                                              ),
+                                              const SizedBox(width: 20),
+                                              Text(
+                                                'Verify Profile',
+                                                style: TextStyle(
+                                                  color: Theme.of(context).primaryColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
                             }
                             return null;
                           }),
@@ -420,12 +453,41 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
 
                         return !isLiked;
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                'Please verify your profile so as to save favorites'),
-                          ),
-                        );
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: const Text('Profile Verification Required'),
+                                content: const Text(
+                                  'Please get your profile verified to perform this action.',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).popUntil((route) => route.isFirst);
+                                      nextPage(context: context, page: const VerificationPage());
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.verified_outlined,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Text(
+                                          'Verify Profile',
+                                          style: TextStyle(
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            });
                       }
                       return null;
                     }),
