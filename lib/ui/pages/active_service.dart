@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../db/user.dart';
@@ -31,20 +32,27 @@ class _ActiveServiceState extends State<ActiveService> {
                   );
                 }
 
+                List vehicleList = snapshot.data!.get('vehiclesList');
+
                 return ListView(
-                  children:
-                  [
+                  children: [
                     ListTile(
-                      title: Text(snapshot.data!.get('vehicle name'), style: const TextStyle(fontSize: 22),),
-                      subtitle: Text("""
+                      title: Text(
+                        vehicleList.join(", "),
+                        style: const TextStyle(fontSize: 22),
+                      ),
+                      subtitle: Text(
+                        """
 Type: ${snapshot.data!.get('type')}
 Commencing: ${snapshot.data!.get('starts')}
-Duration: ${snapshot.data!.get('days')} day(s)
+Duration: ${snapshot.data!.get('duration')} day(s)
 Total cost: ${snapshot.data!.get('total cost')}
-${snapshot.data!.get('paid') ? 'Paid' : 'Not paid' }
+${snapshot.data!.get('paid') ? 'Paid' : 'Not paid'}
 
 Status: ${snapshot.data!.get('status')}
-""", style: const TextStyle(fontSize: 20),),
+""",
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
                     //TODO DOWNLOAD PDF HERE
                   ],

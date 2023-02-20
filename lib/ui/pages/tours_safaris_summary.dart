@@ -57,7 +57,7 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
             const SizedBox(height: 20),
             summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
             summaryItem(name: 'Price: ', data: '\$price'),
-            summaryItem(name: 'Driver: ', data: locationData?.address),
+            summaryItem(name: 'Driver: ', data: deliveryAddress),
             summaryItem(name: 'Time: ', data: '$driverName'),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
             const SizedBox(height: 20),

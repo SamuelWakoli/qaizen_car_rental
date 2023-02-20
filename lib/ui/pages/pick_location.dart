@@ -31,7 +31,7 @@ class _PickLocationState extends State<PickLocation> {
               // print(pickedData.address);
               // print(pickedData.addressData['country']);
               setState(() {
-                locationAddress = pickedData.address.toString();
+                deliveryAddress = pickedData.address.toString();
                 locationDataLat = pickedData.latLong.latitude;
                 locationDataLon = pickedData.latLong.longitude;
               });

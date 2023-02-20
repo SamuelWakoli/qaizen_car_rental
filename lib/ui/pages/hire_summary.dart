@@ -93,8 +93,7 @@ class _HireSummaryState extends State<HireSummary> {
                       data: ' $selectedTime | $selectedDate'),
                   delivery
                       ? summaryItem(
-                          name: 'Delivery Location: ',
-                          data: locationData?.address.toString())
+                          name: 'Delivery Location: ', data: deliveryAddress)
                       : const SizedBox(),
                   const SizedBox(height: 30),
                   StreamBuilder(
@@ -136,11 +135,13 @@ class _HireSummaryState extends State<HireSummary> {
                             'type': 'Self Drive',
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,
-                            'vehiclesList': [CurrentVehicleDocID], //get vehicle ids
-                            'driversList': [], //get driver names
+                            'vehiclesList': [CurrentVehicleDocID],
+                            //get vehicle ids
+                            'driversList': [],
+                            //get driver names
                             'orgName': '',
                             'delivery': delivery,
-                            'delivery address': locationData?.address,
+                            'delivery address': deliveryAddress,
                             'geo-point lat': locationDataLat.toString(),
                             'geo-point lon': locationDataLon.toString(),
                             'total cost': totalCost,
@@ -148,9 +149,7 @@ class _HireSummaryState extends State<HireSummary> {
                             'status': 'Pending',
                           };
 
-                          await Bookings.set(data)
-                              .whenComplete(() {
-
+                          await Bookings.set(data).whenComplete(() {
                             setState(() {
                               loading = false;
                             });
@@ -158,7 +157,8 @@ class _HireSummaryState extends State<HireSummary> {
                             showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                      title: const Text('Submitted Successfully'),
+                                      title:
+                                          const Text('Submitted Successfully'),
                                       content: const Text(
                                           'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
                                       actions: [
@@ -193,7 +193,8 @@ class _HireSummaryState extends State<HireSummary> {
                                         ),
                                         TextButton(
                                           onPressed: () => Navigator.of(context)
-                                              .popUntil((route) => route.isFirst),
+                                              .popUntil(
+                                                  (route) => route.isFirst),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -216,7 +217,14 @@ class _HireSummaryState extends State<HireSummary> {
                                         ),
                                       ],
                                     ));
-                          });
+                          }).onError(
+                            (error, stackTrace) =>
+                                ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('An error occurred: $error'),
+                              ),
+                            ),
+                          );
                         },
                         child: loading
                             ? CircularProgressIndicator(

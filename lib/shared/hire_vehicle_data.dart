@@ -5,7 +5,6 @@ bool? needDriver;
 
 ///shared var
 String serviceType = "";
-dynamic locationData = '';
 dynamic locationDataLat;
 dynamic locationDataLon;
 String locationAddress = '';
@@ -19,6 +18,7 @@ int? totalCost = 00;
 
 /// Hire
 bool delivery = false;
+String deliveryAddress = '';
 
 /// Chauffeured
 String? driverName = '';

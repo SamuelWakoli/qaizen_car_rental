@@ -61,7 +61,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                 name: 'Service description: ', data: tranferDescription),
             const SizedBox(height: 20),
             summaryItem(
-                name: 'Location: ', data: locationData?.address.toString()),
+                name: 'Location: ', data: deliveryAddress),
             summaryItem(
                 name: 'Vehicle(s): ', data: selectedVehicles.toString()),
             summaryItem(name: 'Driver(s): ', data: driversNames.toString()),

@@ -57,7 +57,7 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
             const SizedBox(height: 20),
             summaryItem(name: 'Vehicle(s): ', data: '\$vehicleName'),
             summaryItem(name: 'Price: ', data: '\$price'),
-            summaryItem(name: 'Driver(s): ', data: locationData?.address),
+            summaryItem(name: 'Driver(s): ', data: deliveryAddress),
             summaryItem(name: 'Time: ', data: '$driverName'),
             summaryItem(name: 'Number of Days: ', data: numberOfDays),
             const SizedBox(height: 30),

@@ -58,7 +58,7 @@ class _CorporateSummaryState extends State<CorporateSummary> {
             summaryItem(name: 'Organisation Name: ', data: orgName),
             summaryItem(
                 name: 'Organisation Location: ',
-                data: locationData?.address.toString()),
+                data: deliveryAddress),
             const SizedBox(height: 20),
             summaryItem(name: 'Vehicle: ', data: '\$vehicleName'),
             summaryItem(name: 'Price: ', data: '\$price'),

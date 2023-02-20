@@ -1,12 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:like_button/like_button.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../pages/account_verification.dart';
