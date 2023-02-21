@@ -89,7 +89,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -114,7 +114,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -139,7 +139,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -164,7 +164,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

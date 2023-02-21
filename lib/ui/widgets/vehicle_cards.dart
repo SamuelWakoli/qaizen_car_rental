@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
-
-import '../../shared/hire_vehicle_data.dart';
 import '../pages/account_verification.dart';
 
 class AvailableVehicleCard extends StatefulWidget {
@@ -83,91 +81,97 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                         LikeButton(
-                          isLiked: favoriteVehicles.contains(widget.id),
-                          bubblesColor: BubblesColor(
-                              dotPrimaryColor: Theme.of(context).primaryColor,
-                              dotSecondaryColor: Colors.white),
-                          circleColor: CircleColor(
-                            start: Theme.of(context).primaryColor,
-                            end: Colors.white,
-                          ),
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              Icons.favorite,
-                              color: isLiked
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.grey,
-                              size: 32,
-                            );
-                          },
-                          onTap: ((isLiked) async {
-                            if (dbHasData) {
-                              if (!isLiked) {
-                                favoriteVehicles.add(widget.id);
-                              } else {
-                                favoriteVehicles.remove(widget.id);
-                              }
-                              Map<String, dynamic> data = {
-                                "favorites": favoriteVehicles
-                              };
-                              await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(getUserName())
-                                  .update(data)
-                                  .whenComplete(() {
-                                String likeMessage = "";
-                                isLiked
-                                    ? likeMessage = "removed from"
-                                    : likeMessage = "added to";
-                                showSnackbar(
-                                    context: context,
-                                    duration: 3,
-                                    message:
-                                        "${widget.name} $likeMessage to favorites");
-                              });
+                  LikeButton(
+                    isLiked: favoriteVehicles.contains(widget.id),
+                    bubblesColor: BubblesColor(
+                        dotPrimaryColor: Theme.of(context).primaryColor,
+                        dotSecondaryColor: Colors.white),
+                    circleColor: CircleColor(
+                      start: Theme.of(context).primaryColor,
+                      end: Colors.white,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        Icons.favorite,
+                        color: isLiked
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
+                        size: 32,
+                      );
+                    },
+                    onTap: ((isLiked) async {
+                      if (dbHasData) {
+                        if (!isLiked) {
+                          favoriteVehicles.add(widget.id);
+                        } else {
+                          favoriteVehicles.remove(widget.id);
+                        }
+                        Map<String, dynamic> data = {
+                          "favorites": favoriteVehicles
+                        };
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(getUserName())
+                            .update(data)
+                            .whenComplete(() {
+                          String likeMessage = "";
+                          isLiked
+                              ? likeMessage = "removed from"
+                              : likeMessage = "added to";
+                          showSnackbar(
+                              context: context,
+                              duration: 3,
+                              message:
+                                  "${widget.name} $likeMessage to favorites");
+                        });
 
-                              return !isLiked;
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (ctx) {
-                                    return AlertDialog(
-                                      title: const Text('Profile Verification Required'),
-                                      content: const Text(
-                                        'Please get your profile verified to perform this action.',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).popUntil((route) => route.isFirst);
-                                            nextPage(context: context, page: const VerificationPage());
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.verified_outlined,
-                                                color: Theme.of(context).primaryColor,
-                                              ),
-                                              const SizedBox(width: 20),
-                                              Text(
-                                                'Verify Profile',
-                                                style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
-                                                ),
-                                              ),
-                                            ],
+                        return !isLiked;
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title:
+                                    const Text('Profile Verification Required'),
+                                content: const Text(
+                                  'Please get your profile verified to perform this action.',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                      nextPage(
+                                          context: context,
+                                          page: const VerificationPage());
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.verified_outlined,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Text(
+                                          'Verify Profile',
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
                                         ),
                                       ],
-                                    );
-                                  });
-                            }
-                            return null;
-                          }),
-                        ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            });
+                      }
+                      return null;
+                    }),
+                  ),
                   GestureDetector(
                     onTap: widget.onClickDetails,
                     child: Padding(
@@ -275,7 +279,9 @@ Widget favCard({
                   Row(
                     children: [
                       const Text('Status: '),
-                      Text(availability ? "Available" : "Not avalable")
+                      Text(availability
+                          ? "Available"
+                          : "Not available. Please call us to request it when available.")
                     ],
                   ),
                 ],
@@ -454,7 +460,8 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                             context: context,
                             builder: (ctx) {
                               return AlertDialog(
-                                title: const Text('Profile Verification Required'),
+                                title:
+                                    const Text('Profile Verification Required'),
                                 content: const Text(
                                   'Please get your profile verified to perform this action.',
                                   style: TextStyle(fontSize: 18),
@@ -462,11 +469,15 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                                 actions: [
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.of(context).popUntil((route) => route.isFirst);
-                                      nextPage(context: context, page: const VerificationPage());
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                      nextPage(
+                                          context: context,
+                                          page: const VerificationPage());
                                     },
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.verified_outlined,
@@ -476,7 +487,8 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                                         Text(
                                           'Verify Profile',
                                           style: TextStyle(
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
                                         ),
                                       ],
@@ -521,7 +533,7 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                       );
                     },
                     onTap: ((availabilityNotification) async {
-                      ///add the vehivle to pending notifications
+                      ///add the vehicle to pending notifications
                       String notifyMessage = "";
                       availabilityNotification
                           ? notifyMessage = "not get"
@@ -531,7 +543,7 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                           context: context,
                           duration: 2,
                           message:
-                              "You will $notifyMessage a notification when $vehicleName is available");
+                              "You will $notifyMessage a notification when ${widget.name} is available");
                       return !availabilityNotification;
                     }),
                   ),
@@ -551,10 +563,12 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
 ///
 ///
 ///
-///This will be used to generate various categoties of vehicles using for loop
+///This will be used to generate various categories of vehicles using for loop
 Widget selectVehiclesList({
   required context,
   required String id,
+  required String appBarTitle,
+  required String category,
   required String image,
   required String name,
   required String price,
@@ -562,84 +576,774 @@ Widget selectVehiclesList({
   required onClickSelect,
   required onClickDetails,
 }) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Card(
-      child: Column(
-        children: [
-          ClipRRect(
+  if (appBarTitle == 'Hatchbacks' && category == 'Hatchback') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset(image)),
-          const SizedBox(height: 8),
-          Text(
-            name,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text(
-                  'Ksh. ',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
                   ),
                 ),
-                Text(
-                  price,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
                   ),
                 ),
-                const Text(' /day'),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-            child: Text(availability ? "Available" : "Not available"),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: onClickDetails,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.info_outline_rounded),
-                      SizedBox(width: 8),
-                      Text('Details', style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  //get vehicle name
-
-                  onClickSelect;
-                  Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.assignment_outlined),
-                      SizedBox(width: 8),
-                      Text('Select', style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-        ],
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  } else if (appBarTitle == 'Wagons' && category == 'Wagon') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Sedans' && category == 'Sedan') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Premium Sedans' && category == 'Premium Sedan') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Vans' && category == 'Van') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Compact SUVs' && category == 'Compact SUV') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Premium SUVs' && category == 'Premium SUV') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else if (appBarTitle == 'Luxury' && category == 'Luxury') {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onClickDetails,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.info_outline_rounded),
+                        SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    //get vehicle name
+
+                    onClickSelect;
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.assignment_outlined),
+                        SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  } else {
+    if (appBarTitle == 'Hatchbacks' && category != 'Hatchback') {
+      return const SizedBox();
+    } else if (appBarTitle == 'Hatchbacks' && category != 'Hatchback') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Wagons' && category != 'Wagon') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Sedans' && category != 'Sedan') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Premium Sedans' && category != 'Premium Sedan') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Vans' && category != 'Van') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Compact SUVs' && category != 'Compact SUV') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Premium SUVs' && category != 'Premium SUV') {
+      return const SizedBox();
+    }  else if (appBarTitle == 'Luxury' && category != 'Luxury') {
+      return const SizedBox();
+    } else {
+      return ListTile(
+        title: Text(
+            'No $appBarTitle available at the moment. Please call us to reserve one.'),
+      );
+    }
+  }
 }

@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
-import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
@@ -51,7 +49,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
     }
   }
 
-  String? formatedTime() {
+  String? formattedTime() {
     if (currentTime.hour < 10 && currentTime.minute < 10) {
       selectedTime = '0${currentTime.hour}:0${currentTime.minute}';
       return selectedTime;
@@ -100,7 +98,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               ),
             ),
             subtitle: const Text(
-              '\$selecedVehicle',
+              '\$selectedVehicle',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -120,7 +118,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               ),
             ),
             subtitle: const Text(
-              '\$selecedDriver',
+              '\$selectedDriver',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -134,7 +132,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               ),
             ),
             subtitle: Text(
-              formatedTime()!,
+              formattedTime()!,
               style: const TextStyle(fontSize: 16),
             ),
             onTap: () => _selectTime(context),
@@ -164,7 +162,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
                 if (val!.isNotEmpty) {
                   return null;
                 } else {
-                  return "Number of days cannot be empty";
+                  return "Name cannot be empty";
                 }
               },
               onChanged: (value) {
@@ -176,11 +174,19 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
                 labelText: "Number of days:",
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
-                focusedBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
+                labelStyle: TextStyle(
+                    color: Theme.of(context).primaryColor),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
               ),
               keyboardType: TextInputType.number,
             ),
@@ -188,8 +194,20 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MaterialButton(
-              onPressed: () =>
-                  nextPage(context: context, page: const ChauffeuredSummary()),
+              onPressed: () {
+                String messageText = '';
+                if (numberOfDays == ''){
+                  messageText = 'Please enter number of days.';
+                } else {
+                  numberOfDays != ''
+                    ? nextPage(
+                    context: context, page: const ChauffeuredSummary())
+                    : showSnackbar(
+                    context: context,
+                    duration: 4,
+                    message: messageText);
+                }
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

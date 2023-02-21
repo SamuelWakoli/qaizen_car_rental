@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/db/user.dart';
-import 'package:qaizen_car_rental/ui/pages/active_service.dart';
-import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 
@@ -162,35 +160,6 @@ class _HireSummaryState extends State<HireSummary> {
                                       content: const Text(
                                           'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
                                       actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).popUntil(
-                                                (route) => route.isFirst);
-                                            nextPage(
-                                                context: context,
-                                                page: const ActiveService());
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .supervised_user_circle_outlined,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              const SizedBox(width: 20),
-                                              Text(
-                                                'View Active Service',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
                                         TextButton(
                                           onPressed: () => Navigator.of(context)
                                               .popUntil(

@@ -22,7 +22,6 @@ import '../pages/report_issue.dart';
 import '../pages/services_page.dart';
 import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
-import 'active_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -256,15 +255,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   : nextPage(context: context, page: const VerificationPage()),
             ),
             const Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.supervised_user_circle_outlined,
-                color: _iconColor,
-              ),
-              title: const Text("My Service"),
-              onTap: () =>
-                  nextPage(context: context, page: const ActiveService()),
-            ),
             ListTile(
               leading: Icon(
                 Icons.favorite_outline_outlined,
