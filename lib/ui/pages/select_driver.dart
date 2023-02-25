@@ -6,6 +6,7 @@ import 'package:qaizen_car_rental/ui/pages/corporate_summary.dart';
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/drivers_card.dart';
 import '../widgets/widgets.dart';
+import 'weddings_events_summary.dart';
 
 class SelectDriver extends StatefulWidget {
   const SelectDriver({super.key});
@@ -16,6 +17,7 @@ class SelectDriver extends StatefulWidget {
 
 class _SelectDriverState extends State<SelectDriver> {
   double bottomHeight = 0;
+
   Widget listActions(ctx, list) {
     if (list.isEmpty) {
       return const SizedBox();
@@ -50,11 +52,17 @@ class _SelectDriverState extends State<SelectDriver> {
                   if (serviceType == "Chauffeured") {
                     totalCost = 0;
                     totalCost = await getCost();
-                    nextPage(context: context, page: const ChauffeuredSummary());
+                    nextPage(
+                        context: context, page: const ChauffeuredSummary());
                   } else if (serviceType == "Corporate") {
                     totalCost = 0;
                     totalCost = await getCost();
                     nextPage(context: context, page: const CorporateSummary());
+                  } else if (serviceType == 'WeddingsEvents') {
+                    totalCost = 0;
+                    totalCost = await getCost();
+                    nextPage(
+                        context: context, page: const WeddingsEventsSummary());
                   }
                 },
                 child: Row(
@@ -71,6 +79,7 @@ class _SelectDriverState extends State<SelectDriver> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,11 +112,12 @@ class _SelectDriverState extends State<SelectDriver> {
                       if (availability) {
                         if (driversNames!.contains(driverName)) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("You have already selected $driverName")));
+                              content: Text(
+                                  "You have already selected $driverName")));
                         } else {
                           bottomHeight = 120;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("You have selected $driverName")));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("You have selected $driverName")));
                           setState(() {
                             driversNames?.add(driverName);
                           });

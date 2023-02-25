@@ -8,6 +8,7 @@ import '../widgets/vehicle_cards.dart';
 import '../widgets/widgets.dart';
 import 'corporate_summary.dart';
 import 'select_driver.dart';
+import 'weddings_events_summary.dart';
 
 class CatPremiumSedans extends StatefulWidget {
   const CatPremiumSedans({super.key});
@@ -64,6 +65,17 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                       totalCost = await getCost();
                       nextPage(
                           context: context, page: const CorporateSummary());
+                    }
+                  }
+                  else if (serviceType == 'WeddingsEvents') {
+                    driversNames?.clear();
+                    if (driverNeeded) {
+                      nextPage(context: context, page: const SelectDriver());
+                    } else {
+                      totalCost = 0;
+                      totalCost = await getCost();
+                      nextPage(
+                          context: context, page: const WeddingsEventsSummary());
                     }
                   }
                 },

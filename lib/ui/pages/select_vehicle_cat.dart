@@ -188,7 +188,17 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text('All Vehicles'),
+                      ],
+                    )),
+              )
             ],
           ),
         ),

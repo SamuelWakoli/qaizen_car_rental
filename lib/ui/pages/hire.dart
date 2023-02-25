@@ -106,8 +106,10 @@ class _HirePageState extends State<HirePage> {
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection('vehicles').doc(CurrentVehicleDocID).snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('vehicles')
+                .doc(CurrentVehicleDocID)
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return CircularProgressIndicator(
@@ -262,7 +264,8 @@ class _HirePageState extends State<HirePage> {
                                 acceptedTerms = value!;
                               });
                             }),
-                            fillColor: MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+                            fillColor: MaterialStateColor.resolveWith(
+                                (states) => Theme.of(context).primaryColor),
                           ),
                           Text.rich(TextSpan(
                             text: "I accept the ",
@@ -289,7 +292,7 @@ class _HirePageState extends State<HirePage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: OutlinedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             String messageText = '';
                             if (acceptedTerms == false) {
                               messageText =
@@ -298,8 +301,15 @@ class _HirePageState extends State<HirePage> {
                               messageText = 'Please enter number of days.';
                             }
                             acceptedTerms && numberOfDays != ''
-                                ? nextPage(
-                                    context: context, page: const HireSummary())
+                                ? {
+                                    selectedVehicles?.clear(),
+                                    selectedVehicles?.add(CurrentVehicleDocID),
+                                    totalCost = 0,
+                                    totalCost = await getCost(),
+                                    nextPage(
+                                        context: context,
+                                        page: const HireSummary())
+                                  }
                                 : showSnackbar(
                                     context: context,
                                     duration: 4,

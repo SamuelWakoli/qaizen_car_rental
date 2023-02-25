@@ -8,6 +8,7 @@ import '../widgets/vehicle_cards.dart';
 import '../widgets/widgets.dart';
 import 'corporate_summary.dart';
 import 'select_driver.dart';
+import 'weddings_events_summary.dart';
 
 class CatCompactSuvs extends StatefulWidget {
   const CatCompactSuvs({super.key});
@@ -64,6 +65,16 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                       totalCost = await getCost();
                       nextPage(
                           context: context, page: const CorporateSummary());
+                    }
+                  }  else if (serviceType == 'WeddingsEvents') {
+                    driversNames?.clear();
+                    if (driverNeeded) {
+                      nextPage(context: context, page: const SelectDriver());
+                    } else {
+                      totalCost = 0;
+                      totalCost = await getCost();
+                      nextPage(
+                          context: context, page: const WeddingsEventsSummary());
                     }
                   }
                 },

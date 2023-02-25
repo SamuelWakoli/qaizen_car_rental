@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/pages/corporate_summary.dart';
 import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
+import 'package:qaizen_car_rental/ui/pages/weddings_events_summary.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../db/user.dart';
@@ -67,6 +68,16 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
                       totalCost = await getCost();
                       nextPage(
                           context: context, page: const CorporateSummary());
+                    }
+                  } else if (serviceType == 'WeddingsEvents') {
+                    driversNames?.clear();
+                    if (driverNeeded) {
+                      nextPage(context: context, page: const SelectDriver());
+                    } else {
+                      totalCost = 0;
+                      totalCost = await getCost();
+                      nextPage(
+                          context: context, page: const WeddingsEventsSummary());
                     }
                   }
                 },

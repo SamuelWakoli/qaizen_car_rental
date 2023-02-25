@@ -40,7 +40,6 @@ class _HireSummaryState extends State<HireSummary> {
     );
   }
 
-  String costDay = '';
   bool loading = false;
 
   @override
@@ -93,32 +92,12 @@ class _HireSummaryState extends State<HireSummary> {
                       ? summaryItem(
                           name: 'Delivery Location: ', data: deliveryAddress)
                       : const SizedBox(),
-                  const SizedBox(height: 30),
-                  StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('vehicles')
-                          .doc(CurrentVehicleDocID)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        String costDay = snapshot.data!.get('priceDay');
-                        //remove comma from priceDay
-                        costDay = costDay.replaceAll(',', '');
-                        totalCost = int.parse(costDay);
-                        totalCost = (totalCost! * int.parse(numberOfDays!));
-                        vehicleName = snapshot.data!.get('name');
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            summaryItem(
-                                name: 'Number of Days: ', data: numberOfDays),
-                            summaryItem(name: 'Price per day: ', data: costDay),
-                            summaryItem(
-                                name: "COST: ",
-                                data:
-                                    "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}")
-                          ],
-                        );
-                      }),
+                  summaryItem(
+                      name: 'Number of Days: ', data: numberOfDays),
+                    summaryItem(
+                        name: "COST: ",
+                        data:
+                        "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}"),
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/widgets/vehicle_cards.dart';
@@ -55,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               return TabBarView(
                 children: [
                   ListView(
-                      children: snapshot.data!.docs.map((document) {
+                      children: snapshot.data!.docs.toList().reversed.map((document) {
                     return AvailableVehicleCard(
                         id: document.id,
                         availability: document['availability'],
@@ -74,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                         });
                   }).toList()),
                   ListView(
-                      children: snapshot.data!.docs.map((document) {
+                      children: snapshot.data!.docs.toList().reversed.map((document) {
                     return ReturningVehicleCard(
                       id: document.id,
                       availability: document['availability'],
