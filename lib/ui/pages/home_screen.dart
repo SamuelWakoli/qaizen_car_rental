@@ -104,8 +104,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
       bool data = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        if (!snapshot.get('verified')){
-          data = true;
+        bool isVerified = snapshot.get('verified');
+        if (isVerified){
+          data = isVerified;
         }
         favoriteVehicles = snapshot.get('favorites');
         notificationOn = snapshot.get('notifications');

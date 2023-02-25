@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
-import 'chauffeured_summary.dart';
 
 class ChauffeuredPage extends StatefulWidget {
   const ChauffeuredPage({super.key});
@@ -24,7 +22,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
         context: context,
         initialDate: currentDate,
         firstDate: DateTime.now(), //prevent user from selecting old date
-        lastDate: DateTime(2024));
+        lastDate: DateTime(2026));
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         currentDate = pickedDate;
@@ -64,6 +62,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
       return selectedTime;
     }
   }
+
 // end date time
 //
 
@@ -81,46 +80,6 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
           const Text(
             'Provide details for the following fields:',
             style: TextStyle(fontSize: 18),
-          ),
-          ListTile(
-            onTap: () {
-              nextPage(context: context, page: const SelectVehicleCat());
-            },
-            leading: Icon(
-              Icons.car_rental_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select vehicle',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: const Text(
-              '\$selectedVehicle',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              nextPage(context: context, page: const SelectDriver());
-            },
-            leading: Icon(
-              Icons.person_outline,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select driver',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: const Text(
-              '\$selectedDriver',
-              style: TextStyle(fontSize: 16),
-            ),
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.clock,
@@ -174,8 +133,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
                 labelText: "Number of days:",
-                labelStyle: TextStyle(
-                    color: Theme.of(context).primaryColor),
+                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
@@ -195,17 +153,15 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
             padding: const EdgeInsets.all(8.0),
             child: MaterialButton(
               onPressed: () {
-                String messageText = '';
-                if (numberOfDays == ''){
-                  messageText = 'Please enter number of days.';
+                if (numberOfDays != '') {
+                  selectedVehicles?.clear();
+                  selectedVehicleNames?.clear();
+                  setState(() {});
+                  serviceType = "Chauffeured";
+                  nextPage(context: context, page: const SelectVehicleCat());
                 } else {
-                  numberOfDays != ''
-                    ? nextPage(
-                    context: context, page: const ChauffeuredSummary())
-                    : showSnackbar(
-                    context: context,
-                    duration: 4,
-                    message: messageText);
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Please enter number of days.')));
                 }
               },
               child: Padding(
@@ -215,7 +171,7 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
                   children: [
                     Text(
                       ///use this location in the driver app
-                      'Next',
+                      'Select Vehicle',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),

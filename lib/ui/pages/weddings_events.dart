@@ -1,10 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
 import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
-import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
 import 'package:qaizen_car_rental/ui/pages/weddings_events_summary.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,6 +75,8 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
     if (driverNeeded) {
       return ListTile(
         onTap: () {
+          driversNames?.clear();
+          setState(() {});
           nextPage(context: context, page: const SelectDriver());
         },
         leading: Icon(
@@ -158,7 +158,9 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
             ),
           ),
           ListTile(
-            onTap: () {
+            onTap: () { selectedVehicles?.clear();
+              selectedVehicleNames?.clear();
+              setState(() {});
               nextPage(context: context, page: const SelectVehicleCat());
             },
             leading: Icon(
@@ -172,9 +174,9 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            subtitle: const Text(
-              '\$selecedVehicles',
-              style: TextStyle(fontSize: 16),
+            subtitle: Text(
+              selectedVehicleNames!.join(", "),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           const Padding(

@@ -4,7 +4,7 @@ import 'package:qaizen_car_rental/shared/constants.dart';
 class Theming {
   var lightThemeData = ThemeData(
       primaryColor: Constants().primaryColor(),
-      textTheme: const TextTheme(button: TextStyle(color: Colors.white70)),
+      textTheme: const TextTheme(labelLarge: TextStyle(color: Colors.white70)),
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
         elevation: 0,
@@ -47,13 +47,19 @@ class Theming {
           }),
         ),
       ),
+      // timePickerTheme: TimePickerThemeData(
+      //   hourMinuteTextColor: Constants().primaryColor(),
+      //   dayPeriodTextColor: Constants().primaryColor(),
+      //   dialHandColor: Constants().primaryColor(),
+      // ),
+
       useMaterial3: true);
 
   var darkThemeData = ThemeData(
       primaryColor: Constants().primaryColorDark(),
-      textTheme: const TextTheme(button: TextStyle(color: Colors.black54)),
+      textTheme: const TextTheme(labelLarge: TextStyle(color: Colors.black54)),
       brightness: Brightness.dark,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         elevation: 0,
       ),
       navigationBarTheme: const NavigationBarThemeData(

@@ -137,15 +137,6 @@ class _HirePageState extends State<HirePage> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Center(
-                        child: Text(
-                          'Duration',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                          'I am hiring the selected vehicle starting from :'),
                       ListTile(
                         leading: Icon(FontAwesomeIcons.clock,
                             size: 32, color: Theme.of(context).primaryColor),

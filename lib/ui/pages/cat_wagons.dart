@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../db/user.dart';
+import '../../helper/vehicle_card_func.dart';
+import '../../shared/hire_vehicle_data.dart';
 import '../widgets/vehicle_cards.dart';
+import '../widgets/widgets.dart';
+import 'select_driver.dart';
 
 class CatWagons extends StatefulWidget {
   const CatWagons({super.key});
@@ -12,6 +17,59 @@ class CatWagons extends StatefulWidget {
 
 class _CatWagonsState extends State<CatWagons> {
   String appBarTitle = 'Wagons';
+  double bottomHeight = 0;
+
+  Widget listActions(ctx, list) {
+    if (list.isEmpty) {
+      return const SizedBox();
+    } else {
+      return Column(
+        children: [
+          Text(
+            "Selection: ${selectedVehicleNames!.join(", ").toString()}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedVehicleNames?.clear();
+                    selectedVehicles?.clear();
+                    bottomHeight = 0;
+                  });
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.clear),
+                    SizedBox(width: 10),
+                    Text('Clear')
+                  ],
+                ),
+              ),
+              const SizedBox(width: 30),
+              OutlinedButton(
+                onPressed: () {
+                  if (serviceType == "Chauffeured") {
+                    driversNames?.clear();
+                    nextPage(context: context, page: const SelectDriver());
+                  }
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.done),
+                    SizedBox(width: 10),
+                    Text('Proceed')
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +77,12 @@ class _CatWagonsState extends State<CatWagons> {
       appBar: AppBar(
         title: Text(appBarTitle),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(bottomHeight),
+          child: SingleChildScrollView(
+            child: listActions(context, selectedVehicleNames),
+          ),
+        ),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('vehicles').snapshots(),
@@ -29,19 +93,46 @@ class _CatWagonsState extends State<CatWagons> {
                     'No hatchbacks available at the moment. Please call us to reserve one.'),
               );
             }
+
             return ListView(
               children: snapshot.data!.docs.map((e) {
+                String vehicleName = e['name'];
+                bool availability = e['availability'];
+
                 return selectVehiclesList(
-                    context: context,
-                    availability: e['availability'],
-                    appBarTitle: appBarTitle,
-                    id: e.id,
-                    category: e['category'],
-                    image: e['displayImageURL'],
-                    name: e['name'],
-                    onClickDetails: null,
-                    onClickSelect: null,
-                    price: e['priceDay']);
+                  context: context,
+                  availability: e['availability'],
+                  appBarTitle: appBarTitle,
+                  id: e.id,
+                  category: e['category'],
+                  image: e['displayImageURL'],
+                  name: vehicleName,
+                  onClickDetails: () {
+                    CurrentVehicleDocID = e.id;
+                    return details(context: context);
+                  },
+                  onClickSelect: () {
+                    if (availability) {
+                      if (selectedVehicleNames!.contains(vehicleName)) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("$vehicleName is already selected")));
+                      } else {
+                        bottomHeight = 60;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("$vehicleName selected")));
+                        setState(() {
+                          selectedVehicleNames?.add(vehicleName);
+                          selectedVehicles?.add(e.id);
+                        });
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "$vehicleName Is not available. Please call us to reserve.")));
+                    }
+                  },
+                  price: e['priceDay'],
+                );
               }).toList(),
             );
           }),

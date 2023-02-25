@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qaizen_car_rental/shared/hire_vehicle_data.dart';
 import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/details.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +15,15 @@ dynamic details({required context}) {
 }
 
 dynamic hire({required context}) async {
+  totalCost = 0;
+  numberOfDays = '';
+  driversNames = [];
+  selectedVehicles = [];
+  selectedVehicleNames = [];
+
+
   if (dbHasData) {
+    serviceType = "Self Drive";
     nextPage(context: context, page: const HirePage());
   } else {
     showDialog(
@@ -87,3 +96,5 @@ dynamic hire({required context}) async {
         });
   }
 }
+
+//todo: Select()

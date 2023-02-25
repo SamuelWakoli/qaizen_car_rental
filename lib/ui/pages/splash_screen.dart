@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () async {
+    Timer(const Duration(seconds: 1), () async {
       //after checking the sharedPref, if it's not
       // null, check if it returns true or false
       if (FirebaseAuth.instance.currentUser != null) {

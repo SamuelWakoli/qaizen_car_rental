@@ -188,6 +188,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

@@ -158,7 +158,9 @@ class _HireSummaryState extends State<HireSummary> {
                                       title:
                                           const Text('Submitted Successfully'),
                                       content: const Text(
-                                          'Your request has been received. We will send you an agreement document that will be signed upon payment. '),
+                                        'Your request has been received. We will send you an agreement document that will be signed upon payment. ',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                       actions: [
                                         TextButton(
                                           onPressed: () => Navigator.of(context)

@@ -5,6 +5,7 @@ import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
 import 'hotel_airport_summary.dart';
+import 'select_vehicle_cat.dart';
 
 class HotelAirportPage extends StatefulWidget {
   const HotelAirportPage({super.key});
@@ -134,56 +135,6 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
     );
   }
 
-  Widget showVehicles() {
-    if (hotelORairport == false) {
-      return ListTile(
-        onTap: () {},
-        leading: Icon(
-          Icons.car_rental_outlined,
-          color: Theme.of(context).primaryColor,
-          size: 32,
-        ),
-        title: Text(
-          'Select vehicle(s)',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        subtitle: const Text(
-          '\$selecedVehicles',
-          style: TextStyle(fontSize: 16),
-        ),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  Widget showDrivers() {
-    if (hotelORairport == false) {
-      return ListTile(
-        onTap: () {},
-        leading: Icon(
-          Icons.person_outline,
-          color: Theme.of(context).primaryColor,
-          size: 32,
-        ),
-        title: Text(
-          'Select driver(s)',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        subtitle: const Text(
-          '\$driversNames',
-          style: TextStyle(fontSize: 16),
-        ),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,8 +215,6 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
             ),
           ),
           showLocation(),
-          showVehicles(),
-          showDrivers(),
           ListTile(
             leading: Icon(FontAwesomeIcons.clock,
                 size: 32, color: Theme.of(context).primaryColor),

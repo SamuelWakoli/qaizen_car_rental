@@ -172,8 +172,8 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                       return null;
                     }),
                   ),
-                  GestureDetector(
-                    onTap: widget.onClickDetails,
+                  OutlinedButton(
+                    onPressed: widget.onClickDetails,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -185,8 +185,8 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: widget.onClickHire,
+                  OutlinedButton(
+                    onPressed: widget.onClickHire,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -290,8 +290,8 @@ Widget favCard({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
+                OutlinedButton(
+                  onPressed: onClickDetails,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -303,8 +303,8 @@ Widget favCard({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: onClickHire,
+                OutlinedButton(
+                  onPressed: onClickHire,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -501,8 +501,8 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                       return null;
                     }),
                   ),
-                  GestureDetector(
-                    onTap: widget.onClickDetails,
+                  OutlinedButton(
+                    onPressed: widget.onClickDetails,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -631,10 +631,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -644,15 +644,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -724,10 +719,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -737,15 +732,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -817,10 +807,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -830,15 +820,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -910,10 +895,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -923,15 +908,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -1003,10 +983,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -1016,15 +996,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -1096,10 +1071,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -1109,15 +1084,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -1189,10 +1159,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -1202,15 +1172,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
@@ -1282,10 +1247,10 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline_rounded),
@@ -1295,15 +1260,10 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //get vehicle name
-
-                    onClickSelect;
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
                     child: Row(
                       children: const [
                         Icon(Icons.assignment_outlined),
