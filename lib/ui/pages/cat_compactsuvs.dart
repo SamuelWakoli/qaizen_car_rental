@@ -76,6 +76,9 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                       nextPage(
                           context: context, page: const WeddingsEventsSummary());
                     }
+                  }  else if (serviceType == 'ToursSafaris') {
+                    driversNames?.clear();
+                    nextPage(context: context, page: const SelectDriver());
                   }
                 },
                 child: Row(

@@ -76,6 +76,9 @@ class _CatSedansState extends State<CatSedans> {
                       nextPage(
                           context: context, page: const WeddingsEventsSummary());
                     }
+                  }  else if (serviceType == 'ToursSafaris') {
+                    driversNames?.clear();
+                    nextPage(context: context, page: const SelectDriver());
                   }
                 },
                 child: Row(

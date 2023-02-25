@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
-import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
-import 'package:qaizen_car_rental/ui/pages/tours_safaris_summary.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
@@ -50,7 +48,7 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
     }
   }
 
-  String? formatedTime() {
+  String? formattedTime() {
     if (currentTime.hour < 10 && currentTime.minute < 10) {
       selectedTime = '0${currentTime.hour}:0${currentTime.minute}';
       return selectedTime;
@@ -69,6 +67,8 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
 // end date time
 //
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,160 +77,123 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-          child: Column(
+          child: Form(
+            key: _formKey,
+            child: Column(
         children: [
-          const SizedBox(height: 10),
-          const Text(
-            'Provide details for the following fields:',
-            style: TextStyle(fontSize: 18),
-          ),
-          ListTile(
-            onTap: () {
-              nextPage(context: context, page: const PickLocation());
-            },
-            leading: Icon(
-              Icons.location_on_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
+            const SizedBox(height: 10),
+            const Text(
+              'Provide details for the following fields:',
+              style: TextStyle(fontSize: 18),
             ),
-            title: Text(
-              'Select Destination',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              locationAddress,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              selectedVehicles?.clear();
-              selectedVehicleNames?.clear();
-              setState(() {});
-              nextPage(context: context, page: const SelectVehicleCat());
-            },
-            leading: Icon(
-              Icons.car_rental_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select vehicle(s)',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              selectedVehicleNames!.join(", "),
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              driversNames?.clear();
-              setState(() {});
-              nextPage(context: context, page: const SelectDriver());
-            },
-            leading: Icon(
-              Icons.person_outline,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select driver(s)',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: const Text(
-              '\$driversNames',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.clock,
-                size: 32, color: Theme.of(context).primaryColor),
-            title: Text(
-              'Select time',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              formatedTime()!,
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectTime(context),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.calendar_month_outlined,
-              size: 32,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text(
-              'Select date',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              '${currentDate.day}/${currentDate.month}/${currentDate.year}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectDate(context),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  return null;
-                } else {
-                  return "Name cannot be empty";
-                }
+            ListTile(
+              onTap: () {
+                nextPage(context: context, page: const PickLocation());
               },
-              onChanged: (value) {
-                numberOfDays = value;
-              },
-              minLines: 1,
-              cursorHeight: 22,
-              cursorWidth: 2,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                labelText: "Number of days:",
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
+              leading: Icon(
+                Icons.location_on_outlined,
+                color: Theme.of(context).primaryColor,
+                size: 32,
+              ),
+              title: Text(
+                'Select Destination',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
-              keyboardType: TextInputType.number,
+              subtitle: Text(
+                locationAddress,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.clock,
+                  size: 32, color: Theme.of(context).primaryColor),
+              title: Text(
+                'Select time',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                formattedTime()!,
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectTime(context),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_month_outlined,
+                size: 32,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Select date',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                '${currentDate.day}/${currentDate.month}/${currentDate.year}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectDate(context),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    return null;
+                  } else {
+                    return "Name cannot be empty";
+                  }
+                },
+                onChanged: (value) {
+                  numberOfDays = value;
+                },
+                minLines: 1,
+                cursorHeight: 22,
+                cursorWidth: 2,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  labelText: "Number of days:",
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: OutlinedButton(
-              onPressed: () =>
-                  nextPage(context: context, page: const ToursSafarisSummary()),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  serviceType = 'ToursSafaris';
+                  driversNames?.clear();
+                  selectedVehicleNames?.clear();
+                  selectedVehicles?.clear();
+                  nextPage(context: context, page: const SelectVehicleCat());
+                }
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      ///use this location in the driver app
-                      'Next',
+                      'Select vehicle(s) and driver(s)',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),
@@ -246,7 +209,8 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
             ),
           ),
         ],
-      )),
+      ),
+          )),
     );
   }
 }

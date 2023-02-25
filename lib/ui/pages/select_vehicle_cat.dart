@@ -189,7 +189,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                 child: OutlinedButton(
                     onPressed: () {},
                     child: Row(

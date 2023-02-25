@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/pages/chauffeured_summary.dart';
 import 'package:qaizen_car_rental/ui/pages/corporate_summary.dart';
+import 'package:qaizen_car_rental/ui/pages/tours_safaris_summary.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/drivers_card.dart';
@@ -16,11 +17,60 @@ class SelectDriver extends StatefulWidget {
 }
 
 class _SelectDriverState extends State<SelectDriver> {
-  double bottomHeight = 0;
+  double bottomHeight = 100;
+
+  Future<void> nextActivity() async {
+    if (serviceType == "Chauffeured") {
+      totalCost = 0;
+      totalCost = await getCost();
+      nextPage(
+          context: context, page: const ChauffeuredSummary());
+    } else if (serviceType == "Corporate") {
+      totalCost = 0;
+      totalCost = await getCost();
+      nextPage(context: context, page: const CorporateSummary());
+    } else if (serviceType == 'WeddingsEvents') {
+      totalCost = 0;
+      totalCost = await getCost();
+      nextPage(
+          context: context, page: const WeddingsEventsSummary());
+    } else if (serviceType == 'ToursSafaris') {
+      totalCost = 0;
+      totalCost = await getCost();
+      nextPage(
+          context: context, page: const ToursSafarisSummary());
+    }
+  }
 
   Widget listActions(ctx, list) {
     if (list.isEmpty) {
-      return const SizedBox();
+      return Column(
+        children: [
+          const Text('Click "proceed without driver" if no driver is available'),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+                onPressed: () async => nextActivity(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Proceed without driver',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_outlined,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
+                )),
+          ),
+        ],
+      );
     } else {
       return Column(
         children: [
@@ -35,7 +85,6 @@ class _SelectDriverState extends State<SelectDriver> {
                 onPressed: () {
                   setState(() {
                     driversNames?.clear();
-                    bottomHeight = 0;
                   });
                 },
                 child: Row(
@@ -48,23 +97,7 @@ class _SelectDriverState extends State<SelectDriver> {
               ),
               const SizedBox(width: 30),
               OutlinedButton(
-                onPressed: () async {
-                  if (serviceType == "Chauffeured") {
-                    totalCost = 0;
-                    totalCost = await getCost();
-                    nextPage(
-                        context: context, page: const ChauffeuredSummary());
-                  } else if (serviceType == "Corporate") {
-                    totalCost = 0;
-                    totalCost = await getCost();
-                    nextPage(context: context, page: const CorporateSummary());
-                  } else if (serviceType == 'WeddingsEvents') {
-                    totalCost = 0;
-                    totalCost = await getCost();
-                    nextPage(
-                        context: context, page: const WeddingsEventsSummary());
-                  }
-                },
+                onPressed: () async => nextActivity(),
                 child: Row(
                   children: const [
                     Icon(Icons.done),
