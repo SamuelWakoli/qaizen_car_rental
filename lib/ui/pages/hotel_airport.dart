@@ -5,7 +5,6 @@ import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
 import 'hotel_airport_summary.dart';
-import 'select_vehicle_cat.dart';
 
 class HotelAirportPage extends StatefulWidget {
   const HotelAirportPage({super.key});
@@ -64,6 +63,7 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
       return selectedTime;
     }
   }
+
 // end date time
 //
 
@@ -108,6 +108,14 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        textInputAction: TextInputAction.next,
+        validator: (val) {
+          if (val!.isNotEmpty) {
+            return null;
+          } else {
+            return "Name cannot be empty";
+          }
+        },
         onChanged: (value) {
           hotelAirportName = value;
         },
@@ -135,6 +143,8 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
     );
   }
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,140 +153,157 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 10),
-          const Center(
-            child: Text(
-              'Provide details for the following fields:',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              'Specify Service:',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          Column(
-            children: [
-              RadioListTile(
-                title: const Text("Hotel Transfer"),
-                value: false,
-                groupValue: hotelORairport,
-                onChanged: (value) {
-                  setState(() {
-                    hotelORairport = value!;
-                    serviceType = "Hotel Transfer";
-                  });
-                },
-                activeColor: Theme.of(context).primaryColor,
+          child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            const Center(
+              child: Text(
+                'Provide details for the following fields:',
+                style: TextStyle(fontSize: 18),
               ),
-              RadioListTile(
-                title: const Text("Airport Transfer"),
-                value: true,
-                groupValue: hotelORairport,
-                onChanged: (value) {
-                  setState(() {
-                    hotelORairport = value!;
-                    serviceType = "Airport Transfer";
-                  });
-                },
-                activeColor: Theme.of(context).primaryColor,
+            ),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                'Specify Service:',
+                style: TextStyle(fontSize: 16),
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          showServiceName(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              cursorHeight: 22,
-              cursorWidth: 2,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                labelText: "Short description about the transfer:",
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
+            ),
+            Column(
+              children: [
+                RadioListTile(
+                  title: const Text("Hotel Transfer"),
+                  value: false,
+                  groupValue: hotelORairport,
+                  onChanged: (value) {
+                    setState(() {
+                      hotelORairport = value!;
+                    });
+                  },
+                  activeColor: Theme.of(context).primaryColor,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
+                RadioListTile(
+                  title: const Text("Airport Transfer"),
+                  value: true,
+                  groupValue: hotelORairport,
+                  onChanged: (value) {
+                    setState(() {
+                      hotelORairport = value!;
+                    });
+                  },
+                  activeColor: Theme.of(context).primaryColor,
                 ),
-              ),
+              ],
             ),
-          ),
-          showLocation(),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.clock,
-                size: 32, color: Theme.of(context).primaryColor),
-            title: Text(
-              'Select time',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              formatedTime()!,
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectTime(context),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.calendar_month_outlined,
-              size: 32,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text(
-              'Select date',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              '${currentDate.day}/${currentDate.month}/${currentDate.year}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectDate(context),
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-              onPressed: () =>
-                  nextPage(context: context, page: const HotelAirportSummary()),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      ///use this location in the driver app
-                      'Next',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward_outlined,
+            const SizedBox(height: 10),
+            showServiceName(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                onChanged: (value) => transferDescription = value,
+                textInputAction: TextInputAction.next,
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    return null;
+                  } else {
+                    return "Please provide a short description";
+                  }
+                },
+                cursorHeight: 22,
+                cursorWidth: 2,
+                maxLines: 6,
+                minLines: 1,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  labelText: "Short description about the transfer:",
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                     ),
-                  ],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            showLocation(),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.clock,
+                  size: 32, color: Theme.of(context).primaryColor),
+              title: Text(
+                'Select time',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                formatedTime()!,
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectTime(context),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_month_outlined,
+                size: 32,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Select date',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                '${currentDate.day}/${currentDate.month}/${currentDate.year}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectDate(context),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    serviceType = hotelORairport ? "Airport Transfer" : "Hotel Transfer";
+                    nextPage(
+                        context: context, page: const HotelAirportSummary());
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        ///use this location in the driver app
+                        'Next',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       )),
     );
   }

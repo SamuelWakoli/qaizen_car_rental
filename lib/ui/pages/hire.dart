@@ -303,6 +303,7 @@ class _HirePageState extends State<HirePage> {
                             acceptedTerms && numberOfDays != ''
                                 ? {
                                     selectedVehicles?.clear(),
+                              selectedVehicleNames?.clear(),
                                     selectedVehicles?.add(CurrentVehicleDocID),
                                     totalCost = 0,
                                     totalCost = await getCost(),

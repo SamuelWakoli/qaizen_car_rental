@@ -105,6 +105,8 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
                                 'total cost': totalCost,
                                 'paid': false,
                                 'status': 'Pending',
+                                'hotel/airport name': hotelAirportName,
+                                'transfer desc': transferDescription,
                               };
 
                               await Bookings.set(data).whenComplete(() {

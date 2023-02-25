@@ -95,7 +95,7 @@ class _HireSummaryState extends State<HireSummary> {
                   summaryItem(
                       name: 'Number of Days: ', data: numberOfDays),
                     summaryItem(
-                        name: "COST: ",
+                        name: "TOTAL COST: ",
                         data:
                         "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}"),
                   const SizedBox(height: 10),
@@ -124,6 +124,8 @@ class _HireSummaryState extends State<HireSummary> {
                             'total cost': totalCost,
                             'paid': false,
                             'status': 'Pending',
+                            'hotel/airport name': hotelAirportName,
+                            'transfer desc': transferDescription,
                           };
 
                           await Bookings.set(data).whenComplete(() {
