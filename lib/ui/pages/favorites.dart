@@ -17,7 +17,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(favoriteVehicles.isNotEmpty ? 'Favorites' : 'You have no favorites'),
+        title: Text(favoriteVehicles.isNotEmpty
+            ? 'Favorites'
+            : 'You have no favorites'),
         centerTitle: true,
       ),
       body: StreamBuilder(
@@ -26,33 +28,37 @@ class _FavoritesPageState extends State<FavoritesPage> {
             if (!snapshot.hasData) {
               return Center(
                 child: CircularProgressIndicator(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               );
             }
 
-            return
-              ListView(
-                  children: snapshot.data!.docs.map((document) {
-                    return favCard(id: document.id,
-                        image: document['displayImageURL'],
-                        name: document['name'],
-                        price: document['priceDay'],
-                        availability: document['availability'],
-                        onClickHire: (){
-                          CurrentVehicleDocID = document.id;
-                          hire(context: context);
-                        },
-                        onClickDetails: (){
-                          CurrentVehicleDocID = document.id;
-                          details(context: context);
-                        });
-                  }).toList()
-              );
-          }
-      ),
+            if (favoriteVehicles.isEmpty) {
+              return const Center(
+                  child: Text(
+                    'Like vehicles to add them to Favorites',
+                    style: TextStyle(fontSize: 18),
+                  ));
+            }
+
+            return ListView(
+                children: snapshot.data!.docs.map((document) {
+              return favCard(
+                  id: document.id,
+                  image: document['displayImageURL'],
+                  name: document['name'],
+                  price: document['priceDay'],
+                  availability: document['availability'],
+                  onClickHire: () {
+                    CurrentVehicleDocID = document.id;
+                    hire(context: context);
+                  },
+                  onClickDetails: () {
+                    CurrentVehicleDocID = document.id;
+                    details(context: context);
+                  });
+            }).toList());
+          }),
     );
   }
 }
