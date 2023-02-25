@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
 //todo: if service request is/was approved(bool), show records
 //TODO use PDFs only for records
@@ -17,23 +19,38 @@ class _RecordsPageState extends State<RecordsPage> {
         title: const Text('Records'),
         centerTitle: true,
       ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 810),
-          child: ListView(
-            children: const [
-              ListTile(
-                title: Text('Tesla Model X'),
-                subtitle: Text("""
-Date:
-Duration: 
-Service: 
-"""),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(getUserName())
+              .collection('records')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              Center(
+                  child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ));
+            }
+
+            if (snapshot.data!.docs.toList().isEmpty) {
+              return const Center(
+                  child: Text(
+                'No records found',
+                style: TextStyle(fontSize: 18),
+              ));
+            }
+
+            return ListView(
+                children: snapshot.data!.docs.toList().reversed.map((e) {
+              return ListTile(
+                  title: Text(e['vehiclesList'].join(", ")), subtitle: Text("""
+Date: ${e['starts']}
+Duration: ${e['duration']}
+Service: ${e['type']}
+"""));
+            }).toList());
+          }),
     );
   }
 }
