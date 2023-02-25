@@ -28,8 +28,6 @@ String? vehicleName = '';
 /// Corporate
 String? orgName = '';
 
-/// WedEvents
-
 ///Hotel Airport
 String? hotelAirportName = "";
 String? transferDescription = "";
