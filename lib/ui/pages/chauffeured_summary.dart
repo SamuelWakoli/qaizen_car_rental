@@ -75,7 +75,6 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                 summaryItem(name: 'Email Address: ', data: FirebaseAuth.instance.currentUser!.email.toString()),
                 const SizedBox(height: 20),
                 summaryItem(name: 'Vehicle: ', data: selectedVehicleNames?.join(", ")),
-
                 summaryItem(name: 'Driver: ', data: driversNames?.join(", ")),
                 summaryItem(
                     name: 'Service starts at: ',

@@ -149,9 +149,10 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
               keyboardType: TextInputType.number,
             ),
           ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
+            child: OutlinedButton(
               onPressed: () {
                 if (numberOfDays != '') {
                   selectedVehicles?.clear();

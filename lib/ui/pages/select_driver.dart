@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/ui/pages/chauffeured_summary.dart';
+import 'package:qaizen_car_rental/ui/pages/corporate_summary.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/drivers_card.dart';
@@ -50,6 +51,10 @@ class _SelectDriverState extends State<SelectDriver> {
                     totalCost = 0;
                     totalCost = await getCost();
                     nextPage(context: context, page: const ChauffeuredSummary());
+                  } else if (serviceType == "Corporate") {
+                    totalCost = 0;
+                    totalCost = await getCost();
+                    nextPage(context: context, page: const CorporateSummary());
                   }
                 },
                 child: Row(
@@ -100,7 +105,7 @@ class _SelectDriverState extends State<SelectDriver> {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("You have already selected $driverName")));
                         } else {
-                          bottomHeight = 60;
+                          bottomHeight = 120;
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("You have selected $driverName")));
                           setState(() {

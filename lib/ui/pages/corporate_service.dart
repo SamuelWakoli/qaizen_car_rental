@@ -67,38 +67,8 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
   }
 
 // end date time
-//
 
-  bool driverNeeded = false;
-
-  Widget needDriver() {
-    if (driverNeeded) {
-      return ListTile(
-        onTap: () {
-          driversNames?.clear();
-          setState(() {});
-          nextPage(context: context, page: const SelectDriver());
-        },
-        leading: Icon(
-          Icons.person_outline,
-          color: Theme.of(context).primaryColor,
-          size: 32,
-        ),
-        title: Text(
-          'Select driver(s)',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        subtitle: const Text(
-          '\$driversNames',
-          style: TextStyle(fontSize: 16),
-        ),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -108,221 +78,198 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 10),
-          const Center(
-            child: Text(
-              'Provide details for the following fields:',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  return null;
-                } else {
-                  return "Name cannot be empty";
-                }
-              },
-              onChanged: (value) {
-                orgName = value;
-              },
-              minLines: 1,
-              cursorHeight: 22,
-              cursorWidth: 2,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                labelText: "Organisation's Name:",
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.name,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              nextPage(context: context, page: const PickLocation());
-            },
-            leading: Icon(
-              Icons.location_on_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select Organisation\'s Location',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
+          child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            const Center(
+              child: Text(
+                'Provide details for the following fields:',
+                style: TextStyle(fontSize: 18),
               ),
             ),
-            subtitle: Text(
-              locationAddress,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              selectedVehicles?.clear();
-              selectedVehicleNames?.clear();
-              setState(() {});
-              nextPage(context: context, page: const SelectVehicleCat());
-            },
-            leading: Icon(
-              Icons.car_rental_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select vehicle(s)',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              selectedVehicleNames!.join(", "),
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text('Do you need our driver(s)?'),
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: 120,
-                child: RadioListTile(
-                  title: const Text("Yes"),
-                  value: true,
-                  groupValue: driverNeeded,
-                  onChanged: (value) {
-                    setState(() {
-                      driverNeeded = value!;
-                    });
-                  },
-                  activeColor: Theme.of(context).primaryColor,
-                ),
-              ),
-              SizedBox(
-                width: 120,
-                child: RadioListTile(
-                  title: const Text("No"),
-                  value: false,
-                  groupValue: driverNeeded,
-                  onChanged: (value) {
-                    setState(() {
-                      driverNeeded = value!;
-                    });
-                  },
-                  activeColor: Theme.of(context).primaryColor,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          needDriver(),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.clock,
-                size: 32, color: Theme.of(context).primaryColor),
-            title: Text(
-              'Select time',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              formatedTime()!,
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectTime(context),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.calendar_month_outlined,
-              size: 32,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text(
-              'Select date',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              '${currentDate.day}/${currentDate.month}/${currentDate.year}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            onTap: () => _selectDate(context),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              validator: (val) {
-                if (val!.isNotEmpty) {
-                  return null;
-                } else {
-                  return "Name cannot be empty";
-                }
-              },
-              onChanged: (value) {
-                numberOfDays = value;
-              },
-              minLines: 1,
-              cursorHeight: 22,
-              cursorWidth: 2,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                labelText: "Number of days:",
-                labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
-                focusedBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              onPressed: () =>
-                  nextPage(context: context, page: const CorporateSummary()),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      ///use this location in the driver app
-                      'Next',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward_outlined,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                textInputAction: TextInputAction.next,
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    return null;
+                  } else {
+                    return "Organisation's name cannot be empty";
+                  }
+                },
+                onChanged: (value) {
+                  orgName = value;
+                },
+                minLines: 1,
+                cursorHeight: 22,
+                cursorWidth: 2,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  labelText: "Organisation's Name:",
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                     ),
-                  ],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.name,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                textInputAction: TextInputAction.next,
+                validator: (val) {
+                  if (val!.isNotEmpty) {
+                    return null;
+                  } else {
+                    return "Number of days cannot be empty";
+                  }
+                },
+                onChanged: (value) {
+                  numberOfDays = value;
+                },
+                minLines: 1,
+                cursorHeight: 22,
+                cursorWidth: 2,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  labelText: "Number of days:",
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.clock,
+                  size: 32, color: Theme.of(context).primaryColor),
+              title: Text(
+                'Select time',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                formatedTime()!,
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectTime(context),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_month_outlined,
+                size: 32,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Select date',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              subtitle: Text(
+                '${currentDate.day}/${currentDate.month}/${currentDate.year}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              onTap: () => _selectDate(context),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text('Do you need our driver(s)?'),
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: RadioListTile(
+                    title: const Text("Yes"),
+                    value: true,
+                    groupValue: driverNeeded,
+                    onChanged: (value) {
+                      setState(() {
+                        driverNeeded = value!;
+                      });
+                    },
+                    activeColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+                SizedBox(
+                  width: 120,
+                  child: RadioListTile(
+                    title: const Text("No"),
+                    value: false,
+                    groupValue: driverNeeded,
+                    onChanged: (value) {
+                      setState(() {
+                        driverNeeded = value!;
+                      });
+                    },
+                    activeColor: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    serviceType = 'Corporate';
+                    driversNames?.clear();
+                    selectedVehicleNames?.clear();
+                    selectedVehicles?.clear();
+                    nextPage(context: context, page: const SelectVehicleCat());
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        driverNeeded
+                            ? 'Select vehicle(s) and driver(s)'
+                            : 'Select vehicle(s)',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       )),
     );
   }

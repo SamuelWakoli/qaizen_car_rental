@@ -138,26 +138,6 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
             ),
           ),
           ListTile(
-            onTap: () {
-              nextPage(context: context, page: const PickLocation());
-            },
-            leading: Icon(
-              Icons.location_on_outlined,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            title: Text(
-              'Select location:',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            subtitle: Text(
-              locationAddress,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          ListTile(
             onTap: () { selectedVehicles?.clear();
               selectedVehicleNames?.clear();
               setState(() {});
@@ -280,7 +260,7 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
+            child: OutlinedButton(
               onPressed: () => nextPage(
                   context: context, page: const WeddingsEventsSummary()),
               child: Padding(

@@ -248,9 +248,10 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
             ),
             onTap: () => _selectDate(context),
           ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
+            child: OutlinedButton(
               onPressed: () =>
                   nextPage(context: context, page: const HotelAirportSummary()),
               child: Padding(

@@ -288,7 +288,7 @@ class _HirePageState extends State<HirePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
+                        child: OutlinedButton(
                           onPressed: () {
                             String messageText = '';
                             if (acceptedTerms == false) {

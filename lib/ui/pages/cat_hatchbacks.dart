@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/ui/pages/corporate_summary.dart';
 import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
@@ -25,9 +26,12 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
     } else {
       return Column(
         children: [
-          Text(
-            "Selection: ${selectedVehicleNames!.join(", ").toString()}",
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Selection: ${selectedVehicleNames!.join(", ").toString()}",
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,10 +54,20 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
               ),
               const SizedBox(width: 30),
               OutlinedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (serviceType == "Chauffeured") {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
+                  } else if (serviceType == "Corporate") {
+                    driversNames?.clear();
+                    if (driverNeeded) {
+                      nextPage(context: context, page: const SelectDriver());
+                    } else {
+                      totalCost = 0;
+                      totalCost = await getCost();
+                      nextPage(
+                          context: context, page: const CorporateSummary());
+                    }
                   }
                 },
                 child: Row(
@@ -97,13 +111,14 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
             return ListView(
               children: snapshot.data!.docs.map((e) {
                 String vehicleName = e['name'];
+                String vehicleId = e.id;
                 bool availability = e['availability'];
 
                 return selectVehiclesList(
                   context: context,
                   availability: e['availability'],
                   appBarTitle: appBarTitle,
-                  id: e.id,
+                  id: vehicleId,
                   category: e['category'],
                   image: e['displayImageURL'],
                   name: vehicleName,
@@ -113,13 +128,13 @@ class _CatHatchbacksState extends State<CatHatchbacks> {
                   },
                   onClickSelect: () {
                     if (availability) {
-                      if (selectedVehicleNames!.contains(vehicleName)) {
+                      if (selectedVehicles!.contains(vehicleId)) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("$vehicleName is already selected")));
                       } else {
-                          bottomHeight = 60;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("$vehicleName selected")));
+                        bottomHeight = 120;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("$vehicleName selected")));
                         setState(() {
                           selectedVehicleNames?.add(vehicleName);
                           selectedVehicles?.add(e.id);

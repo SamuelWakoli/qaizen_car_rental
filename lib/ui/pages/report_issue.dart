@@ -75,7 +75,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
                       };
                       await FirebaseFirestore.instance
                           .collection('issues')
-                          .doc(getUserName())
+                          .doc("${getUserName()} ${DateTime.now()}")
                           .set(data)
                           .whenComplete(
                         () {

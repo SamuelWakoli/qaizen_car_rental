@@ -202,17 +202,25 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
               decoration: InputDecoration(
                 labelText: "Number of days:",
                 labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-                enabledBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
-                focusedBorder:
-                    const OutlineInputBorder(borderSide: BorderSide.none),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
               ),
               keyboardType: TextInputType.number,
             ),
           ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
+            child: OutlinedButton(
               onPressed: () =>
                   nextPage(context: context, page: const ToursSafarisSummary()),
               child: Padding(

@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 ///This data will be used to generate agreement pdf
-bool? needDriver;
-
 ///shared var
+bool driverNeeded = false;
 String serviceType = "";
 dynamic locationDataLat;
 dynamic locationDataLon;

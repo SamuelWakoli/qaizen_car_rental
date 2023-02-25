@@ -6,6 +6,7 @@ import '../../helper/vehicle_card_func.dart';
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/vehicle_cards.dart';
 import '../widgets/widgets.dart';
+import 'corporate_summary.dart';
 import 'select_driver.dart';
 
 class CatCompactSuvs extends StatefulWidget {
@@ -50,10 +51,20 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
               ),
               const SizedBox(width: 30),
               OutlinedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (serviceType == "Chauffeured") {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
+                  } else if (serviceType == "Corporate") {
+                    driversNames?.clear();
+                    if (driverNeeded) {
+                      nextPage(context: context, page: const SelectDriver());
+                    } else {
+                      totalCost = 0;
+                      totalCost = await getCost();
+                      nextPage(
+                          context: context, page: const CorporateSummary());
+                    }
                   }
                 },
                 child: Row(
@@ -97,13 +108,14 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
             return ListView(
               children: snapshot.data!.docs.map((e) {
                 String vehicleName = e['name'];
+                String vehicleId = e.id;
                 bool availability = e['availability'];
 
                 return selectVehiclesList(
                   context: context,
                   availability: e['availability'],
                   appBarTitle: appBarTitle,
-                  id: e.id,
+                  id: vehicleId,
                   category: e['category'],
                   image: e['displayImageURL'],
                   name: vehicleName,
@@ -113,11 +125,11 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
                   },
                   onClickSelect: () {
                     if (availability) {
-                      if (selectedVehicleNames!.contains(vehicleName)) {
+                      if (selectedVehicles!.contains(vehicleId)) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("$vehicleName is already selected")));
                       } else {
-                        bottomHeight = 60;
+                        bottomHeight = 120;
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("$vehicleName selected")));
                         setState(() {
