@@ -273,6 +273,13 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "favorites": [],
                       "verified by": "",
                       "notifications": true,
+                      "passport URL": "",
+                      "national ID URL": "",
+                      "driving licence URL": "",
+                      "referee name 1": "",
+                      "referee phone 1": "",
+                      "referee name 2": "",
+                      "referee phone 2": "",
                     };
 
                     await UserData.set(userData).whenComplete(() {
