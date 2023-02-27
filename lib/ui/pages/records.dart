@@ -27,7 +27,7 @@ class _RecordsPageState extends State<RecordsPage> {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              Center(
+              return Center(
                   child: CircularProgressIndicator(
                 color: Theme.of(context).primaryColor,
               ));

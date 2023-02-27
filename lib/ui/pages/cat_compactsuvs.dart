@@ -115,7 +115,7 @@ class _CatCompactSuvsState extends State<CatCompactSuvs> {
             if (!snapshot.hasData) {
               return const ListTile(
                 title: Text(
-                    'No hatchbacks available at the moment. Please call us to reserve one.'),
+                    'No compact SUVs available at the moment. Please call us to reserve one.'),
               );
             }
 
