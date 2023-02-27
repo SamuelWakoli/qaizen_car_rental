@@ -20,6 +20,7 @@ dynamic hire({required context}) async {
   driversNames = [];
   selectedVehicles = [];
   selectedVehicleNames = [];
+  deliveryAddress = '';
 
 
   if (dbHasData) {

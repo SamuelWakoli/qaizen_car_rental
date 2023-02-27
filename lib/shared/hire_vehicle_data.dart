@@ -7,7 +7,6 @@ bool driverNeeded = false;
 String serviceType = "";
 dynamic locationDataLat;
 dynamic locationDataLon;
-String locationAddress = '';
 String? selectedTime = '${TimeOfDay.now().hour}:${TimeOfDay.now().minute}';
 String? selectedDate =
     '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
@@ -29,6 +28,7 @@ String? vehicleName = '';
 String? orgName = '';
 
 ///Hotel Airport
+bool hotelORairport = false; //false for hotel
 String? hotelAirportName = "";
 String? transferDescription = "";
 

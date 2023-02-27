@@ -37,7 +37,7 @@ class _PickLocationState extends State<PickLocation> {
               });
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(locationAddress),
+                content: Text(deliveryAddress),
                 duration: const Duration(seconds: 5),
               ));
             }));

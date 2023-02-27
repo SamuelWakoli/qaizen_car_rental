@@ -84,7 +84,7 @@ class _HirePageState extends State<HirePage> {
             ),
           ),
           subtitle: Text(
-            locationAddress,
+            deliveryAddress,
             style: const TextStyle(fontSize: 16),
           ),
           onTap: () {
@@ -121,228 +121,223 @@ class _HirePageState extends State<HirePage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 510, minWidth: 300),
-            child: Form(
-                key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Center(
-                        child: Text(
-                          'Provide details for the following fields:',
-                          style: TextStyle(fontSize: 18),
-                        ),
+        child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Center(
+                    child: Text(
+                      'Provide details for the following fields:',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    leading: Icon(FontAwesomeIcons.clock,
+                        size: 32, color: Theme.of(context).primaryColor),
+                    title: Text(
+                      'Select time:',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                       ),
-                      const SizedBox(height: 10),
-                      ListTile(
-                        leading: Icon(FontAwesomeIcons.clock,
-                            size: 32, color: Theme.of(context).primaryColor),
-                        title: Text(
-                          'Select time:',
-                          style: TextStyle(
+                    ),
+                    subtitle: Text(
+                      formattedTime()!,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    onTap: () => _selectTime(context),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.calendar_month_outlined,
+                      size: 32,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    title: Text(
+                      'Select date:',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${currentDate.day}/${currentDate.month}/${currentDate.year}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    onTap: () => _selectDate(context),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      validator: (val) {
+                        if (val!.isNotEmpty) {
+                          return null;
+                        } else {
+                          return "Name cannot be empty";
+                        }
+                      },
+                      onChanged: (value) {
+                        numberOfDays = value;
+                      },
+                      minLines: 1,
+                      cursorHeight: 22,
+                      cursorWidth: 2,
+                      cursorColor: Theme.of(context).primaryColor,
+                      decoration: InputDecoration(
+                        labelText: "Number of days:",
+                        labelStyle: TextStyle(
+                            color: Theme.of(context).primaryColor),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
-                        subtitle: Text(
-                          formattedTime()!,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        onTap: () => _selectTime(context),
                       ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.calendar_month_outlined,
-                          size: 32,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        title: Text(
-                          'Select date:',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        subtitle: Text(
-                          '${currentDate.day}/${currentDate.month}/${currentDate.year}',
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        onTap: () => _selectDate(context),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          validator: (val) {
-                            if (val!.isNotEmpty) {
-                              return null;
-                            } else {
-                              return "Name cannot be empty";
-                            }
-                          },
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Center(
+                    child: Text(
+                      'Delivery',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                      'Do you want the vehicle to be delivered to you? (Delivery fee applied)'),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 120,
+                        child: RadioListTile(
+                          title: const Text("Yes"),
+                          value: true,
+                          groupValue: delivery,
                           onChanged: (value) {
-                            numberOfDays = value;
+                            setState(() {
+                              delivery = value!;
+                            });
                           },
-                          minLines: 1,
-                          cursorHeight: 22,
-                          cursorWidth: 2,
-                          cursorColor: Theme.of(context).primaryColor,
-                          decoration: InputDecoration(
-                            labelText: "Number of days:",
-                            labelStyle: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                          keyboardType: TextInputType.number,
+                          activeColor: Theme.of(context).primaryColor,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      const Center(
-                        child: Text(
-                          'Delivery',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                          'Do you want the vehicle to be delivered to you? (Delivery fee applied)'),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            child: RadioListTile(
-                              title: const Text("Yes"),
-                              value: true,
-                              groupValue: delivery,
-                              onChanged: (value) {
-                                setState(() {
-                                  delivery = value!;
-                                });
-                              },
-                              activeColor: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 120,
-                            child: RadioListTile(
-                              title: const Text("No"),
-                              value: false,
-                              groupValue: delivery,
-                              onChanged: (value) {
-                                setState(() {
-                                  delivery = value!;
-                                });
-                              },
-                              activeColor: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      showDeliveryLocation(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                            value: acceptedTerms,
-                            onChanged: ((value) {
-                              setState(() {
-                                acceptedTerms = value!;
-                              });
-                            }),
-                            fillColor: MaterialStateColor.resolveWith(
-                                (states) => Theme.of(context).primaryColor),
-                          ),
-                          Text.rich(TextSpan(
-                            text: "I accept the ",
-                            style: const TextStyle(fontSize: 14),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "terms and conditions",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16,
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      nextPage(
-                                          context: context,
-                                          page: const TermsConditionsPage());
-                                    }),
-                            ],
-                          )),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: OutlinedButton(
-                          onPressed: () async {
-                            String messageText = '';
-                            if (acceptedTerms == false) {
-                              messageText =
-                                  'Accept the terms and conditions to continue.';
-                            } else {
-                              messageText = 'Please enter number of days.';
-                            }
-                            acceptedTerms && numberOfDays != ''
-                                ? {
-                                    selectedVehicles?.clear(),
-                              selectedVehicleNames?.clear(),
-                                    selectedVehicles?.add(CurrentVehicleDocID),
-                                    totalCost = 0,
-                                    totalCost = await getCost(),
-                                    nextPage(
-                                        context: context,
-                                        page: const HireSummary())
-                                  }
-                                : showSnackbar(
-                                    context: context,
-                                    duration: 4,
-                                    message: messageText);
+                      SizedBox(
+                        width: 120,
+                        child: RadioListTile(
+                          title: const Text("No"),
+                          value: false,
+                          groupValue: delivery,
+                          onChanged: (value) {
+                            setState(() {
+                              delivery = value!;
+                            });
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ///use this location in the driver app
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Icon(
-                                  Icons.arrow_forward_outlined,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
+                          activeColor: Theme.of(context).primaryColor,
                         ),
                       ),
                     ],
                   ),
-                )),
-          ),
-        ),
+                  const SizedBox(height: 10),
+                  showDeliveryLocation(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: acceptedTerms,
+                        onChanged: ((value) {
+                          setState(() {
+                            acceptedTerms = value!;
+                          });
+                        }),
+                        fillColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context).primaryColor),
+                      ),
+                      Text.rich(TextSpan(
+                        text: "I accept the ",
+                        style: const TextStyle(fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: "terms and conditions",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  nextPage(
+                                      context: context,
+                                      page: const TermsConditionsPage());
+                                }),
+                        ],
+                      )),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        String messageText = '';
+                        if (acceptedTerms == false) {
+                          messageText =
+                              'Accept the terms and conditions to continue.';
+                        } else {
+                          messageText = 'Please enter number of days.';
+                        }
+                        acceptedTerms && numberOfDays != ''
+                            ? {
+                                selectedVehicles?.clear(),
+                          selectedVehicleNames?.clear(),
+                                selectedVehicles?.add(CurrentVehicleDocID),
+                                totalCost = 0,
+                                totalCost = await getCost(),
+                                nextPage(
+                                    context: context,
+                                    page: const HireSummary())
+                              }
+                            : showSnackbar(
+                                context: context,
+                                duration: 4,
+                                message: messageText);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              ///use this location in the driver app
+                              'Next',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_forward_outlined,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
       ),
     );
   }

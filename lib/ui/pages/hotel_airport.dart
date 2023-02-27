@@ -67,8 +67,6 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
 // end date time
 //
 
-  bool hotelORairport = false; //false for hotel
-
   ///Todo
   ///if service is hotel, show location list tile
   Widget showLocation() {
@@ -86,7 +84,7 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
           ),
         ),
         subtitle: Text(
-          locationAddress,
+          deliveryAddress,
           style: const TextStyle(fontSize: 16),
         ),
         onTap: () {

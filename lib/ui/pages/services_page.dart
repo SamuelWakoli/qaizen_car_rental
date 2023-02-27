@@ -38,6 +38,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     driversNames?.clear();
                     serviceType = "Self Drive";
                     numberOfDays = '';
+                    deliveryAddress = '';
                    nextPage(context: context, page: const SelfDrive());
                   }),
               servicesCard(
@@ -50,6 +51,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     driversNames?.clear();
                     serviceType = "Chauffeured";
                     numberOfDays = '';
+                    deliveryAddress = '';
                     nextPage(context: context, page: const ChauffeuredPage());
                   }),
             ],
@@ -67,6 +69,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    deliveryAddress = '';
                     nextPage(
                         context: context, page: const CorporateServicePage());
                   }),
@@ -79,6 +82,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    deliveryAddress = '';
                     nextPage(context: context, page: const WeddingsEventsPage());
                   }),
             ],
@@ -96,6 +100,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    deliveryAddress = '';
                     nextPage(context: context, page: const ToursSafarisPage());
                   }),
               servicesCard(
@@ -107,6 +112,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    deliveryAddress = '';
                     nextPage(context: context, page: const HotelAirportPage());
                   }),
             ],

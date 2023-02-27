@@ -74,6 +74,7 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                       summaryItem(name: 'Phone Number: ', data: document['phone']),
                       summaryItem(name: 'Email Address: ', data: FirebaseAuth.instance.currentUser!.email.toString()),
                       const SizedBox(height: 20),
+                      summaryItem(name: 'Destination: ', data: deliveryAddress),
                       summaryItem(name: 'Vehicle(s): ', data: selectedVehicleNames?.join(", ")),
                       summaryItem(name: 'Driver(s): ', data: driversNames?.join(", ")),
                       summaryItem(

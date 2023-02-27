@@ -102,7 +102,7 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
                 ),
               ),
               subtitle: Text(
-                locationAddress,
+                deliveryAddress,
                 style: const TextStyle(fontSize: 16),
               ),
             ),

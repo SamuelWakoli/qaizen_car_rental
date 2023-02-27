@@ -81,7 +81,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                   summaryItem(
                       name: 'Service description: ', data: transferDescription),
                   const SizedBox(height: 20),
-                  summaryItem(name: 'Location: ', data: deliveryAddress),
+                  if (!hotelORairport) summaryItem(name: 'Location: ', data: deliveryAddress) else const SizedBox(),
                   summaryItem(
                       name: 'Duration: ',
                       data: "From $selectedTime $selectedDate"),
