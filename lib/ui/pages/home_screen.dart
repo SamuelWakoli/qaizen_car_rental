@@ -102,26 +102,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Future.delayed(const Duration(), () async {
       var snapshot = await UserData.get();
 
-      bool data = false;
+      bool dataAwaiting = false, dataVerified = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        bool isVerified = snapshot.get('verified');
-        if (isVerified){
-          data = isVerified;
+        bool isAwiaiting = snapshot.get('awaiting verification');
+        bool isUserVerified = snapshot.get('verified');
+        if (isAwiaiting){
+          dataAwaiting = isAwiaiting;
         }
+        if (isUserVerified){
+          dataVerified = isUserVerified;
+        }
+
         favoriteVehicles = snapshot.get('favorites');
         notificationOn = snapshot.get('notifications');
       } else {
-        data = false;
+        dataAwaiting = false;
+        dataVerified = false;
         favoriteVehicles = [];
       }
 
-      updateDbHasData(data);
+      updateDbHasData(dataAwaiting);
+      updateVerification(dataVerified);
     });
   }
 
   void updateDbHasData(bool value) {
     setState(() {
       dbHasData = value;
+    });
+  }
+  void updateVerification(bool value) {
+    setState(() {
+      isVerified = value;
     });
   }
 
@@ -226,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  dbHasData
+                  isVerified
                       ? StreamBuilder(
                           stream: UserData.snapshots(),
                           builder: (context, snapshot) {

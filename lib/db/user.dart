@@ -23,7 +23,8 @@ final UserStorageFolder =
     FirebaseStorage.instance.ref("users_images/${getUserName()}");
 
 String nameDateBooking = "${getUserName()} ${DateTime.now()}";
-final Bookings = FirebaseFirestore.instance.collection('bookings').doc(nameDateBooking);
+final Bookings =
+    FirebaseFirestore.instance.collection('bookings').doc(nameDateBooking);
 
 Future<String> getUserProfileImageURL() async {
   return UserStorageFolder.child('passport').getDownloadURL().toString();
@@ -31,8 +32,8 @@ Future<String> getUserProfileImageURL() async {
 
 List favoriteVehicles = [];
 
-//temporary var
 bool dbHasData = false;
+bool isVerified = false;
 
 String CurrentVehicleDocID = '';
 
