@@ -71,7 +71,8 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
                       );
                     } else {
                       Map<String, dynamic> data = {
-                        'issue': issueText
+                        'issue': issueText,
+                        'read': false
                       };
                       await FirebaseFirestore.instance
                           .collection('issues')

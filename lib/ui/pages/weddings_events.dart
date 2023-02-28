@@ -250,7 +250,7 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
               child: OutlinedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    serviceType = 'WeddingsEvents';
+                    serviceType = 'Weddings & Events';
                     driversNames?.clear();
                     selectedVehicleNames?.clear();
                     selectedVehicles?.clear();

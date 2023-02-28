@@ -29,12 +29,12 @@ class _SelectDriverState extends State<SelectDriver> {
       totalCost = 0;
       totalCost = await getCost();
       nextPage(context: context, page: const CorporateSummary());
-    } else if (serviceType == 'WeddingsEvents') {
+    } else if (serviceType == 'Weddings & Events') {
       totalCost = 0;
       totalCost = await getCost();
       nextPage(
           context: context, page: const WeddingsEventsSummary());
-    } else if (serviceType == 'ToursSafaris') {
+    } else if (serviceType == 'Tours & Safaris') {
       totalCost = 0;
       totalCost = await getCost();
       nextPage(

@@ -180,7 +180,7 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
             child: OutlinedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  serviceType = 'ToursSafaris';
+                  serviceType = 'Tours & Safaris';
                   driversNames?.clear();
                   selectedVehicleNames?.clear();
                   selectedVehicles?.clear();

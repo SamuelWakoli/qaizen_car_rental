@@ -65,6 +65,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
               }
 
               final document = snapshot.data!;
+              clientName = document['name'];
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,11 +97,13 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                           });
 
                           Map<String, dynamic> data = {
+                            'name': clientName,
+                            'userId': getUserName(),
                             'type': serviceType,
                             'starts': '$selectedTime | $selectedDate',
                             'duration': '',
-                            'vehiclesList': '',
-                            'driversList': '',
+                            'vehiclesList': [],
+                            'driversList': [],
                             'orgName': '',
                             'delivery': delivery,
                             'delivery address': deliveryAddress,
@@ -113,7 +116,9 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.set(data).whenComplete(() {
+                          await Bookings.doc(
+                              "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                              .set(data).whenComplete(() {
                             setState(() {
                               loading = false;
                             });

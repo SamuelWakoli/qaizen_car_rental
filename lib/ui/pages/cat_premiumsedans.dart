@@ -67,7 +67,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                           context: context, page: const CorporateSummary());
                     }
                   }
-                  else if (serviceType == 'WeddingsEvents') {
+                  else if (serviceType == 'Weddings & Events') {
                     driversNames?.clear();
                     if (driverNeeded) {
                       nextPage(context: context, page: const SelectDriver());
@@ -77,7 +77,7 @@ class _CatPremiumSedansState extends State<CatPremiumSedans> {
                       nextPage(
                           context: context, page: const WeddingsEventsSummary());
                     }
-                  }  else if (serviceType == 'ToursSafaris') {
+                  }  else if (serviceType == 'Tours & Safaris') {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
                   }

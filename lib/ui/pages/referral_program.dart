@@ -214,6 +214,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
                       "friend": friendName,
                       "phone": friendPhone,
                       "code": friendCode,
+                      "approved": false,
                     };
 
                     await FirebaseFirestore.instance

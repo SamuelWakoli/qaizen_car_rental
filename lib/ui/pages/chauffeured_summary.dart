@@ -66,6 +66,7 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
             }
 
             final document = snapshot.data!;
+            clientName = document['name'];
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +94,8 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                         });
 
                         Map<String, dynamic> data = {
+                          'name': clientName,
+                          'userId': getUserName(),
                           'type': serviceType,
                           'starts': '$selectedTime | $selectedDate',
                           'duration': numberOfDays,
@@ -110,7 +113,9 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                           'transfer desc': transferDescription,
                         };
 
-                        await Bookings.set(data).whenComplete(() {
+                        await Bookings.doc(
+                            "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                            .set(data).whenComplete(() {
                           setState(() {
                             loading = false;
                           });

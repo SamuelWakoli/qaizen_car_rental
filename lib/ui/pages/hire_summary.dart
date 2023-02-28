@@ -62,6 +62,7 @@ class _HireSummaryState extends State<HireSummary> {
             }
 
             final document = snapshot.data!;
+            clientName = document['name'];
             return SingleChildScrollView(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -92,12 +93,11 @@ class _HireSummaryState extends State<HireSummary> {
                       ? summaryItem(
                           name: 'Delivery Location: ', data: deliveryAddress)
                       : const SizedBox(),
+                  summaryItem(name: 'Number of Days: ', data: numberOfDays),
                   summaryItem(
-                      name: 'Number of Days: ', data: numberOfDays),
-                    summaryItem(
-                        name: "TOTAL COST: ",
-                        data:
-                        "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}"),
+                      name: "TOTAL COST: ",
+                      data:
+                          "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}"),
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -109,6 +109,8 @@ class _HireSummaryState extends State<HireSummary> {
                           });
 
                           Map<String, dynamic> data = {
+                            'name': clientName,
+                            'userId': getUserName(),
                             'type': 'Self Drive',
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,
@@ -128,7 +130,10 @@ class _HireSummaryState extends State<HireSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.set(data).whenComplete(() {
+                          await Bookings.doc(
+                                  "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                              .set(data)
+                              .whenComplete(() {
                             setState(() {
                               loading = false;
                             });

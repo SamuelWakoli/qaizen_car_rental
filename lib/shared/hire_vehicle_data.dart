@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
 ///This data will be used to generate agreement pdf
 ///shared var
+String clientName = getUserName();
 bool driverNeeded = false;
 String serviceType = "";
 dynamic locationDataLat;
