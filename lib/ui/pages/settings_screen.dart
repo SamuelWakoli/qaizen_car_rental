@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,6 +29,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  Future<void> _openWhatsApp() async {
+    final uri = Uri.parse("https://wa.me/254797228948");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      // can't launch url
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +62,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
                   onToggle: (value) async {
-                    Map<String, dynamic> data = {
-                      'notifications': value
-                    };
+                    Map<String, dynamic> data = {'notifications': value};
                     await UserData.update(data); //update data in db
-                    setState(() {notificationOn = value;});
+                    setState(() {
+                      notificationOn = value;
+                    });
                     String messageText = value ? "on" : "off";
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Notifications turned $messageText'),),);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Notifications turned $messageText'),
+                      ),
+                    );
                   },
                   initialValue: notificationOn,
                   activeSwitchColor: Theme.of(context).primaryColor,
@@ -78,10 +101,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) {
-                                            return const AuthGate();
-                                          }), (r) {
-                                        return false;
-                                      });
+                                    return const AuthGate();
+                                  }), (r) {
+                                    return false;
+                                  });
                                 },
                                 child: const Text('Yes'),
                               ),
@@ -119,9 +142,65 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       context: context, page: const TermsConditionsPage()),
                 ),
                 SettingsTile(
+                  leading: const Icon(FontAwesomeIcons.code),
+                  title: const Text('Developer Contact'),
+                  onPressed: (context) {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            title: const Text('Developer Contact'),
+                            content: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    //when call permission is granted:
+                                    await FlutterPhoneDirectCaller.callNumber(
+                                        '+254797228948');
+                                    //else not granted, just show phone number
+                                    if (await Permission.phone.isDenied) {
+                                      _makePhoneCall('+254797228948');
+                                    }
+                                  },
+                                  icon: const Icon(
+                                    Icons.phone_outlined,
+                                    color: Colors.lightBlue,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    _openWhatsApp();
+                                  },
+                                  icon: const Icon(
+                                    FontAwesomeIcons.whatsapp,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    //Email
+                                    String email = Uri.encodeComponent(
+                                        "info@qaizen.co.ke");
+                                    String subject =
+                                        Uri.encodeComponent("Developer Contact");
+                                    String body = Uri.encodeComponent("");
+                                    Uri mail = Uri.parse(
+                                        "mailto:$email?subject=$subject&body=$body");
+                                    await launchUrl(mail);
+                                  },
+                                  icon: const Icon(Icons.email_outlined),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                ),
+                SettingsTile(
                   leading: const Icon(Icons.perm_device_info_outlined),
                   title: const Text("Application Version"),
-                  description: const Text('1.0'),
+                  description: const Text('1.0.0'),
                 ),
               ],
             )
