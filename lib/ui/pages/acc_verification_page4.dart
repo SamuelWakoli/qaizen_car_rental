@@ -135,6 +135,7 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "referee phone 2": refPhone2,
                       "verified": false,
                       "awaiting verification": true,
+                      "can user like or hire": true,
                     };
 
                     await UserData.update(refData).whenComplete(() {
@@ -143,50 +144,51 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                           .whenComplete(() {
                         setState(() {
                           loading = false;
-                        });
-
-                        return showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text(
-                              "Form Submission Successful",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            content: const Text(
-                              "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, please also check your email inbox to verify your email address. We will get back to you as soon as possible.",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.popUntil(
-                                      context, (route) => route.isFirst);
-                                  //Restart.restartApp();
-                                  setState(() {
-                                    dbHasData = true;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          ' You can now access our services through this app while awaiting for verification'),
-                                      duration: Duration(seconds: 5),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(14),
-                                  child: Text(
-                                    "okay",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Theme.of(context).primaryColor),
+                          dbHasData = true;
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text(
+                                "Form Submission Successful",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              content: const Text(
+                                "Thank you for submitting this form. We have received it and will review it within the next 6 hours during the day. To complete the process, check your email inbox to verify your email address. We will get back to you as soon as possible.\n\nYou can now hire our vehicles while awaiting for verification",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                      .popUntil(
+                                          (route) => route.isFirst);
+                                    setState(() => dbHasData = true);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.home_outlined,
+                                        color: Theme.of(context)
+                                            .primaryColor,
+                                      ),
+                                      const SizedBox(width: 20),
+                                      Text(
+                                        'Go to Home Screen',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .primaryColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
+                              ],
+                            ),
+                          );
+                        });
                       });
                     });
                   }

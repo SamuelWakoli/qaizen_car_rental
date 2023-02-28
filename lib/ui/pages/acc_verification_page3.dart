@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
     }
   }
 
-  bool loading = false;
+  bool loading = false, showErrorText = false, navigatedToNextPage = false;
 
   Widget _getImage() {
     if (image != null) {
@@ -129,7 +130,11 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                 _getImage(),
               ]),
             ),
-            const SizedBox(height: 30),
+            showErrorText ? const SizedBox(height: 10) : const SizedBox(),
+            Text(showErrorText
+                ? "Sorry, we were unable to upload your image. Please check your internet connection and try again."
+                : ""),
+            const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () async {
                   if (image != null) {
@@ -153,11 +158,20 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                           .getDownloadURL()
                     };
 
+                    if (navigatedToNextPage == false) {
+                      Timer(const Duration(seconds: 5), () {
+                        setState(() {
+                          showErrorText = true;
+                          loading = false;
+                        });
+                      });
+                    }
+
                     await UserData.update(drivingLicenceURL).whenComplete(() {
                       setState(() {
                         loading = false;
+                        navigatedToNextPage = true;
                       });
-
                       return nextPage(
                           context: context, page: const AccVerificationPage4());
                     }).onError((error, stackTrace) {

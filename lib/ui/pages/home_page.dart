@@ -19,7 +19,25 @@ class _HomePageState extends State<HomePage> {
   bool isnotifyON1 = false;
   bool isnotifyON2 = false;
 
+  @override
+  void initState() {
+    super.initState();
 
+    Future.delayed(const Duration(), () async {
+      var snapshot = await UserData.get();
+      bool dataCanHireLike = false;
+
+      if (snapshot.exists && snapshot.data()!.isNotEmpty) {
+        bool isHireLike = snapshot.get("can user like or hire");
+        if (isHireLike) {
+          dataCanHireLike = isHireLike;
+        } else {
+          dataCanHireLike = false;
+        }
+       setState(() => canUserHireOrLike = dataCanHireLike);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +66,11 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-
-
               return TabBarView(
                 children: [
                   ListView(
-                      children: snapshot.data!.docs.toList().reversed.map((document) {
+                      children:
+                          snapshot.data!.docs.toList().reversed.map((document) {
                     return AvailableVehicleCard(
                         id: document.id,
                         availability: document['availability'],
@@ -72,7 +89,8 @@ class _HomePageState extends State<HomePage> {
                         });
                   }).toList()),
                   ListView(
-                      children: snapshot.data!.docs.toList().reversed.map((document) {
+                      children:
+                          snapshot.data!.docs.toList().reversed.map((document) {
                     return ReturningVehicleCard(
                       id: document.id,
                       availability: document['availability'],

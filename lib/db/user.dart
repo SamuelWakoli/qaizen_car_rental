@@ -34,6 +34,7 @@ List favoriteVehicles = [];
 
 bool dbHasData = false;
 bool isVerified = false;
+bool canUserHireOrLike = false;
 
 String CurrentVehicleDocID = '';
 

@@ -104,15 +104,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
       bool dataAwaiting = false, dataVerified = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        bool isAwiaiting = snapshot.get('awaiting verification');
+        bool isAwaiting = snapshot.get('awaiting verification');
         bool isUserVerified = snapshot.get('verified');
-        if (isAwiaiting){
-          dataAwaiting = isAwiaiting;
+        if (isAwaiting) {
+          dataAwaiting = isAwaiting;
         }
-        if (isUserVerified){
+        if (isUserVerified) {
           dataVerified = isUserVerified;
         }
-
         favoriteVehicles = snapshot.get('favorites');
         notificationOn = snapshot.get('notifications');
       } else {
@@ -126,16 +125,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
-  void updateDbHasData(bool value) {
-    setState(() {
-      dbHasData = value;
-    });
-  }
-  void updateVerification(bool value) {
-    setState(() {
-      isVerified = value;
-    });
-  }
+  void updateDbHasData(bool value) => setState(() => dbHasData = value);
+  void updateVerification(bool value) => setState(() => isVerified = value);
 
   Widget _getImage() {
     return Card(
@@ -238,24 +229,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  isVerified
+                  dbHasData
                       ? StreamBuilder(
                           stream: UserData.snapshots(),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data!.get('verified')) {
-                                return Icon(
-                                  Icons.verified_outlined,
-                                  size: 18,
-                                  color: Theme.of(context).primaryColor,
-                                );
-                              } else {
-                                return const Text(
-                                  'awaiting verification',
-                                );
-                              }
+                            if (snapshot.data!.get('verified')) {
+                              return Icon(
+                                Icons.verified_outlined,
+                                size: 18,
+                                color: Theme.of(context).primaryColor,
+                              );
                             } else {
-                              return const SizedBox();
+                              return const Text(
+                                'awaiting verification',
+                              );
                             }
                           })
                       : const Text(
