@@ -66,8 +66,6 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
   }
 
 // end date time
-//
-  bool driverNeeded = false;
 
   Widget needDriver() {
     if (driverNeeded) {

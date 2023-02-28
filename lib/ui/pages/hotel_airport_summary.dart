@@ -102,7 +102,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                             'vehiclesList': '',
                             'driversList': '',
                             'orgName': '',
-                            'delivery': '',
+                            'delivery': delivery,
                             'delivery address': deliveryAddress,
                             'geo-point lat': locationDataLat.toString(),
                             'geo-point lon': locationDataLon.toString(),

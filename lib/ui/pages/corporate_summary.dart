@@ -99,7 +99,7 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                           'vehiclesList': selectedVehicles,
                           'driversList': driversNames,
                           'orgName': orgName,
-                          'delivery': '',
+                          'delivery': delivery,
                           'delivery address': '',
                           'geo-point lat': '',
                           'geo-point lon': '',

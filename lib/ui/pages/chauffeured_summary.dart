@@ -99,7 +99,7 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                           'vehiclesList': selectedVehicles,
                           'driversList': driversNames,
                           'orgName': '',
-                          'delivery': '',
+                          'delivery': delivery,
                           'delivery address': '',
                           'geo-point lat': '',
                           'geo-point lon': '',
