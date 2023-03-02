@@ -52,7 +52,16 @@ class Theming {
       //   dayPeriodTextColor: Constants().primaryColor(),
       //   dialHandColor: Constants().primaryColor(),
       // ),
-
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          textStyle: MaterialStateProperty.resolveWith((states) {
+            return TextStyle(color: Constants().primaryColor());
+          }),
+          iconColor: MaterialStateProperty.resolveWith((states) {
+            return Constants().primaryColor();
+          }),
+        ),
+      ),
       useMaterial3: true);
 
   var darkThemeData = ThemeData(

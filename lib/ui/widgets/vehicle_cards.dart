@@ -133,9 +133,9 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                               return AlertDialog(
                                 title:
                                     const Text('Profile Verification Required'),
-                                content: const Text(
+                                content: Text(
                                   'Please get your profile verified to perform this action.',
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
                                 ),
                                 actions: [
                                   TextButton(
@@ -177,10 +177,10 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.info_outline_rounded),
                           SizedBox(width: 8),
-                          Text('Details', style: TextStyle(fontSize: 18))
+                          Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
                     ),
@@ -190,10 +190,10 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.assignment_outlined),
                           SizedBox(width: 8),
-                          Text('Hire', style: TextStyle(fontSize: 18))
+                          Text('Hire', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
                     ),
@@ -217,6 +217,7 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
 ///
 ///
 Widget favCard({
+  required context,
   required String id,
   required String image,
   required String name,
@@ -295,10 +296,10 @@ Widget favCard({
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -308,10 +309,10 @@ Widget favCard({
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Hire', style: TextStyle(fontSize: 18))
+                        Text('Hire', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -462,9 +463,9 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                               return AlertDialog(
                                 title:
                                     const Text('Profile Verification Required'),
-                                content: const Text(
+                                content: Text(
                                   'Please get your profile verified to perform this action.',
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
                                 ),
                                 actions: [
                                   TextButton(
@@ -506,10 +507,10 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.info_outline_rounded),
                           SizedBox(width: 8),
-                          Text('Details', style: TextStyle(fontSize: 18))
+                          Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
                     ),
@@ -636,10 +637,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -649,10 +650,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -724,10 +725,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -737,10 +738,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -812,10 +813,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -825,10 +826,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -900,10 +901,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -913,10 +914,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -988,10 +989,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1001,10 +1002,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1076,10 +1077,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1089,10 +1090,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1164,10 +1165,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1177,10 +1178,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1252,10 +1253,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.info_outline_rounded),
                         SizedBox(width: 8),
-                        Text('Details', style: TextStyle(fontSize: 18))
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),
@@ -1265,10 +1266,10 @@ Widget selectVehiclesList({
                   child: SizedBox(
                     height: 40,
                     child: Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.assignment_outlined),
                         SizedBox(width: 8),
-                        Text('Select', style: TextStyle(fontSize: 18))
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
                   ),

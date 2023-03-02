@@ -44,6 +44,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             return ListView(
                 children: snapshot.data!.docs.map((document) {
               return favCard(
+                context: context,
                   id: document.id,
                   image: document['displayImageURL'],
                   name: document['name'],

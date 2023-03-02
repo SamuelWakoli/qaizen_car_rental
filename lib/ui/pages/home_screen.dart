@@ -233,6 +233,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ? StreamBuilder(
                           stream: UserData.snapshots(),
                           builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor,
+                              );
+                            }
+
                             if (snapshot.data!.get('verified')) {
                               return Icon(
                                 Icons.verified_outlined,

@@ -42,12 +42,18 @@ class _RecordsPageState extends State<RecordsPage> {
             }
 
             return ListView(
-                children: snapshot.data!.docs.toList().reversed.map((e) {
+                children: snapshot.data!.docs.reversed.toList().reversed.map((e) {
               return ListTile(
                   title: Text(e['vehiclesList'].join(", ")), subtitle: Text("""
 Date: ${e['starts']}
 Duration: ${e['duration']}
 Service: ${e['type']}
+
+Vehicle(s): ${e['vehicles list']}
+
+Driver(s): ${e['drivers list']}
+
+
 """));
             }).toList());
           }),

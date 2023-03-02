@@ -80,6 +80,12 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
           StreamBuilder(
               stream: UserData.snapshots(),
               builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  );
+                }
+
                 //so as to allow [containsKey()]
                 Map<String, dynamic> dataMap =
                     snapshot.data!.data() as Map<String, dynamic>;
@@ -210,7 +216,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
                     loading = true;
 
                     Map<String, dynamic> data = {
-                      'client name': getUserName(),
+                      'client doc id': getUserName(),
                       "friend": friendName,
                       "phone": friendPhone,
                       "code": friendCode,
@@ -219,7 +225,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
                     await FirebaseFirestore.instance
                         .collection('referrals')
-                        .doc("${getUserName()} ${DateTime.now()}")
+                        .doc("${getUserName()} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
                         .set(data)
                         .whenComplete(() {
                       loading = false;
