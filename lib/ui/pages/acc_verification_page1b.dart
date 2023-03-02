@@ -130,10 +130,14 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                 _getImage(),
               ]),
             ),
-            showErrorText ? const SizedBox(height: 10) : const SizedBox(),
-            Text(showErrorText
-                ? "Sorry, we were unable to upload your image. Please check your internet connection and try again."
-                : ""),
+            showErrorText ? Column(
+              children: [
+                const SizedBox(height: 20),
+                Text(showErrorText
+                    ? "Sorry, we were unable to upload your image. Please check your internet connection and try again."
+                    : ""),
+              ],
+            ) : const SizedBox(),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () async {
@@ -179,6 +183,15 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
+
+                    //this is in case the user navigates back to this page
+                    if (navigatedToNextPage == true) {
+                      Timer(const Duration(seconds: 5), () {
+                        setState(() {
+                          showErrorText = false;
+                        });
+                      });
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -187,9 +200,11 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                   }
                 },
                 child: loading
-                    ? CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      )
+                    ? Center(
+                      child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                    )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

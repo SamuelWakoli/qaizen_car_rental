@@ -100,18 +100,18 @@ class _UserProfileState extends State<UserProfile> {
       body: StreamBuilder(
         stream: UserData.snapshots(),
         builder: (context, snapshot) {
-          String profileImageURL =
-              snapshot.data!.get('passport URL').toString();
-          // if profileImageURL empty, use holder image
-          if (profileImageURL == "") {
-            profileImageURL =
-                "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-          }
           if (!snapshot.hasData) {
             return CircularProgressIndicator(
               color: Theme.of(context).primaryColor,
             );
           } else {
+            String profileImageURL =
+            snapshot.data!.get('passport URL').toString();
+            // if profileImageURL empty, use holder image
+            if (profileImageURL == "") {
+              profileImageURL =
+              "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
+            }
             return SingleChildScrollView(
               child: Center(
                 child: Column(

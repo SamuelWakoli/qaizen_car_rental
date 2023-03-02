@@ -180,6 +180,15 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
+
+                    //this is in case the user navigates back to this page
+                    if (navigatedToNextPage == true) {
+                      Timer(const Duration(seconds: 5), () {
+                        setState(() {
+                          showErrorText = false;
+                        });
+                      });
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -188,9 +197,11 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                   }
                 },
                 child: loading
-                    ? CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      )
+                    ? Center(
+                      child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                    )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

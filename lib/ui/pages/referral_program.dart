@@ -213,7 +213,9 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    loading = true;
+                    setState(() {
+                      loading = true;
+                    });
 
                     Map<String, dynamic> data = {
                       'client doc id': getUserName(),
@@ -225,10 +227,12 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
                     await FirebaseFirestore.instance
                         .collection('referrals')
-                        .doc("${getUserName()} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                        .doc("${getUserName()} Time: ${DateTime.now().hour}H:${DateTime.now().minute}M:${DateTime.now().second}S")
                         .set(data)
                         .whenComplete(() {
-                      loading = false;
+                      setState(() {
+                        loading = false;
+                      });
                       return showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(

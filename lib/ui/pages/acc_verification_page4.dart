@@ -161,25 +161,21 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context)
-                                      .popUntil(
-                                          (route) => route.isFirst);
+                                        .popUntil((route) => route.isFirst);
                                     setState(() => dbHasData = true);
                                   },
                                   child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.home_outlined,
-                                        color: Theme.of(context)
-                                            .primaryColor,
+                                        color: Theme.of(context).primaryColor,
                                       ),
                                       const SizedBox(width: 20),
                                       Text(
                                         'Go to Home Screen',
                                         style: TextStyle(
-                                          color: Theme.of(context)
-                                              .primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                     ],
@@ -193,21 +189,27 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                     });
                   }
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Submit',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor)),
-                    const SizedBox(width: 12),
-                    Icon(
-                      Icons.check,
-                      size: 32,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ],
-                )),
+                child: loading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Submit',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: 12),
+                          Icon(
+                            Icons.check,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
+                      )),
           ]),
         ),
       ),
