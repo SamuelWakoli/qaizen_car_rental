@@ -121,8 +121,9 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
                           };
 
                           await Bookings.doc(
-                              "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
-                              .set(data).whenComplete(() {
+                                  "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                              .set(data)
+                              .whenComplete(() {
                             setState(() {
                               loading = false;
                             });
@@ -173,8 +174,10 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
                           );
                         },
                         child: loading
-                            ? CircularProgressIndicator(
-                                color: Theme.of(context).primaryColor,
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),

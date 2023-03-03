@@ -82,7 +82,10 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                   summaryItem(
                       name: 'Service description: ', data: transferDescription),
                   const SizedBox(height: 20),
-                  if (!hotelORairport) summaryItem(name: 'Location: ', data: deliveryAddress) else const SizedBox(),
+                  if (!hotelORairport)
+                    summaryItem(name: 'Location: ', data: deliveryAddress)
+                  else
+                    const SizedBox(),
                   summaryItem(
                       name: 'Duration: ',
                       data: "From $selectedTime $selectedDate"),
@@ -117,8 +120,9 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                           };
 
                           await Bookings.doc(
-                              "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
-                              .set(data).whenComplete(() {
+                                  "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                              .set(data)
+                              .whenComplete(() {
                             setState(() {
                               loading = false;
                             });
@@ -169,8 +173,10 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                           );
                         },
                         child: loading
-                            ? CircularProgressIndicator(
-                                color: Theme.of(context).primaryColor,
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),

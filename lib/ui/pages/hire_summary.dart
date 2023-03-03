@@ -184,8 +184,10 @@ class _HireSummaryState extends State<HireSummary> {
                           );
                         },
                         child: loading
-                            ? CircularProgressIndicator(
-                                color: Theme.of(context).primaryColor,
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),

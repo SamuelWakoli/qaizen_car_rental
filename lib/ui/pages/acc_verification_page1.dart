@@ -252,8 +252,8 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                     // If the form is valid, display a snack bar. In the real world,
                     // you'd often call a server or save the information in a database.
 
-                    if (phoneNumber!.startsWith("07")) {
-                      phoneNumber = "2547${phoneNumber!.substring(2)}";
+                    if (phoneNumber!.startsWith("0")) {
+                      phoneNumber = "+254${phoneNumber!.substring(1)}";
                     }
 
                     setState(() {
@@ -280,6 +280,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "referee phone 1": "",
                       "referee name 2": "",
                       "referee phone 2": "",
+                      "awaiting verification": null,
                     };
 
                     await UserData.set(userData).whenComplete(() {

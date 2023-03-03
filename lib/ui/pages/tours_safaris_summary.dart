@@ -51,81 +51,87 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
       ),
       body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(getUserName())
-                    .snapshots(),
-                builder: (context, snapshot) {
+        padding: const EdgeInsets.all(8.0),
+        child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(getUserName())
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                );
+              }
 
-                  if (!snapshot.hasData) {
-                    return CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    );
-                  }
+              final document = snapshot.data!;
+              clientName = document['name'];
 
-                  final document = snapshot.data!;
-                  clientName = document['name'];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  summaryItem(name: 'Name: ', data: document['name']),
+                  summaryItem(name: 'Phone Number: ', data: document['phone']),
+                  summaryItem(
+                      name: 'Email Address: ',
+                      data:
+                          FirebaseAuth.instance.currentUser!.email.toString()),
+                  const SizedBox(height: 20),
+                  summaryItem(name: 'Destination: ', data: deliveryAddress),
+                  summaryItem(
+                      name: 'Vehicle(s): ',
+                      data: selectedVehicleNames?.join(", ")),
+                  summaryItem(
+                      name: 'Driver(s): ', data: driversNames?.join(", ")),
+                  summaryItem(
+                      name: 'Service starts at: ',
+                      data: ' $selectedTime | $selectedDate'),
+                  summaryItem(name: 'Number of Days: ', data: numberOfDays),
+                  const SizedBox(height: 30),
+                  summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      summaryItem(name: 'Name: ', data: document['name']),
-                      summaryItem(name: 'Phone Number: ', data: document['phone']),
-                      summaryItem(name: 'Email Address: ', data: FirebaseAuth.instance.currentUser!.email.toString()),
-                      const SizedBox(height: 20),
-                      summaryItem(name: 'Destination: ', data: deliveryAddress),
-                      summaryItem(name: 'Vehicle(s): ', data: selectedVehicleNames?.join(", ")),
-                      summaryItem(name: 'Driver(s): ', data: driversNames?.join(", ")),
-                      summaryItem(
-                          name: 'Service starts at: ',
-                          data: ' $selectedTime | $selectedDate'),
-                      summaryItem(name: 'Number of Days: ', data: numberOfDays),
-                      const SizedBox(height: 30),
-                      summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              setState(() {
-                                loading = true;
-                              });
+                          Map<String, dynamic> data = {
+                            'name': clientName,
+                            'userId': getUserName(),
+                            'type': serviceType,
+                            'starts': '$selectedTime | $selectedDate',
+                            'duration': numberOfDays,
+                            'vehiclesList': selectedVehicles,
+                            'driversList': driversNames,
+                            'orgName': '',
+                            'delivery': delivery,
+                            'delivery address': '',
+                            'geo-point lat': '',
+                            'geo-point lon': '',
+                            'total cost': totalCost,
+                            'paid': false,
+                            'status': 'Pending',
+                            'hotel/airport name': hotelAirportName,
+                            'transfer desc': transferDescription,
+                          };
 
-                              Map<String, dynamic> data = {
-                                'name': clientName,
-                                'userId': getUserName(),
-                                'type': serviceType,
-                                'starts': '$selectedTime | $selectedDate',
-                                'duration': numberOfDays,
-                                'vehiclesList': selectedVehicles,
-                                'driversList': driversNames,
-                                'orgName': '',
-                                'delivery': delivery,
-                                'delivery address': '',
-                                'geo-point lat': '',
-                                'geo-point lon': '',
-                                'total cost': totalCost,
-                                'paid': false,
-                                'status': 'Pending',
-                                'hotel/airport name': hotelAirportName,
-                                'transfer desc': transferDescription,
-                              };
-
-                              await Bookings.doc(
+                          await Bookings.doc(
                                   "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
-                                  .set(data).whenComplete(() {
-                                setState(() {
-                                  loading = false;
-                                });
+                              .set(data)
+                              .whenComplete(() {
+                            setState(() {
+                              loading = false;
+                            });
 
-                                showDialog(
-                                    context: context,
-                                    builder: (ctx) => AlertDialog(
+                            showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
                                       title:
-                                      const Text('Submitted Successfully'),
+                                          const Text('Submitted Successfully'),
                                       content: const Text(
                                         'Your request has been received. We will send you an agreement document that will be signed upon payment. ',
                                         style: TextStyle(fontSize: 16),
@@ -137,7 +143,7 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                                                   (route) => route.isFirst),
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Icon(
                                                 Icons.home_outlined,
@@ -157,47 +163,47 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                                         ),
                                       ],
                                     ));
-                              }).onError(
-                                    (error, stackTrace) =>
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('An error occurred: $error'),
-                                      ),
-                                    ),
-                              );
-                            },
-                            child: loading
-                                ? CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                            )
-                                : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Submit Request',
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Icon(
-                                    Icons.arrow_forward_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ],
+                          }).onError(
+                            (error, stackTrace) =>
+                                ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('An error occurred: $error'),
                               ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
+                        child: loading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Submit Request',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Icon(
+                                      Icons.arrow_forward_outlined,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
                       ),
-                    ],
-                  );
-                }
-            ),
-          )),
-
+                    ),
+                  ),
+                ],
+              );
+            }),
+      )),
     );
   }
 }
