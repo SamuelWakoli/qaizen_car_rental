@@ -153,8 +153,8 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
 
                     await UserStorageFolder.child(
                         '${getUserName()}\'s driving licence.png')
-                        .putFile(image!).then((snapshot) {
-                      drivingLicenceUrl = snapshot.ref.getDownloadURL().toString();
+                        .putFile(image!).then((snapshot) async {
+                      drivingLicenceUrl = await snapshot.ref.getDownloadURL();
                     }).whenComplete(() async {
                       if (drivingLicenceUrl != '') {
                         Map<String, String> drivingLicenceURL = {

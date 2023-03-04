@@ -153,8 +153,8 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
 
                     await UserStorageFolder.child(
                         '${getUserName()}\'s national ID.png')
-                        .putFile(image!).then((snapshot) {
-                          nationalIdUrl = snapshot.ref.getDownloadURL().toString();
+                        .putFile(image!).then((snapshot) async {
+                          nationalIdUrl = await snapshot.ref.getDownloadURL();
                         }).whenComplete(() async {
                           if (nationalIdUrl != ''){
 
