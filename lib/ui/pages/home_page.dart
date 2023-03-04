@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         } else {
           dataCanHireLike = false;
         }
-       setState(() => canUserHireOrLike = dataCanHireLike);
+        setState(() => canUserHireOrLike = dataCanHireLike);
       }
     });
   }
@@ -71,7 +71,8 @@ class _HomePageState extends State<HomePage> {
                   ListView(
                       children:
                           snapshot.data!.docs.toList().reversed.map((document) {
-                    return AvailableVehicleCard(
+                    return availableVehicleCard(
+                        context: context,
                         id: document.id,
                         availability: document['availability'],
                         image: document['displayImageURL'],
@@ -91,7 +92,8 @@ class _HomePageState extends State<HomePage> {
                   ListView(
                       children:
                           snapshot.data!.docs.toList().reversed.map((document) {
-                    return ReturningVehicleCard(
+                    return returningVehicleCard(
+                      context: context,
                       id: document.id,
                       availability: document['availability'],
                       image: document['displayImageURL'],
