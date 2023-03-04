@@ -16,12 +16,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(favoriteVehicles.isNotEmpty
-            ? 'Favorites'
-            : 'You have no favorites'),
-        centerTitle: true,
-      ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('vehicles').snapshots(),
           builder: (context, snapshot) {
@@ -36,15 +30,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
             if (favoriteVehicles.isEmpty) {
               return const Center(
                   child: Text(
-                    'Like vehicles to add them to Favorites',
-                    style: TextStyle(fontSize: 18),
-                  ));
+                'Like vehicles to add them to Favorites',
+                style: TextStyle(fontSize: 18),
+              ));
             }
 
             return ListView(
                 children: snapshot.data!.docs.map((document) {
               return favCard(
-                context: context,
+                  context: context,
                   id: document.id,
                   image: document['displayImageURL'],
                   name: document['name'],

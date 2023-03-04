@@ -16,7 +16,6 @@ import '../../shared/constants.dart';
 import '../pages/favorites.dart';
 import '../pages/home_page.dart';
 import '../pages/more_page.dart';
-import '../pages/notifications_page.dart';
 import '../pages/records.dart';
 import '../pages/report_issue.dart';
 import '../pages/services_page.dart';
@@ -65,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         backgroundColor: Colors.white,
         child: Image.asset('assets/ic_launcher.png')),
     const Text('Services'),
-    const Text('Notifications'),
+    const Text('Favorites'),
     const Text('More')
   ];
 
@@ -73,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<IconData> icons = [
     Icons.car_rental_outlined,
     Icons.cases_outlined,
-    Icons.notifications_outlined,
+    Icons.favorite_outline_rounded,
     Icons.more_outlined,
   ];
 
@@ -81,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const List<String> names = [
     'Home',
     'Services',
-    'Notifications',
+    'Favorites',
     'More',
   ];
 
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Widget> _pages = const [
     HomePage(),
     ServicesPage(),
-    NotificationsPage(),
+    FavoritesPage(),
     MorePage()
   ];
 
@@ -126,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void updateDbHasData(bool value) => setState(() => dbHasData = value);
+
   void updateVerification(bool value) => setState(() => isVerified = value);
 
   Widget _getImage() {
@@ -261,15 +261,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   : nextPage(context: context, page: const VerificationPage()),
             ),
             const Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.favorite_outline_outlined,
-                color: _iconColor,
-              ),
-              title: const Text("Favorites"),
-              onTap: () =>
-                  nextPage(context: context, page: const FavoritesPage()),
-            ),
             ListTile(
               leading: Icon(
                 Icons.book_outlined,
