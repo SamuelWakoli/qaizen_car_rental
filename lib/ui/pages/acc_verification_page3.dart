@@ -149,31 +149,54 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                       loading = true;
                     });
 
-                    Map<String, String> drivingLicenceURL = {
-                      'driving licence URL': await UserStorageFolder.child(
-                              '${getUserName()}\'s driving licence.png')
-                          .putFile(image!)
-                          .snapshot
-                          .ref
-                          .getDownloadURL()
-                    };
+                    String drivingLicenceUrl = '';
 
-                    if (navigatedToNextPage == false) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = true;
+                    await UserStorageFolder.child(
+                        '${getUserName()}\'s driving licence.png')
+                        .putFile(image!).then((snapshot) {
+                      drivingLicenceUrl = snapshot.ref.getDownloadURL().toString();
+                    }).whenComplete(() async {
+                      if (drivingLicenceUrl != '') {
+                        Map<String, String> drivingLicenceURL = {
+                          'driving licence URL': drivingLicenceUrl
+                        };
+
+                        if (navigatedToNextPage == false) {
+                          Timer(const Duration(seconds: 5), () {
+                            setState(() {
+                              showErrorText = true;
+                              loading = false;
+                            });
+                          });
+                        }
+
+                        await UserData.update(drivingLicenceURL).whenComplete(() {
+                          setState(() {
+                            loading = false;
+                            navigatedToNextPage = true;
+                          });
+                          return nextPage(
+                              context: context, page: const AccVerificationPage4());
+                        }).onError((error, stackTrace) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please try again. An error occurred: $error')));
                           loading = false;
                         });
-                      });
-                    }
 
-                    await UserData.update(drivingLicenceURL).whenComplete(() {
-                      setState(() {
-                        loading = false;
-                        navigatedToNextPage = true;
-                      });
-                      return nextPage(
-                          context: context, page: const AccVerificationPage4());
+                        //this is in case the user navigates back to this page
+                        if (navigatedToNextPage == true) {
+                          Timer(const Duration(seconds: 5), () {
+                            setState(() {
+                              showErrorText = false;
+                            });
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          loading = false;
+                        });
+                      }
                     }).onError((error, stackTrace) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
@@ -181,14 +204,7 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                       loading = false;
                     });
 
-                    //this is in case the user navigates back to this page
-                    if (navigatedToNextPage == true) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = false;
-                        });
-                      });
-                    }
+
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

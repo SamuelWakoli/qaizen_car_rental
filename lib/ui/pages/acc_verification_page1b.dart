@@ -130,14 +130,16 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                 _getImage(),
               ]),
             ),
-            showErrorText ? Column(
-              children: [
-                const SizedBox(height: 20),
-                Text(showErrorText
-                    ? "Sorry, we were unable to upload your image. Please check your internet connection and try again."
-                    : ""),
-              ],
-            ) : const SizedBox(),
+            showErrorText
+                ? Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Text(showErrorText
+                          ? "Sorry, we were unable to upload your image. Please check your internet connection and try again."
+                          : ""),
+                    ],
+                  )
+                : const SizedBox(),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () async {
@@ -152,46 +154,62 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                     setState(() {
                       loading = true;
                     });
-                    Map<String, String> passportURL = {
-                      'passport URL': await UserStorageFolder.child(
-                              '${getUserName()}\'s passport.png')
-                          .putFile(image!)
-                          .snapshot
-                          .ref
-                          .getDownloadURL()
-                    };
 
-                    if (navigatedToNextPage == false) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = true;
+                    String passportUrl = "";
+                    await UserStorageFolder.child(
+                            '${getUserName()}\'s passport.png')
+                        .putFile(image!)
+                        .then((snapshot) {
+                      passportUrl = snapshot.ref.getDownloadURL().toString();
+                    }).whenComplete(() async {
+                      if (passportUrl != "") {
+                        Map<String, String> passportURL = {
+                          'passport URL': passportUrl
+                        };
+
+                        if (navigatedToNextPage == false) {
+                          Timer(const Duration(seconds: 5), () {
+                            setState(() {
+                              showErrorText = true;
+                              loading = false;
+                            });
+                          });
+                        }
+
+                        await UserData.update(passportURL).whenComplete(() {
+                          setState(() {
+                            loading = false;
+                            navigatedToNextPage = true;
+                          });
+                          return nextPage(
+                              context: context,
+                              page: const AccVerificationPage2());
+                        }).onError((error, stackTrace) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please try again. An error occurred: $error')));
                           loading = false;
                         });
-                      });
-                    }
 
-                    await UserData.update(passportURL).whenComplete(() {
-                      setState(() {
-                        loading = false;
-                        navigatedToNextPage = true;
-                      });
-                      return nextPage(
-                          context: context, page: const AccVerificationPage2());
+                        //this is in case the user navigates back to this page
+                        if (navigatedToNextPage == true) {
+                          Timer(const Duration(seconds: 5), () {
+                            setState(() {
+                              showErrorText = false;
+                            });
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          loading = false;
+                        });
+                      }
                     }).onError((error, stackTrace) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
-
-                    //this is in case the user navigates back to this page
-                    if (navigatedToNextPage == true) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = false;
-                        });
-                      });
-                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -201,10 +219,10 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                 },
                 child: loading
                     ? Center(
-                      child: CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           color: Theme.of(context).primaryColor,
                         ),
-                    )
+                      )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

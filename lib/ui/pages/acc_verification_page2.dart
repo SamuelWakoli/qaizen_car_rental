@@ -149,46 +149,62 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                       loading = true;
                     });
 
-                    Map<String, String> nationalIdURL = {
-                      'national ID URL': await UserStorageFolder.child(
-                              '${getUserName()}\'s national ID.png')
-                          .putFile(image!)
-                          .snapshot
-                          .ref
-                          .getDownloadURL()
-                    };
+                    String nationalIdUrl = '';
 
-                    if (navigatedToNextPage == false) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = true;
-                          loading = false;
-                        });
-                      });
-                    }
+                    await UserStorageFolder.child(
+                        '${getUserName()}\'s national ID.png')
+                        .putFile(image!).then((snapshot) {
+                          nationalIdUrl = snapshot.ref.getDownloadURL().toString();
+                        }).whenComplete(() async {
+                          if (nationalIdUrl != ''){
 
-                    await UserData.update(nationalIdURL).whenComplete(() {
-                      setState(() {
-                        loading = false;
-                        navigatedToNextPage = true;
-                      });
-                      return nextPage(
-                          context: context, page: const AccVerificationPage3());
-                    }).onError((error, stackTrace) {
+                            Map<String, String> nationalIdURL = {
+                              'national ID URL': nationalIdUrl
+                            };
+
+                            if (navigatedToNextPage == false) {
+                              Timer(const Duration(seconds: 5), () {
+                                setState(() {
+                                  showErrorText = true;
+                                  loading = false;
+                                });
+                              });
+                            }
+
+                            await UserData.update(nationalIdURL).whenComplete(() {
+                              setState(() {
+                                loading = false;
+                                navigatedToNextPage = true;
+                              });
+                              return nextPage(
+                                  context: context, page: const AccVerificationPage3());
+                            }).onError((error, stackTrace) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Please try again. An error occurred: $error')));
+                              loading = false;
+                            });
+
+                            //this is in case the user navigates back to this page
+                            if (navigatedToNextPage == true) {
+                              Timer(const Duration(seconds: 5), () {
+                                setState(() {
+                                  showErrorText = false;
+                                });
+                              });
+                            }
+                          } else {
+                            setState(() {
+                              loading = false;
+                            });
+                          }
+                        }).onError((error, stackTrace) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
 
-                    //this is in case the user navigates back to this page
-                    if (navigatedToNextPage == true) {
-                      Timer(const Duration(seconds: 5), () {
-                        setState(() {
-                          showErrorText = false;
-                        });
-                      });
-                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

@@ -16,8 +16,8 @@ class _HomePageState extends State<HomePage> {
 //replace these var by getting vehicle ID to get liked status.
   bool isLiked0 = false;
 
-  bool isnotifyON1 = false;
-  bool isnotifyON2 = false;
+  bool isNotifyON1 = false;
+  bool isNotifyON2 = false;
 
   @override
   void initState() {

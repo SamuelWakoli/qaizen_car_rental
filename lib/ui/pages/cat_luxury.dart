@@ -62,9 +62,8 @@ class _CatLuxuryState extends State<CatLuxury> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
-                      nextPage(
-                          context: context, page: const CorporateSummary());
+                      totalCost = await getCost().whenComplete(() => nextPage(
+                          context: context, page: const CorporateSummary()));
                     }
                   } else if (serviceType == 'Weddings & Events') {
                     driversNames?.clear();
@@ -72,11 +71,11 @@ class _CatLuxuryState extends State<CatLuxury> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
-                      nextPage(
-                          context: context, page: const WeddingsEventsSummary());
+                      totalCost = await getCost().whenComplete(() => nextPage(
+                          context: context,
+                          page: const WeddingsEventsSummary()));
                     }
-                  }  else if (serviceType == 'Tours & Safaris') {
+                  } else if (serviceType == 'Tours & Safaris') {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
                   }
