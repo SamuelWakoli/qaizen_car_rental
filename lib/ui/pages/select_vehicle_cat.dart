@@ -9,6 +9,8 @@ import 'package:qaizen_car_rental/ui/pages/cat_vans.dart';
 import 'package:qaizen_car_rental/ui/pages/cat_wagons.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
+import 'select_from_all_vehicles.dart';
+
 class SelectVehicleCat extends StatefulWidget {
   const SelectVehicleCat({super.key});
 
@@ -191,7 +193,7 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                 child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () => nextPage(context: context, page: const SelectFromAllVehicles()),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

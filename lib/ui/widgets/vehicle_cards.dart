@@ -178,8 +178,8 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.info_outline_rounded),
-                          SizedBox(width: 8),
+                          const Icon(Icons.info_outline_rounded),
+                          const SizedBox(width: 8),
                           Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
@@ -191,8 +191,8 @@ class _AvailableVehicleCardState extends State<AvailableVehicleCard> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.assignment_outlined),
-                          SizedBox(width: 8),
+                          const Icon(Icons.assignment_outlined),
+                          const SizedBox(width: 8),
                           Text('Hire', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
@@ -297,8 +297,8 @@ Widget favCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -310,8 +310,8 @@ Widget favCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Hire', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -508,8 +508,8 @@ class _ReturningVehicleCardState extends State<ReturningVehicleCard> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.info_outline_rounded),
-                          SizedBox(width: 8),
+                          const Icon(Icons.info_outline_rounded),
+                          const SizedBox(width: 8),
                           Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                         ],
                       ),
@@ -638,8 +638,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -651,8 +651,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -726,8 +726,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -739,8 +739,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -814,8 +814,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -827,8 +827,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -902,8 +902,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -915,8 +915,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -990,8 +990,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1003,8 +1003,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1078,8 +1078,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1091,8 +1091,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1166,8 +1166,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1179,8 +1179,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1254,8 +1254,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.info_outline_rounded),
-                        SizedBox(width: 8),
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
                         Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1267,8 +1267,8 @@ Widget selectVehiclesList({
                     height: 40,
                     child: Row(
                       children:  [
-                        Icon(Icons.assignment_outlined),
-                        SizedBox(width: 8),
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
                         Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
                       ],
                     ),
@@ -1281,7 +1281,97 @@ Widget selectVehiclesList({
         ),
       ),
     );
-  } else {
+  }
+  else if (appBarTitle == "All Vehicles"){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Ksh. ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    price,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(' /day'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(availability
+                  ? "Available"
+                  : "Not available. Please call us to request it when available."),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: SizedBox(
+                    height: 40,
+                    child: Row(
+                      children:  [
+                        const Icon(Icons.info_outline_rounded),
+                        const SizedBox(width: 8),
+                        Text('Details', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
+                      ],
+                    ),
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: SizedBox(
+                    height: 40,
+                    child: Row(
+                      children:  [
+                        const Icon(Icons.assignment_outlined),
+                        const SizedBox(width: 8),
+                        Text('Select', style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+  else {
     if (appBarTitle == 'Hatchbacks' && category != 'Hatchback') {
       return const SizedBox();
     } else if (appBarTitle == 'Hatchbacks' && category != 'Hatchback') {
