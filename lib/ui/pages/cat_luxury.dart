@@ -143,8 +143,10 @@ class _CatLuxuryState extends State<CatLuxury> {
                             content: Text("$vehicleName is already selected")));
                       } else {
                         bottomHeight = 120;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("$vehicleName selected")));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("$vehicleName selected"),
+                          duration: const Duration(seconds: 2),
+                        ));
                         setState(() {
                           selectedVehicleNames?.add(vehicleName);
                           selectedVehicles?.add(e.id);

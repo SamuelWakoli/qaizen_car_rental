@@ -22,23 +22,20 @@ class _SelectDriverState extends State<SelectDriver> {
   Future<void> nextActivity() async {
     if (serviceType == "Chauffeured") {
       totalCost = 0;
-      totalCost = await getCost();
-      nextPage(
-          context: context, page: const ChauffeuredSummary());
+      totalCost = await getCost().whenComplete(() =>
+      nextPage(context: context, page: const ChauffeuredSummary()));
     } else if (serviceType == "Corporate") {
       totalCost = 0;
-      totalCost = await getCost();
-      nextPage(context: context, page: const CorporateSummary());
+      totalCost = await getCost().whenComplete(
+          () => nextPage(context: context, page: const CorporateSummary()));
     } else if (serviceType == 'Weddings & Events') {
       totalCost = 0;
-      totalCost = await getCost();
-      nextPage(
-          context: context, page: const WeddingsEventsSummary());
+      totalCost = await getCost().whenComplete(() =>
+          nextPage(context: context, page: const WeddingsEventsSummary()));
     } else if (serviceType == 'Tours & Safaris') {
       totalCost = 0;
-      totalCost = await getCost();
-      nextPage(
-          context: context, page: const ToursSafarisSummary());
+      totalCost = await getCost().whenComplete(
+          () => nextPage(context: context, page: const ToursSafarisSummary()));
     }
   }
 
@@ -46,7 +43,8 @@ class _SelectDriverState extends State<SelectDriver> {
     if (list.isEmpty) {
       return Column(
         children: [
-          const Text('Click "proceed without driver" if no driver is available'),
+          const Text(
+              'Click "proceed without driver" if no driver is available'),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),

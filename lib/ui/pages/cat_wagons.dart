@@ -62,9 +62,8 @@ class _CatWagonsState extends State<CatWagons> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
-                      nextPage(
-                          context: context, page: const CorporateSummary());
+                      totalCost = await getCost().whenComplete(() => nextPage(
+                          context: context, page: const CorporateSummary()));
                     }
                   } else if (serviceType == 'Weddings & Events') {
                     driversNames?.clear();
@@ -72,11 +71,11 @@ class _CatWagonsState extends State<CatWagons> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
-                      nextPage(
-                          context: context, page: const WeddingsEventsSummary());
+                      totalCost = await getCost().whenComplete(() => nextPage(
+                          context: context,
+                          page: const WeddingsEventsSummary()));
                     }
-                  }  else if (serviceType == 'Tours & Safaris') {
+                  } else if (serviceType == 'Tours & Safaris') {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
                   }
@@ -143,8 +142,10 @@ class _CatWagonsState extends State<CatWagons> {
                             content: Text("$vehicleName is already selected")));
                       } else {
                         bottomHeight = 120;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("$vehicleName selected")));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("$vehicleName selected"),
+                          duration: const Duration(seconds: 2),
+                        ));
                         setState(() {
                           selectedVehicleNames?.add(vehicleName);
                           selectedVehicles?.add(e.id);

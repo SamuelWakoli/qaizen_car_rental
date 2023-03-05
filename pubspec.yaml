@@ -40,7 +40,6 @@ dependencies:
   permission_handler: ^10.2.0
   font_awesome_flutter: ^10.3.0
   geocoding: ^2.0.5
-  pdf: ^3.8.4
   location_picker_flutter_map: ^1.1.5
   like_button: ^2.0.5
   url_launcher: ^6.1.7
@@ -57,9 +56,7 @@ dependencies:
   cloud_firestore: ^4.3.1
   firebase_messaging: ^14.2.1
   firebase_storage: ^11.0.10
-  flutter_local_notifications: ^13.0.0
   cached_network_image: ^3.2.3
-  restart_app: ^1.1.2
 
 dev_dependencies:
   flutter_test:

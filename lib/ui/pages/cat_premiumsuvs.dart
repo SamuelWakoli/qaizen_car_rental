@@ -62,9 +62,9 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
+                      totalCost = await getCost().whenComplete(() =>
                       nextPage(
-                          context: context, page: const CorporateSummary());
+                          context: context, page: const CorporateSummary()));
                     }
                   } else if (serviceType == 'Weddings & Events') {
                     driversNames?.clear();
@@ -72,9 +72,9 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost();
+                      totalCost = await getCost().whenComplete(() =>
                       nextPage(
-                          context: context, page: const WeddingsEventsSummary());
+                          context: context, page: const WeddingsEventsSummary()));
                     }
                   }  else if (serviceType == 'Tours & Safaris') {
                     driversNames?.clear();
