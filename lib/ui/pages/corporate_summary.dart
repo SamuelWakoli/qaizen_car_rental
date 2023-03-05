@@ -120,7 +120,7 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                           };
 
                           await Bookings.doc(
-                                  "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                                  "${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {

@@ -228,7 +228,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
                     await FirebaseFirestore.instance
                         .collection('referrals')
-                        .doc("${getUserName()} Time: ${DateTime.now().hour}H:${DateTime.now().minute}M:${DateTime.now().second}S")
+                        .doc("${DateTime.now()}")
                         .set(data)
                         .whenComplete(() {
                       setState(() {

@@ -6,7 +6,6 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/widgets.dart';
 import 'home_screen.dart';
 
 class AuthGate extends StatefulWidget {
@@ -107,15 +106,6 @@ class _AuthGateState extends State<AuthGate> {
                           })
                   ])));
             },
-            actions: [
-              AuthStateChangeAction<SignedIn>((context, state) {
-                if (!state.user!.emailVerified) {
-                  nextPageReplace(context: context, page: const AuthGate());
-                } else {
-                  nextPage(context: context, page: const HomeScreen());
-                }
-              }),
-            ],
           );
         }
         return const HomeScreen();

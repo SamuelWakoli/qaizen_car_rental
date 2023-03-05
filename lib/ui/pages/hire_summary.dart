@@ -131,7 +131,7 @@ class _HireSummaryState extends State<HireSummary> {
                           };
 
                           await Bookings.doc(
-                                  "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}")
+                                  "${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {
