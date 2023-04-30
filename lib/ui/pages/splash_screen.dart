@@ -7,6 +7,7 @@ import '../widgets/widgets.dart';
 import 'home_screen.dart';
 import 'onboarding_screen.dart';
 
+// TODO: Remove this splash screen RE: Android 12+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

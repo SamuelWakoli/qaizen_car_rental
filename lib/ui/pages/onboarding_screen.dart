@@ -6,6 +6,11 @@ import '../../shared/constants.dart';
 import '../widgets/widgets.dart';
 import 'auth_gate.dart';
 
+/// This is the Onboarding Screen where the user gets introduced to the app.
+/// This screen is made using a package: introduction_screen: ^3.1.0
+/// All the pages of the onboarding screen are contained in here.
+/// After the onboarding screen, the user gets directed to the SignIn Screen (AuthGate).
+// TODO: Make these pages to be industry level.
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
@@ -78,15 +83,16 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ],
         onDone: () => _onIntroEnd(context),
-        onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+        onSkip: () => _onIntroEnd(context),
+        // You can override onSkip callback
 
         skipOrBackFlex: 0,
         nextFlex: 0,
         isTopSafeArea: true,
         isBottomSafeArea: true,
         showSkipButton: true,
-        showBackButton:
-            false, //set true if showSkipButton: false //and vice versa
+        showBackButton: false,
+        //set true if showSkipButton: false //and vice versa
         //rtl: true, // Display as right-to-left
         back: Icon(Icons.arrow_back, color: Constants().primaryColor()),
         skip: Text('Skip',

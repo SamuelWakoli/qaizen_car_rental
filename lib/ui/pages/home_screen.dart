@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,9 +10,9 @@ import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../db/user.dart';
+import '../../helper/communication.dart';
 import '../../shared/constants.dart';
 import '../pages/favorites.dart';
 import '../pages/home_page.dart';
@@ -30,31 +31,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  // String getUserName() {
-  //   if (FirebaseAuth.instance.currentUser!.displayName!.isNotEmpty) {
-  //     return FirebaseAuth.instance.currentUser!.displayName!.toString();
-  //   } else {
-  //     return FirebaseAuth.instance.currentUser!.email!.toString();
-  //   }
-  // }
-
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
-
-  Future<void> _openWhatsApp() async {
-    final uri = Uri.parse("https://wa.me/254797228948");
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      // can't launch url
-    }
-  }
-
   static const int totalPage = 4;
 
   // appbar title:
@@ -98,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(), () async {
+    // TODO: Check this issue
+    Timer(Duration.zero, () async {
       var snapshot = await UserData.get();
 
       bool dataAwaiting = false, dataVerified = false;
@@ -204,14 +181,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Image(
-              height: 100,
-              image: AssetImage('assets/qaizenlogo.png'),
-              fit: BoxFit.fitHeight,
-            ),
+            const SizedBox(height: 100),
+            CircleAvatar(
+                radius: 64,
+                backgroundColor: Colors.white,
+                child: Image.asset('assets/ic_launcher.png')),
             const SizedBox(
               height: 50,
             ),
@@ -260,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ? nextPage(context: context, page: const UserProfile())
                   : nextPage(context: context, page: const VerificationPage()),
             ),
-            const Divider(),
+            const SizedBox(height: 20),
             ListTile(
               leading: Icon(
                 Icons.book_outlined,
@@ -287,21 +261,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               title: const Text("Terms and Conditions"),
               onTap: () =>
                   nextPage(context: context, page: const TermsConditionsPage()),
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.nights_stay_outlined),
-              title: const Text("Night Mode"),
-              trailing: Switch(
-                inactiveThumbColor: _iconColor,
-                activeTrackColor: Theme.of(context).primaryColor,
-                value: isNightModeOn,
-                onChanged: (bool value) {
-                  setState(() {
-                    EasyDynamicTheme.of(context).changeTheme();
-                  });
-                },
-              ),
             ),
           ],
         ),
@@ -343,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               '+254797228948');
                           //else not granted, just show phone number
                           if (await Permission.phone.isDenied) {
-                            _makePhoneCall('+254797228948');
+                            makePhoneCall('+254797228948');
                           }
                         },
                         child: Container(
@@ -374,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }
               if (position == 1) {
                 //WhatsApp
-                _openWhatsApp();
+                openWhatsApp();
               }
               if (position == 2) {
                 //Report Issue
@@ -420,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentIndex: _currentPage,
         totalLength: totalPage,
         transitionType: TransitionType.fade,
-        transitionDuration: const Duration(milliseconds: 100),
+        transitionDuration: const Duration(milliseconds: 1500),
         transitionCurve: Curves.ease,
       ),
       bottomNavigationBar: _getBottomBar(),
@@ -431,8 +390,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return BottomNavigationBar(
         currentIndex: _currentPage,
         onTap: (index) {
-          _currentPage = index;
-          setState(() {});
+          setState(() {
+            _currentPage = index;
+          });
         },
         backgroundColor:
             Theme.of(context).bottomNavigationBarTheme.backgroundColor,

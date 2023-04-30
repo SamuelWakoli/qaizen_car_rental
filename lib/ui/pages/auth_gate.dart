@@ -4,10 +4,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../helper/communication.dart';
 import 'home_screen.dart';
 
+/// This is the SignIn Screen created using tha packages: firebase_ui_auth: ^1.1.9
+/// and firebase_ui_oauth_google: ^1.0.16
+/// The auth providers have been configured in the [main.dart] file.
 class AuthGate extends StatefulWidget {
   const AuthGate({Key? key}) : super(key: key);
 
@@ -18,14 +21,6 @@ class AuthGate extends StatefulWidget {
 class _AuthGateState extends State<AuthGate> {
   @override
   Widget build(BuildContext context) {
-    Future<void> makePhoneCall(String phoneNumber) async {
-      final Uri launchUri = Uri(
-        scheme: 'tel',
-        path: phoneNumber,
-      );
-      await launchUrl(launchUri);
-    }
-
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -63,7 +58,7 @@ class _AuthGateState extends State<AuthGate> {
                                         style: TextStyle(fontSize: 18),
                                       ),
                                       actions: <Widget>[
-                                        ElevatedButton(
+                                        TextButton(
                                           onPressed: () async {
                                             Navigator.of(ctx).pop();
                                             //call
@@ -76,29 +71,23 @@ class _AuthGateState extends State<AuthGate> {
                                               makePhoneCall('+254797228948');
                                             }
                                           },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(14),
-                                            child: Text(
-                                              "Yes",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                            ),
+                                          child: Text(
+                                            "Yes",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Theme.of(context)
+                                                    .primaryColor),
                                           ),
                                         ),
-                                        ElevatedButton(
+                                        TextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(),
-                                          child: Container(
-                                            padding: const EdgeInsets.all(14),
-                                            child: Text(
-                                              "No",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Theme.of(context)
-                                                      .primaryColor),
-                                            ),
+                                          child: Text(
+                                            "No",
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                color: Theme.of(context)
+                                                    .primaryColor),
                                           ),
                                         ),
                                       ],

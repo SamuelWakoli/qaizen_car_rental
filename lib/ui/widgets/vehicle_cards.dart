@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
+
 import '../pages/account_verification.dart';
 
 Widget availableVehicleCard({
@@ -156,7 +157,7 @@ Widget availableVehicleCard({
                     return null;
                   }),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -172,7 +173,7 @@ Widget availableVehicleCard({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickHire,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -280,7 +281,7 @@ Widget favCard({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -296,7 +297,7 @@ Widget favCard({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickHire,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -476,7 +477,7 @@ Widget returningVehicleCard({
                     return null;
                   }),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -604,7 +605,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -620,7 +621,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -698,7 +699,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -714,7 +715,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -792,7 +793,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -808,7 +809,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -886,7 +887,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -902,7 +903,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -980,7 +981,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -996,7 +997,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -1074,7 +1075,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -1090,7 +1091,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -1168,7 +1169,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -1184,7 +1185,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -1262,7 +1263,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -1278,7 +1279,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,
@@ -1356,7 +1357,7 @@ Widget selectVehiclesList({
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickDetails,
                   child: SizedBox(
                     height: 40,
@@ -1372,7 +1373,7 @@ Widget selectVehiclesList({
                     ),
                   ),
                 ),
-                OutlinedButton(
+                MaterialButton(
                   onPressed: onClickSelect,
                   child: SizedBox(
                     height: 40,

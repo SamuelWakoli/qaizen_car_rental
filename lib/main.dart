@@ -9,18 +9,23 @@ import 'package:qaizen_car_rental/ui/pages/splash_screen.dart';
 
 import 'firebase_options.dart';
 
+/// This is the starting point of the app.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  /// The app uses Email and GoogleProvider to sign in.
   FirebaseUIAuth.configureProviders([
     EmailAuthProvider(),
     GoogleProvider(
         clientId:
             '166127006317-sb4n54vsbjpu06ghshefdkf5apidbpt5.apps.googleusercontent.com'),
-    // ... other providers
+    // ... other providers can be added here if necessary
   ]);
+
+  /// This prevents the app from rotating to landscape mode.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(EasyDynamicThemeWidget(child: const MyApp()));
@@ -40,24 +45,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Qaizen Car Rental',
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: const SplashScreen(),
       theme: Theming().lightThemeData,
       darkTheme: Theming().darkThemeData,
       themeMode: EasyDynamicTheme.of(context).themeMode,
     );
-  }
-}
-
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return const SplashScreen();
   }
 }
