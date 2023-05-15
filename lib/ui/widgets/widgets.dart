@@ -43,10 +43,6 @@ void showSnackbar(
         message,
       ),
       duration: Duration(seconds: duration),
-      action: SnackBarAction(
-        label: "OK",
-        onPressed: () => Navigator.pop(context),
-      ),
     ),
   );
 }

@@ -11,105 +11,111 @@ class ReportIssuePage extends StatefulWidget {
 
 class _ReportIssuePageState extends State<ReportIssuePage> {
   String issueText = '';
+  bool loading = false;
+
+  sendIssue(text) async {
+    setState(() {
+      loading = true;
+    });
+
+    if (text == '') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please type your issue'),
+        ),
+      );
+    } else {
+      Map<String, dynamic> data = {'issue': text, 'read': false};
+      await FirebaseFirestore.instance
+          .collection('issues')
+          .doc("${getUserName()} ${DateTime.now()}")
+          .set(data)
+          .whenComplete(
+        () {
+          setState(() {
+            loading = false;
+          });
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return const AlertDialog(
+                  title: Text('Report Sent'),
+                  content: Text('Thank you for reporting an issue'
+                      ' to us. We will review it fix it.'),
+                );
+              }).whenComplete(() => Navigator.of(context).pop());
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Report Issue'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: ConstrainedBox(
+    return FocusScope(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Report Issue'),
+          centerTitle: true,
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(24.0),
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Please tell us what happened.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+                tooltip: "Send",
+                onPressed: () => sendIssue(issueText),
+                icon: loading
+                    ? SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      )
+                    : Icon(
+                        Icons.send_outlined,
+                        color: Theme.of(context).primaryColor,
+                      )),
+          ],
+        ),
+        body: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 810),
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Please tell us what happened.',
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   onChanged: (value) {
                     issueText = value;
                   },
+                  onFieldSubmitted: (value) => sendIssue(value),
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.send,
+                  autofocus: true,
                   minLines: 1,
-                  maxLines: 8,
+                  maxLines: 12,
                   cursorHeight: 22,
                   cursorWidth: 2,
                   cursorColor: Theme.of(context).primaryColor,
                   decoration: InputDecoration(
-                    labelText: 'Type here:',
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).primaryColor),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
                       ),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.transparent,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: OutlinedButton(
-                  onPressed: () async {
-                    if (issueText == '') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please type your issue'),
-                        ),
-                      );
-                    } else {
-                      Map<String, dynamic> data = {
-                        'issue': issueText,
-                        'read': false
-                      };
-                      await FirebaseFirestore.instance
-                          .collection('issues')
-                          .doc("${getUserName()} ${DateTime.now()}")
-                          .set(data)
-                          .whenComplete(
-                        () {
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return const AlertDialog(
-                                  title: Text('Report Sent'),
-                                  content: Text(
-                                      'Thank you for reporting an issue to us. We will review it fix it.'),
-                                );
-                              });
-                        },
-                      );
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.send_outlined,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          'Send',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ),

@@ -16,7 +16,7 @@ class Theming {
       indicatorColor: Constants().primaryColor(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       cardTheme: CardTheme(
-        elevation: 8,
+        elevation: 1,
         shadowColor: Constants().primaryColor(),
         surfaceTintColor: Constants().primaryColor(),
       ),
@@ -78,7 +78,7 @@ class Theming {
       indicatorColor: Constants().primaryColorDark(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       cardTheme: CardTheme(
-        elevation: 8,
+        elevation: 1,
         shadowColor: Constants().primaryColorDark(),
         surfaceTintColor: Constants().primaryColorDark(),
       ),

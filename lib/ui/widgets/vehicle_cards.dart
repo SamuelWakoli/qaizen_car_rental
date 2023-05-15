@@ -24,7 +24,9 @@ Widget availableVehicleCard({
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0)),
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl: image,
@@ -37,38 +39,25 @@ Widget availableVehicleCard({
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
+            Text.rich(TextSpan(
+                text: name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '    Ksh. $price /day',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
+                  )
+                ])),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 LikeButton(
                   isLiked: favoriteVehicles.contains(id),
+                  animationDuration: const Duration(milliseconds: 2000),
                   bubblesColor: BubblesColor(
                       dotPrimaryColor: Theme.of(context).primaryColor,
                       dotSecondaryColor: Colors.white),
@@ -78,10 +67,15 @@ Widget availableVehicleCard({
                   ),
                   likeBuilder: (bool isLiked) {
                     return Icon(
-                      Icons.favorite,
+                      isLiked
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_outline_rounded,
                       color: isLiked
                           ? Theme.of(context).primaryColor
                           : Colors.grey,
+                      semanticLabel: isLiked
+                          ? "Remove $name from favorites"
+                          : "Add $name from favorites",
                       size: 32,
                     );
                   },
@@ -163,7 +157,10 @@ Widget availableVehicleCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline_rounded),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text('Details',
                             style: TextStyle(
@@ -179,7 +176,10 @@ Widget availableVehicleCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(Icons.assignment_outlined),
+                        Icon(
+                          Icons.assignment_outlined,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text('Hire',
                             style: TextStyle(
@@ -223,7 +223,9 @@ Widget favCard({
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  topRight: Radius.circular(12.0)),
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl: image,
@@ -287,7 +289,10 @@ Widget favCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline_rounded),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text('Details',
                             style: TextStyle(
@@ -303,7 +308,10 @@ Widget favCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(Icons.assignment_outlined),
+                        Icon(
+                          Icons.assignment_outlined,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text('Hire',
                             style: TextStyle(
@@ -356,33 +364,19 @@ Widget returningVehicleCard({
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
+            Text.rich(TextSpan(
+                text: name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '    Ksh. $price /day',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
+                  )
+                ])),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -483,7 +477,10 @@ Widget returningVehicleCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline_rounded),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text('Details',
                             style: TextStyle(
