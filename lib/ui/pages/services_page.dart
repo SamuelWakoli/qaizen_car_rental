@@ -39,7 +39,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     serviceType = "Self Drive";
                     numberOfDays = '';
                     deliveryAddress = '';
-                   nextPage(context: context, page: const SelfDrive());
+                    nextPage(context: context, page: const SelfDrive());
                   }),
               servicesCard(
                   context: context,
@@ -83,7 +83,8 @@ class _ServicesPageState extends State<ServicesPage> {
                     driversNames?.clear();
                     numberOfDays = '';
                     deliveryAddress = '';
-                    nextPage(context: context, page: const WeddingsEventsPage());
+                    nextPage(
+                        context: context, page: const WeddingsEventsPage());
                   }),
             ],
           ),
@@ -117,6 +118,16 @@ class _ServicesPageState extends State<ServicesPage> {
                   }),
             ],
           ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Didn't find the service you're looking "
+              "for? We've got you covered! Contact us "
+              "for a customized solution.",
+              style: TextStyle(fontSize: 16.0),
+            ),
+          )
         ],
       ),
     );
