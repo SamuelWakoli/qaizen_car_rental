@@ -120,38 +120,54 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         child: Column(
           children: const [
             Text(style: TextStyle(fontSize: 16), """
-At Qaizen Car Rental, we take the privacy of our users seriously. This policy outlines the types of personal information we collect, how we use it, and your rights in relation to it.
+# Privacy Policy
 
-Information We Collect:
+Last updated: May 24, 2023
 
-Personal information you provide to us directly, such as your name, contact information, and images of your credentials.
-Information about your use of our app, such as most liked vehicles and booking history.
-Location data, in order to provide you with relevant car rental options and to improve the functionality of the app.
+This Privacy Policy describes how your personal information is collected, used, and shared when you use the Qaizen Car Rental mobile application (the "App").
 
-Use of Information:
+## Personal Information We Collect
 
-We use your personal information to process your bookings, payments, and to communicate with you regarding your account and reservations.
-We use your location data to facilitate delivery option, organize events and to improve the functionality of the app.
-We may use your information for marketing and promotional purposes, but only with your explicit consent.
+When you use the App, we may collect certain information about you, including:
 
-Sharing of Information:
+- Your name, email address, age, years of driving experience, and images of your credentials such as National ID card and Driving Licence (if provided by you voluntarily).
+- Information about how you use the App, such as your favorite vehicles, the pages you visit, and the features you use.
 
-We may share your personal information with third-party service providers, such as payment processors (example: M-pesa), and marketing partners, but only to the extent necessary to provide the services offered by our app.
-We may also share your information in response to legal requests and as required by law.
-We will not sell or rent your personal information to any third party without your explicit consent.
+## How We Use Your Personal Information
 
-Security:
+We may use your personal information to:
 
-We take appropriate measures to protect the security and confidentiality of your personal information.
-However, please note that no method of transmission over the internet or method of electronic storage is completely secure.
+- Provide and maintain the App, ensuring its proper functionality and continuous improvement.
+- Improve and personalize the App based on your preferences and feedback.
+- Communicate with you about the App, including sending you updates and notifications regarding your account, reservations, and relevant promotions.
+- Monitor and analyze the usage of the App to enhance its performance, user experience, and security.
 
-Changes to this Policy:
+## Sharing Your Personal Information
 
-We may update this policy from time to time. We will notify you of any changes by posting the new policy on our app.
+We may share your personal information with the following entities:
 
+- Service providers who assist us in performing various functions necessary for the operation of the App, including hosting, analytics, and marketing services.
+- Law enforcement agencies, government officials, or other third parties when we are obligated to disclose your personal information by law or in response to a subpoena, court order, or similar legal process.
+- Other third parties with your explicit consent or when necessary to protect our rights, safety, or property, as well as the rights, safety, or property of our users or others.
 
-If you have any questions or concerns about our privacy policy, please call us or email us at [+254 726 371714 | +254 728 305774 | info@qaizen.co.ke].
-By using our app, you consent to our collection, use, and sharing of your information as described in this policy.""")
+## Your Rights
+
+You have the right to access and correct the personal information we collect about you. Additionally, you may have the right to restrict or object to certain types of processing of your personal information. Please note that these rights may be subject to legal limitations and requirements.
+
+## Data Retention
+
+We will retain your personal information for as long as necessary to provide you with the App's services and as required by applicable laws and regulations.
+
+## Changes to This Privacy Policy
+
+We reserve the right to update or modify this Privacy Policy at any time. Any changes made will be effective immediately upon posting the updated version on this page. We encourage you to review this Privacy Policy periodically for any updates.
+
+## Contact Us
+
+If you have any questions or concerns about this Privacy Policy or our privacy practices, please call us or email us at [+254 726 371714 | +254 728 305774 | info@qaizen.co.ke]
+
+By using the App, you signify your acceptance and agreement to the terms of this Privacy Policy.
+""")
           ],
         ),
       )),
