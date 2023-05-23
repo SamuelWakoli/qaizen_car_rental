@@ -215,7 +215,7 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
             Row(
               children: [
                 SizedBox(
-                  width: 120,
+                  width: 160,
                   child: RadioListTile(
                     title: const Text("Yes"),
                     value: true,
@@ -229,7 +229,7 @@ class _WeddingsEventsPageState extends State<WeddingsEventsPage> {
                   ),
                 ),
                 SizedBox(
-                  width: 120,
+                  width: 160,
                   child: RadioListTile(
                     title: const Text("No"),
                     value: false,

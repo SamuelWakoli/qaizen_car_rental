@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../helper/communication.dart';
 import '../widgets/widgets.dart';
 
 class PrivacyPolicyPage extends StatefulWidget {
@@ -14,23 +15,6 @@ class PrivacyPolicyPage extends StatefulWidget {
 }
 
 class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
-
-  Future<void> _openWhatsApp() async {
-    final uri = Uri.parse("https://wa.me/254797228948");
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      // can't launch url
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +44,10 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                           //call
                           //when call permission is granted:
                           await FlutterPhoneDirectCaller.callNumber(
-                              '+254797228948');
+                              '+254726371714');
                           //else not granted, just show phone number
                           if (await Permission.phone.isDenied) {
-                            _makePhoneCall('+254797228948');
+                            makePhoneCall();
                           }
                         },
                         child: Container(
@@ -94,7 +78,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               }
               if (position == 1) {
                 //WhatsApp
-                _openWhatsApp();
+                openWhatsApp();
               }
               if (position == 2) {
                 //Email

@@ -64,11 +64,11 @@ class _AuthGateState extends State<AuthGate> {
                                             //call
                                             //when call permission is granted:
                                             await FlutterPhoneDirectCaller
-                                                .callNumber('+254797228948');
+                                                .callNumber('+254726371714');
                                             //else not granted, just show phone number
                                             if (await Permission
                                                 .phone.isDenied) {
-                                              makePhoneCall('+254797228948');
+                                              makePhoneCall();
                                             }
                                           },
                                           child: Text(

@@ -13,7 +13,6 @@ Widget servicesCard({
       child: Card(
         color: Colors.white,
         shadowColor: Theme.of(context).primaryColor,
-        elevation: 4,
         child: Column(
           children: [
             ConstrainedBox(

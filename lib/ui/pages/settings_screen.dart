@@ -12,6 +12,7 @@ import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
 import 'auth_gate.dart';
 
+// TODO: Fix this Screen
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -62,7 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tiles: <SettingsTile>[
                 SettingsTile.switchTile(
                   onToggle: (value) async {
-                    Map<String, dynamic> data = {'notifications': value};
+                    Map<String, dynamic> data = {'Night Mode': value};
                     //update data in db
                     await UserData.update(data).whenComplete(() {
                       setState(() {
@@ -184,8 +185,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     //Email
                                     String email = Uri.encodeComponent(
                                         "swwakoli@gmail.com");
-                                    String subject =
-                                        Uri.encodeComponent("Developer Contact");
+                                    String subject = Uri.encodeComponent(
+                                        "Developer Contact");
                                     String body = Uri.encodeComponent("");
                                     Uri mail = Uri.parse(
                                         "mailto:$email?subject=$subject&body=$body");

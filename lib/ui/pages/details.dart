@@ -26,11 +26,15 @@ Widget getVehicleImages(image) {
       child: CachedNetworkImage(
         fit: BoxFit.fill,
         imageUrl: image,
-        progressIndicatorBuilder: (context, url, downloadProgress) =>
-            CircularProgressIndicator(
-          value: downloadProgress.progress,
-          valueColor:
-              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+        progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              value: downloadProgress.progress,
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+            ),
+          ),
         ),
         errorWidget: (context, url, error) => const Icon(Icons.error_outline),
       ),

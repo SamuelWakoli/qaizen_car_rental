@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../helper/communication.dart';
 
 class LeasePage extends StatefulWidget {
   const LeasePage({Key? key}) : super(key: key);
@@ -11,14 +12,6 @@ class LeasePage extends StatefulWidget {
 }
 
 class _LeasePageState extends State<LeasePage> {
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,10 +73,10 @@ Call us to get started.
                                   //call
                                   //when call permission is granted:
                                   await FlutterPhoneDirectCaller.callNumber(
-                                      '+254797228948');
+                                      '+254726371714');
                                   //else not granted, just show phone number
                                   if (await Permission.phone.isDenied) {
-                                    _makePhoneCall('+254797228948');
+                                    makePhoneCall();
                                   }
                                 },
                                 child: Container(

@@ -14,10 +14,6 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
   bool loading = false;
 
   sendIssue(text) async {
-    setState(() {
-      loading = true;
-    });
-
     if (text == '') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -25,6 +21,9 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
         ),
       );
     } else {
+      setState(() {
+        loading = true;
+      });
       Map<String, dynamic> data = {'issue': text, 'read': false};
       await FirebaseFirestore.instance
           .collection('issues')
@@ -68,7 +67,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
           ),
           actions: [
             IconButton(
-                tooltip: "Send",
+                tooltip: loading ? "Sending" : "Send",
                 onPressed: () => sendIssue(issueText),
                 icon: loading
                     ? SizedBox(

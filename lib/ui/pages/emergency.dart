@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../helper/communication.dart';
 
 class Emergency extends StatefulWidget {
   const Emergency({super.key});
@@ -11,14 +12,6 @@ class Emergency extends StatefulWidget {
 }
 
 class _EmergencyState extends State<Emergency> {
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +38,10 @@ class _EmergencyState extends State<Emergency> {
               onPressed: () async {
                 //call
                 //when call permission is granted:
-                await FlutterPhoneDirectCaller.callNumber('+254797228948');
+                await FlutterPhoneDirectCaller.callNumber('+254726371714');
                 //else not granted, just show phone number
                 if (await Permission.phone.isDenied) {
-                  _makePhoneCall('+254797228948');
+                  makePhoneCall();
                 }
               },
               child: Padding(

@@ -4,7 +4,8 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/acc_verification_page1.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../helper/communication.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -14,14 +15,6 @@ class VerificationPage extends StatefulWidget {
 }
 
 class _VerificationPageState extends State<VerificationPage> {
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,10 +86,10 @@ Click "Get Started" to proceed.
                                           //call
                                           //when call permission is granted:
                                           await FlutterPhoneDirectCaller
-                                              .callNumber('+254797228948');
+                                              .callNumber('+254726371714');
                                           //else not granted, just show phone number
                                           if (await Permission.phone.isDenied) {
-                                            _makePhoneCall('+254797228948');
+                                            makePhoneCall();
                                           }
                                         },
                                         child: Container(
@@ -135,7 +128,10 @@ Click "Get Started" to proceed.
                       ]),
                 ),
                 const SizedBox(height: 10),
-                const Text("Please note that this process needs a strong internet connection when uploading your images.", style: TextStyle(fontSize: 17),),
+                const Text(
+                  "Please note that this process needs a strong internet connection when uploading your images.",
+                  style: TextStyle(fontSize: 17),
+                ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                     onPressed: () => nextPage(
@@ -155,7 +151,6 @@ Click "Get Started" to proceed.
                         )
                       ],
                     )),
-
               ],
             ),
           ],

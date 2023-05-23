@@ -48,7 +48,10 @@ class _MorePageState extends State<MorePage> {
       _iconColor = Constants().primaryColorDark();
     }
 
-    listItem({required icon, required String title, required onTap}) {
+    listItem(
+        {required icon,
+        required String title,
+        required void Function() onTap}) {
       return SizedBox(
         width: 400,
         child: Card(
@@ -64,7 +67,7 @@ class _MorePageState extends State<MorePage> {
               padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
               child: Text(title),
             ),
-            onTap: () => onTap,
+            onTap: onTap,
           ),
         ),
       );

@@ -292,35 +292,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       style: TextStyle(fontSize: 18),
                     ),
                     actions: <Widget>[
-                      ElevatedButton(
+                      TextButton(
                         onPressed: () async {
                           Navigator.of(ctx).pop();
 
                           //call
                           //when call permission is granted:
                           await FlutterPhoneDirectCaller.callNumber(
-                              '+254797228948');
+                              '+254726371714');
                           //else not granted, just show phone number
                           if (await Permission.phone.isDenied) {
-                            makePhoneCall('+254797228948');
+                            makePhoneCall();
                           }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(14),
                           child: Text(
-                            "okay",
+                            "Yes",
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
-                      ElevatedButton(
+                      TextButton(
                         onPressed: () => Navigator.of(ctx).pop(),
                         child: Container(
                           padding: const EdgeInsets.all(14),
                           child: Text(
-                            "cancel",
+                            "No",
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Theme.of(context).primaryColor),

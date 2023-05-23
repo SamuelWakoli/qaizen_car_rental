@@ -5,8 +5,6 @@ import 'package:like_button/like_button.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
-import '../pages/account_verification.dart';
-
 Widget availableVehicleCard({
   required context,
   required id,
@@ -31,10 +29,15 @@ Widget availableVehicleCard({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -80,74 +83,29 @@ Widget availableVehicleCard({
                     );
                   },
                   onTap: ((isLiked) async {
-                    if (dbHasData) {
-                      if (!isLiked) {
-                        favoriteVehicles.add(id);
-                      } else {
-                        favoriteVehicles.remove(id);
-                      }
-                      Map<String, dynamic> data = {
-                        "favorites": favoriteVehicles
-                      };
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(getUserName())
-                          .update(data)
-                          .whenComplete(() {
-                        String likeMessage = "";
-                        isLiked
-                            ? likeMessage = "removed from"
-                            : likeMessage = "added to";
-                        showSnackbar(
-                            context: context,
-                            duration: 3,
-                            message: "$name $likeMessage to favorites");
-                      });
-
-                      return !isLiked;
+                    if (!isLiked) {
+                      favoriteVehicles.add(id);
                     } else {
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              title:
-                                  const Text('Profile Verification Required'),
-                              content: Text(
-                                'Please get your profile verified to perform this action.',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
-                                    nextPage(
-                                        context: context,
-                                        page: const VerificationPage());
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.verified_outlined,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Text(
-                                        'Verify Profile',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
+                      favoriteVehicles.remove(id);
                     }
+                    Map<String, dynamic> data = {"favorites": favoriteVehicles};
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(getUserName())
+                        .update(data)
+                        .whenComplete(() {
+                      String likeMessage = "";
+                      isLiked
+                          ? likeMessage = "removed from"
+                          : likeMessage = "added to";
+                      showSnackbar(
+                          context: context,
+                          duration: 3,
+                          message: "$name $likeMessage to favorites");
+                    });
+
+                    return !isLiked;
+
                     return null;
                   }),
                 ),
@@ -230,55 +188,37 @@ Widget favCard({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'Ksh. ',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        price,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Text(' /day'),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Text('Status: '),
-                      Text(availability
-                          ? "Available"
-                          : "Not available. Please call us to request it when available.")
-                    ],
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+              child: Text.rich(TextSpan(
+                  text: name,
+                  style: const TextStyle(
+                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text:
+                          ' |  ${availability ? "Available" : "Unavailable."}',
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    TextSpan(
+                      text: '  |  Ksh. $price /day ',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ])),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -356,10 +296,15 @@ Widget returningVehicleCard({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -399,75 +344,29 @@ Widget returningVehicleCard({
                     );
                   },
                   onTap: ((isLiked) async {
-                    if (dbHasData) {
-                      if (!isLiked) {
-                        favoriteVehicles.add(id);
-                      } else {
-                        favoriteVehicles.remove(id);
-                      }
-                      Map<String, dynamic> data = {
-                        "favorites": favoriteVehicles
-                      };
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(getUserName())
-                          .update(data)
-                          .whenComplete(() {
-                        String likeMessage = "";
-                        isLiked
-                            ? likeMessage = "removed from"
-                            : likeMessage = "added to";
-
-                        showSnackbar(
-                            context: context,
-                            duration: 3,
-                            message: "$name $likeMessage to favorites");
-                      });
-
-                      return !isLiked;
+                    if (!isLiked) {
+                      favoriteVehicles.add(id);
                     } else {
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              title:
-                                  const Text('Profile Verification Required'),
-                              content: Text(
-                                'Please get your profile verified to perform this action.',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
-                                    nextPage(
-                                        context: context,
-                                        page: const VerificationPage());
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.verified_outlined,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Text(
-                                        'Verify Profile',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
+                      favoriteVehicles.remove(id);
                     }
+                    Map<String, dynamic> data = {"favorites": favoriteVehicles};
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(getUserName())
+                        .update(data)
+                        .whenComplete(() {
+                      String likeMessage = "";
+                      isLiked
+                          ? likeMessage = "removed from"
+                          : likeMessage = "added to";
+
+                      showSnackbar(
+                          context: context,
+                          duration: 3,
+                          message: "$name $likeMessage to favorites");
+                    });
+
+                    return !isLiked;
                     return null;
                   }),
                 ),
@@ -518,8 +417,13 @@ Widget returningVehicleCard({
                     showSnackbar(
                         context: context,
                         duration: 2,
-                        message:
-                            "You will $notifyMessage a notification when $name is available");
+                        message: "Feature under development");
+
+                    // showSnackbar(
+                    //     context: context,
+                    //     duration: 2,
+                    //     message:
+                    //         "You will $notifyMessage a notification when $name is available");
                     return !availabilityNotification;
                   }),
                 ),
@@ -559,10 +463,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -653,10 +562,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -747,10 +661,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -841,10 +760,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -935,10 +859,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1029,10 +958,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1123,10 +1057,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1217,10 +1156,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1311,10 +1255,15 @@ Widget selectVehiclesList({
                 fit: BoxFit.fill,
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+                    Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                  ),
                 ),
               ),
             ),

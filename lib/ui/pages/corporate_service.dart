@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
-import 'package:qaizen_car_rental/ui/pages/select_driver.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
-import 'corporate_summary.dart';
 
 class CorporateServicePage extends StatefulWidget {
   const CorporateServicePage({super.key});
@@ -203,7 +200,7 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
             Row(
               children: [
                 SizedBox(
-                  width: 120,
+                  width: 160,
                   child: RadioListTile(
                     title: const Text("Yes"),
                     value: true,
@@ -217,7 +214,7 @@ class _CorporateServicePageState extends State<CorporateServicePage> {
                   ),
                 ),
                 SizedBox(
-                  width: 120,
+                  width: 160,
                   child: RadioListTile(
                     title: const Text("No"),
                     value: false,
