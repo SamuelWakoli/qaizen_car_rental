@@ -135,7 +135,6 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "referee phone 2": refPhone2,
                       "verified": false,
                       "awaiting verification": true,
-                      "can user like or hire": true,
                     };
 
                     await UserData.update(refData).whenComplete(() {

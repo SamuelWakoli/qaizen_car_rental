@@ -13,32 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-//replace these var by getting vehicle ID to get liked status.
-  bool isLiked0 = false;
-
-  bool isNotifyON1 = false;
-  bool isNotifyON2 = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(), () async {
-      var snapshot = await UserData.get();
-      bool dataCanHireLike = false;
-
-      if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        bool isHireLike = snapshot.get("can user like or hire");
-        if (isHireLike) {
-          dataCanHireLike = isHireLike;
-        } else {
-          dataCanHireLike = false;
-        }
-        setState(() => canUserHireOrLike = dataCanHireLike);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
