@@ -42,8 +42,8 @@ class _CatWagonsState extends State<CatWagons> {
                     bottomHeight = 0;
                   });
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.clear),
                     SizedBox(width: 10),
                     Text('Clear')
@@ -80,8 +80,8 @@ class _CatWagonsState extends State<CatWagons> {
                     nextPage(context: context, page: const SelectDriver());
                   }
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.done),
                     SizedBox(width: 10),
                     Text('Proceed')
@@ -132,7 +132,7 @@ class _CatWagonsState extends State<CatWagons> {
                   image: e['displayImageURL'],
                   name: vehicleName,
                   onClickDetails: () {
-                    CurrentVehicleDocID = e.id;
+                    currentVehicleDocID = e.id;
                     return details(context: context);
                   },
                   onClickSelect: () {

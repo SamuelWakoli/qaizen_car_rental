@@ -66,9 +66,9 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [Text('Page 3 out of 5')],
+          children: [Text('Page 3 out of 5')],
         ),
       ),
       body: SingleChildScrollView(
@@ -151,60 +151,62 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
 
                     String nationalIdUrl = '';
 
-                    await UserStorageFolder.child(
-                        '${getUserName()}\'s national ID.png')
-                        .putFile(image!).then((snapshot) async {
-                          nationalIdUrl = await snapshot.ref.getDownloadURL();
-                        }).whenComplete(() async {
-                          if (nationalIdUrl != ''){
+                    await firebaseStorageUserFolder
+                        .child('${getUserName()}\'s national ID.png')
+                        .putFile(image!)
+                        .then((snapshot) async {
+                      nationalIdUrl = await snapshot.ref.getDownloadURL();
+                    }).whenComplete(() async {
+                      if (nationalIdUrl != '') {
+                        Map<String, String> nationalIdURL = {
+                          'national ID URL': nationalIdUrl
+                        };
 
-                            Map<String, String> nationalIdURL = {
-                              'national ID URL': nationalIdUrl
-                            };
-
-                            if (navigatedToNextPage == false) {
-                              Timer(const Duration(seconds: 5), () {
-                                setState(() {
-                                  showErrorText = true;
-                                  loading = false;
-                                });
-                              });
-                            }
-
-                            await UserData.update(nationalIdURL).whenComplete(() {
-                              setState(() {
-                                loading = false;
-                                navigatedToNextPage = true;
-                              });
-                              return nextPage(
-                                  context: context, page: const AccVerificationPage3());
-                            }).onError((error, stackTrace) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      'Please try again. An error occurred: $error')));
-                              loading = false;
-                            });
-
-                            //this is in case the user navigates back to this page
-                            if (navigatedToNextPage == true) {
-                              Timer(const Duration(seconds: 5), () {
-                                setState(() {
-                                  showErrorText = false;
-                                });
-                              });
-                            }
-                          } else {
+                        if (navigatedToNextPage == false) {
+                          Timer(const Duration(seconds: 5), () {
                             setState(() {
+                              showErrorText = true;
                               loading = false;
                             });
-                          }
+                          });
+                        }
+
+                        await fireStoreUserData
+                            .update(nationalIdURL)
+                            .whenComplete(() {
+                          setState(() {
+                            loading = false;
+                            navigatedToNextPage = true;
+                          });
+                          return nextPage(
+                              context: context,
+                              page: const AccVerificationPage3());
                         }).onError((error, stackTrace) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please try again. An error occurred: $error')));
+                          loading = false;
+                        });
+
+                        //this is in case the user navigates back to this page
+                        if (navigatedToNextPage == true) {
+                          Timer(const Duration(seconds: 5), () {
+                            setState(() {
+                              showErrorText = false;
+                            });
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          loading = false;
+                        });
+                      }
+                    }).onError((error, stackTrace) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
-
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -214,10 +216,10 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                 },
                 child: loading
                     ? Center(
-                      child: CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           color: Theme.of(context).primaryColor,
                         ),
-                    )
+                      )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

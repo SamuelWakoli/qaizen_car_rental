@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
 
     Timer(Duration.zero, () async {
-      var snapshot = await UserData.get();
+      var snapshot = await fireStoreUserData.get();
 
       bool dataAwaiting = false, dataVerified = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             width: 48,
             child: dbHasData
                 ? StreamBuilder(
-                    stream: UserData.snapshots(),
+                    stream: fireStoreUserData.snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         String profileImageURL =
@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(height: 4),
                   dbHasData
                       ? StreamBuilder(
-                          stream: UserData.snapshots(),
+                          stream: fireStoreUserData.snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return CircularProgressIndicator(

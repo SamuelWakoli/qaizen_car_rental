@@ -15,11 +15,11 @@ class _AboutPageState extends State<AboutPage> {
         title: const Text('About Us'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               Text(style: TextStyle(fontSize: 16), """
 At Qaizen Car Rental, we are committed to providing our customers with the highest level of service and convenience. Our state-of-the-art car rental app offers a seamless experience for browsing and reserving a diverse fleet of vehicles, ranging from economy cars to luxury SUVs.
 

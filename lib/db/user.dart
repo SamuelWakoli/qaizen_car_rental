@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-final CurrentUser = FirebaseAuth.instance.currentUser;
+dynamic currentUser = FirebaseAuth.instance.currentUser;
 
 String getUserName() {
   final user = FirebaseAuth.instance.currentUser;
@@ -16,17 +16,19 @@ String getUserName() {
   return email.toString();
 }
 
-final UserData =
+final fireStoreUserData =
     FirebaseFirestore.instance.collection('users').doc(getUserName());
 
-final UserStorageFolder =
+final firebaseStorageUserFolder =
     FirebaseStorage.instance.ref("users_images/${getUserName()}");
 
-final Bookings =
-    FirebaseFirestore.instance.collection('bookings');
+final userBookings = FirebaseFirestore.instance.collection('bookings');
 
 Future<String> getUserProfileImageURL() async {
-  return UserStorageFolder.child('passport').getDownloadURL().toString();
+  return firebaseStorageUserFolder
+      .child('passport')
+      .getDownloadURL()
+      .toString();
 }
 
 List favoriteVehicles = [];
@@ -35,6 +37,6 @@ bool dbHasData = false;
 bool isVerified = false;
 bool canUserHireOrLike = false;
 
-String CurrentVehicleDocID = '';
+String currentVehicleDocID = '';
 
 bool notificationOn = true;

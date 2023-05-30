@@ -119,8 +119,8 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.doc(
-                                  "${DateTime.now()}")
+                          await userBookings
+                              .doc("${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {

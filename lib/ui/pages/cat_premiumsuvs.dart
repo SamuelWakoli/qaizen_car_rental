@@ -42,8 +42,8 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                     bottomHeight = 0;
                   });
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.clear),
                     SizedBox(width: 10),
                     Text('Clear')
@@ -62,8 +62,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost().whenComplete(() =>
-                      nextPage(
+                      totalCost = await getCost().whenComplete(() => nextPage(
                           context: context, page: const CorporateSummary()));
                     }
                   } else if (serviceType == 'Weddings & Events') {
@@ -72,17 +71,17 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                       nextPage(context: context, page: const SelectDriver());
                     } else {
                       totalCost = 0;
-                      totalCost = await getCost().whenComplete(() =>
-                      nextPage(
-                          context: context, page: const WeddingsEventsSummary()));
+                      totalCost = await getCost().whenComplete(() => nextPage(
+                          context: context,
+                          page: const WeddingsEventsSummary()));
                     }
-                  }  else if (serviceType == 'Tours & Safaris') {
+                  } else if (serviceType == 'Tours & Safaris') {
                     driversNames?.clear();
                     nextPage(context: context, page: const SelectDriver());
                   }
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.done),
                     SizedBox(width: 10),
                     Text('Proceed')
@@ -134,7 +133,7 @@ class _CatPremiumSuvsState extends State<CatPremiumSuvs> {
                   image: e['displayImageURL'],
                   name: vehicleName,
                   onClickDetails: () {
-                    CurrentVehicleDocID = e.id;
+                    currentVehicleDocID = e.id;
                     return details(context: context);
                   },
                   onClickSelect: () {

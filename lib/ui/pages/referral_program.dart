@@ -60,7 +60,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
   String getCode() {
     String code = "";
-    UserData.get().then((value) {
+    fireStoreUserData.get().then((value) {
       final data = value.data() as Map<String, dynamic>;
       code = data["referral code"].toString();
     });
@@ -78,7 +78,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
             style: TextStyle(fontSize: 16),
           ),
           StreamBuilder(
-              stream: UserData.snapshots(),
+              stream: fireStoreUserData.snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator(
@@ -219,7 +219,8 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
 
                     Map<String, dynamic> data = {
                       'client doc id': getUserName(),
-                      "time": "${DateTime.now().hour}H:${DateTime.now().minute}M:${DateTime.now().second}S  Day: ${DateTime.now().day} Month: ${DateTime.now().month}",
+                      "time":
+                          "${DateTime.now().hour}H:${DateTime.now().minute}M:${DateTime.now().second}S  Day: ${DateTime.now().day} Month: ${DateTime.now().month}",
                       "friend": friendName,
                       "phone": friendPhone,
                       "code": friendCode,
@@ -246,30 +247,28 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
                             "We are checking the referral code you entered. Please wait while we confirm its validity. You will get a notification after validation.",
                             style: TextStyle(fontSize: 18),
                           ),
-                          actions: <Widget>[TextButton(
-                            onPressed: () => Navigator.of(context)
-                                .popUntil(
-                                    (route) => route.isFirst),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.home_outlined,
-                                  color: Theme.of(context)
-                                      .primaryColor,
-                                ),
-                                const SizedBox(width: 20),
-                                Text(
-                                  'Go to Home Screen',
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .primaryColor,
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.of(context)
+                                  .popUntil((route) => route.isFirst),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.home_outlined,
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 20),
+                                  Text(
+                                    'Go to Home Screen',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),],
+                          ],
                         ),
                       );
                     });

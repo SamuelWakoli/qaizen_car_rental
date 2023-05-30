@@ -117,8 +117,8 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.doc(
-                                  "${DateTime.now()}")
+                          await userBookings
+                              .doc("${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {

@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
-import '../../db/user.dart';
 import '../widgets/text_form_field.dart';
 import '../widgets/widgets.dart';
 import 'acc_verification_page1b.dart';
@@ -46,9 +46,9 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [Text('Page 1 out of 5')],
+          children: [Text('Page 1 out of 5')],
         ),
       ),
       body: Form(
@@ -190,7 +190,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
             Column(
               children: [
                 RadioListTile(
-                  title: Row(children: const [
+                  title: const Row(children: [
                     Icon(
                       FontAwesomeIcons.facebook,
                       color: Colors.indigo,
@@ -208,7 +208,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                   activeColor: Theme.of(context).primaryColor,
                 ),
                 RadioListTile(
-                  title: Row(children: const [
+                  title: const Row(children: [
                     Icon(
                       FontAwesomeIcons.instagram,
                     ),
@@ -225,7 +225,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                   activeColor: Theme.of(context).primaryColor,
                 ),
                 RadioListTile(
-                  title: Row(children: const [
+                  title: const Row(children: [
                     Icon(
                       FontAwesomeIcons.twitter,
                       color: Colors.blue,
@@ -283,30 +283,35 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "awaiting verification": null,
                     };
 
-                    await UserData.set(userData).whenComplete(() {
+                    await fireStoreUserData.set(userData).whenComplete(() {
                       setState(() {
                         loading = false;
                       });
                       return nextPage(
-                        context: context, page: const AccVerificationPage1b());
+                          context: context,
+                          page: const AccVerificationPage1b());
                     });
                   }
                 },
-                child: loading ? CircularProgressIndicator(color: Theme.of(context).primaryColor,) : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Next',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor)),
-                    const SizedBox(width: 12),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 32,
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ],
-                )),
+                child: loading
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Next',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme.of(context).primaryColor)),
+                          const SizedBox(width: 12),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 32,
+                            color: Theme.of(context).primaryColor,
+                          )
+                        ],
+                      )),
           ]),
         ),
       ),

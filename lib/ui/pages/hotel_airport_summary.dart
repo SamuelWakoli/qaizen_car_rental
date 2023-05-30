@@ -119,8 +119,8 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.doc(
-                                  "${DateTime.now()}")
+                          await userBookings
+                              .doc("${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {

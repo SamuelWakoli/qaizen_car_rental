@@ -16,7 +16,7 @@ class _LeasePageState extends State<LeasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Need extra income?'),
+        title: const Text('Need extra income?'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -50,7 +50,8 @@ Call us to get started.
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ConstrainedBox(constraints: BoxConstraints(minHeight: 10)),
+                  ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: 10)),
                   ElevatedButton(
                       onPressed: () {
                         showDialog(

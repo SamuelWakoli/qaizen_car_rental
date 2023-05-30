@@ -191,12 +191,14 @@ class _SelectVehicleCatState extends State<SelectVehicleCat> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                padding:
+                    const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
                 child: OutlinedButton(
-                    onPressed: () => nextPage(context: context, page: const SelectFromAllVehicles()),
-                    child: Row(
+                    onPressed: () => nextPage(
+                        context: context, page: const SelectFromAllVehicles()),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text('All Vehicles'),
                       ],
                     )),

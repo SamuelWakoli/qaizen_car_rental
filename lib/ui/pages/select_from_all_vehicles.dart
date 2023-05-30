@@ -42,8 +42,8 @@ class _SelectFromAllVehiclesState extends State<SelectFromAllVehicles> {
                     bottomHeight = 0;
                   });
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.clear),
                     SizedBox(width: 10),
                     Text('Clear')
@@ -80,8 +80,8 @@ class _SelectFromAllVehiclesState extends State<SelectFromAllVehicles> {
                     nextPage(context: context, page: const SelectDriver());
                   }
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.done),
                     SizedBox(width: 10),
                     Text('Proceed')
@@ -133,7 +133,7 @@ class _SelectFromAllVehiclesState extends State<SelectFromAllVehicles> {
                   image: e['displayImageURL'],
                   name: vehicleName,
                   onClickDetails: () {
-                    CurrentVehicleDocID = e.id;
+                    currentVehicleDocID = e.id;
                     return details(context: context);
                   },
                   onClickSelect: () {

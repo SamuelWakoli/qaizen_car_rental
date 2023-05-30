@@ -114,11 +114,11 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
-          children: const [
+          children: [
             Text(style: TextStyle(fontSize: 16), """
 # Privacy Policy
 

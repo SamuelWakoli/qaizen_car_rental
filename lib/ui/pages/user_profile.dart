@@ -98,7 +98,7 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
       body: StreamBuilder(
-        stream: UserData.snapshots(),
+        stream: fireStoreUserData.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return CircularProgressIndicator(
@@ -128,7 +128,7 @@ class _UserProfileState extends State<UserProfile> {
                             height: 160,
                             width: 160,
                             child: StreamBuilder(
-                                stream: UserData.snapshots(),
+                                stream: fireStoreUserData.snapshots(),
                                 builder: (context, snapshot) {
                                   String profileImageURL = snapshot.data!
                                       .get('passport URL')
@@ -169,7 +169,7 @@ class _UserProfileState extends State<UserProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             StreamBuilder(
-                                stream: UserData.snapshots(),
+                                stream: fireStoreUserData.snapshots(),
                                 builder: (context, snapshot) {
                                   bool verified =
                                       snapshot.data!.get('verified');

@@ -65,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onToggle: (value) async {
                     Map<String, dynamic> data = {'Night Mode': value};
                     //update data in db
-                    await UserData.update(data).whenComplete(() {
+                    await fireStoreUserData.update(data).whenComplete(() {
                       setState(() {
                         notificationOn = value;
                       });

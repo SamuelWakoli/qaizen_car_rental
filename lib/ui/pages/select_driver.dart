@@ -22,8 +22,8 @@ class _SelectDriverState extends State<SelectDriver> {
   Future<void> nextActivity() async {
     if (serviceType == "Chauffeured") {
       totalCost = 0;
-      totalCost = await getCost().whenComplete(() =>
-      nextPage(context: context, page: const ChauffeuredSummary()));
+      totalCost = await getCost().whenComplete(
+          () => nextPage(context: context, page: const ChauffeuredSummary()));
     } else if (serviceType == "Corporate") {
       totalCost = 0;
       totalCost = await getCost().whenComplete(
@@ -85,8 +85,8 @@ class _SelectDriverState extends State<SelectDriver> {
                     driversNames?.clear();
                   });
                 },
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.clear),
                     SizedBox(width: 10),
                     Text('Clear')
@@ -96,8 +96,8 @@ class _SelectDriverState extends State<SelectDriver> {
               const SizedBox(width: 30),
               OutlinedButton(
                 onPressed: () async => nextActivity(),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Icon(Icons.done),
                     SizedBox(width: 10),
                     Text('Proceed')

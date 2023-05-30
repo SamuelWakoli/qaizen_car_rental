@@ -36,12 +36,12 @@ class _HomePageState extends State<HomePage> {
                 name: document['name'],
                 price: document['priceDay'],
                 onClickHire: () {
-                  CurrentVehicleDocID = document.id;
+                  currentVehicleDocID = document.id;
                   hire(context: context);
                 },
                 onClickDetails: () {
                   setState(() {
-                    CurrentVehicleDocID = document.id;
+                    currentVehicleDocID = document.id;
                     details(context: context);
                   });
                 });

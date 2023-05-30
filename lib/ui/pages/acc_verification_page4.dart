@@ -23,9 +23,9 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [Text('Page 5 out of 5')],
+          children: [Text('Page 5 out of 5')],
         ),
       ),
       body: Padding(
@@ -137,8 +137,8 @@ class _AccVerificationPage4State extends State<AccVerificationPage4> {
                       "awaiting verification": true,
                     };
 
-                    await UserData.update(refData).whenComplete(() {
-                      return CurrentUser!
+                    await fireStoreUserData.update(refData).whenComplete(() {
+                      return currentUser!
                           .sendEmailVerification()
                           .whenComplete(() {
                         setState(() {

@@ -78,7 +78,7 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('vehicles')
-            .doc(CurrentVehicleDocID)
+            .doc(currentVehicleDocID)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

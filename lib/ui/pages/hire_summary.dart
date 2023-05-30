@@ -79,7 +79,7 @@ class _HireSummaryState extends State<HireSummary> {
                   StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('vehicles')
-                          .doc(CurrentVehicleDocID)
+                          .doc(currentVehicleDocID)
                           .snapshots(),
                       builder: (context, snapshot) {
                         return summaryItem(
@@ -114,7 +114,7 @@ class _HireSummaryState extends State<HireSummary> {
                             'type': 'Self Drive',
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,
-                            'vehiclesList': [CurrentVehicleDocID],
+                            'vehiclesList': [currentVehicleDocID],
                             //get vehicle ids
                             'driversList': [],
                             //get driver names
@@ -130,8 +130,8 @@ class _HireSummaryState extends State<HireSummary> {
                             'transfer desc': transferDescription,
                           };
 
-                          await Bookings.doc(
-                                  "${DateTime.now()}")
+                          await userBookings
+                              .doc("${DateTime.now()}")
                               .set(data)
                               .whenComplete(() {
                             setState(() {

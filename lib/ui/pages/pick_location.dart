@@ -24,10 +24,12 @@ class _PickLocationState extends State<PickLocation> {
             searchBarHintColor: Theme.of(context).primaryColor,
             searchBarTextColor: Theme.of(context).primaryColor,
             selectLocationButtonText: 'Select Pinned Location',
-            onError: (e) => print(e),
+            onError: (e) {
+              // print(e);
+            },
             onPicked: (pickedData) async {
-              print(pickedData.latLong.latitude);
-              print(pickedData.latLong.longitude);
+              // print(pickedData.latLong.latitude);
+              // print(pickedData.latLong.longitude);
               // print(pickedData.address);
               // print(pickedData.addressData['country']);
               setState(() {

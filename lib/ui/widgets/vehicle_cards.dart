@@ -105,8 +105,6 @@ Widget availableVehicleCard({
                     });
 
                     return !isLiked;
-
-                    return null;
                   }),
                 ),
                 MaterialButton(
@@ -212,7 +210,7 @@ Widget favCard({
                     ),
                     TextSpan(
                       text: '  |  Ksh. $price /day ',
-                      style: TextStyle(fontSize: 16.0),
+                      style: const TextStyle(fontSize: 16.0),
                     ),
                   ])),
             ),

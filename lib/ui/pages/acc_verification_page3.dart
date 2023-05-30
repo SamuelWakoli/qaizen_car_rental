@@ -66,9 +66,9 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [Text('Page 4 out of 5')],
+          children: [Text('Page 4 out of 5')],
         ),
       ),
       body: SingleChildScrollView(
@@ -151,9 +151,10 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
 
                     String drivingLicenceUrl = '';
 
-                    await UserStorageFolder.child(
-                        '${getUserName()}\'s driving licence.png')
-                        .putFile(image!).then((snapshot) async {
+                    await firebaseStorageUserFolder
+                        .child('${getUserName()}\'s driving licence.png')
+                        .putFile(image!)
+                        .then((snapshot) async {
                       drivingLicenceUrl = await snapshot.ref.getDownloadURL();
                     }).whenComplete(() async {
                       if (drivingLicenceUrl != '') {
@@ -170,13 +171,16 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                           });
                         }
 
-                        await UserData.update(drivingLicenceURL).whenComplete(() {
+                        await fireStoreUserData
+                            .update(drivingLicenceURL)
+                            .whenComplete(() {
                           setState(() {
                             loading = false;
                             navigatedToNextPage = true;
                           });
                           return nextPage(
-                              context: context, page: const AccVerificationPage4());
+                              context: context,
+                              page: const AccVerificationPage4());
                         }).onError((error, stackTrace) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
@@ -203,8 +207,6 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                               'Please try again. An error occurred: $error')));
                       loading = false;
                     });
-
-
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -214,10 +216,10 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                 },
                 child: loading
                     ? Center(
-                      child: CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           color: Theme.of(context).primaryColor,
                         ),
-                    )
+                      )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

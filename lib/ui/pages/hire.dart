@@ -108,7 +108,7 @@ class _HirePageState extends State<HirePage> {
         title: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('vehicles')
-                .doc(CurrentVehicleDocID)
+                .doc(currentVehicleDocID)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -189,8 +189,8 @@ class _HirePageState extends State<HirePage> {
                       cursorColor: Theme.of(context).primaryColor,
                       decoration: InputDecoration(
                         labelText: "Number of days:",
-                        labelStyle: TextStyle(
-                            color: Theme.of(context).primaryColor),
+                        labelStyle:
+                            TextStyle(color: Theme.of(context).primaryColor),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Theme.of(context).primaryColor,
@@ -300,13 +300,12 @@ class _HirePageState extends State<HirePage> {
                         acceptedTerms && numberOfDays != ''
                             ? {
                                 selectedVehicles?.clear(),
-                          selectedVehicleNames?.clear(),
-                                selectedVehicles?.add(CurrentVehicleDocID),
+                                selectedVehicleNames?.clear(),
+                                selectedVehicles?.add(currentVehicleDocID),
                                 totalCost = 0,
                                 totalCost = await getCost(),
                                 nextPage(
-                                    context: context,
-                                    page: const HireSummary())
+                                    context: context, page: const HireSummary())
                               }
                             : showSnackbar(
                                 context: context,

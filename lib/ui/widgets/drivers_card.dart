@@ -27,10 +27,10 @@ Widget driverCard({
                 imageUrl: image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
               ),
             ),
           ),
@@ -73,9 +73,7 @@ Widget driverCard({
                 child: Row(
                   children: [
                     Text(
-                      availability
-                          ? "Available"
-                          : "Not available",
+                      availability ? "Available" : "Not available",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -86,10 +84,10 @@ Widget driverCard({
               ),
               OutlinedButton(
                 onPressed: onClickSelect,
-                child: SizedBox(
+                child: const SizedBox(
                   height: 40,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(Icons.assignment_outlined),
                       SizedBox(width: 8),
                       Text('Select', style: TextStyle(fontSize: 18))
@@ -99,7 +97,6 @@ Widget driverCard({
               )
             ],
           ),
-
         ],
       ),
     ),

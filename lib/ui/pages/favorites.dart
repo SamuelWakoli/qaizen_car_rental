@@ -45,11 +45,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   price: document['priceDay'],
                   availability: document['availability'],
                   onClickHire: () {
-                    CurrentVehicleDocID = document.id;
+                    currentVehicleDocID = document.id;
                     hire(context: context);
                   },
                   onClickDetails: () {
-                    CurrentVehicleDocID = document.id;
+                    currentVehicleDocID = document.id;
                     details(context: context);
                   });
             }).toList());

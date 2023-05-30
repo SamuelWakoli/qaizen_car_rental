@@ -66,9 +66,9 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [Text('Page 2 out of 5')],
+          children: [Text('Page 2 out of 5')],
         ),
       ),
       body: SingleChildScrollView(
@@ -156,8 +156,8 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                     });
 
                     String passportUrl = "";
-                    await UserStorageFolder.child(
-                            '${getUserName()}\'s passport.png')
+                    await firebaseStorageUserFolder
+                        .child('${getUserName()}\'s passport.png')
                         .putFile(image!)
                         .then((snapshot) async {
                       passportUrl = await snapshot.ref.getDownloadURL();
@@ -176,7 +176,9 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
                           });
                         }
 
-                        await UserData.update(passportURL).whenComplete(() {
+                        await fireStoreUserData
+                            .update(passportURL)
+                            .whenComplete(() {
                           setState(() {
                             loading = false;
                             navigatedToNextPage = true;
