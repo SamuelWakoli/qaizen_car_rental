@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/ui/pages/view_image.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../db/user.dart';
 
@@ -112,7 +114,12 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    displayImage(),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = displayImageUrl!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: displayImage()),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -166,11 +173,36 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                       document.get('shortDesc'),
                     ),
                     const SizedBox(height: 10),
-                    getVehicleImages(image1Url.toString()),
-                    getVehicleImages(image2Url.toString()),
-                    getVehicleImages(image3Url.toString()),
-                    getVehicleImages(image4Url.toString()),
-                    getVehicleImages(image5Url.toString()),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = image1Url!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: getVehicleImages(image1Url.toString())),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = image2Url!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: getVehicleImages(image2Url.toString())),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = image3Url!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: getVehicleImages(image3Url.toString())),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = image4Url!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: getVehicleImages(image4Url.toString())),
+                    GestureDetector(
+                        onTap: () {
+                          currentImageUrl = image5Url!;
+                          nextPage(context: context, page: const ViewImage());
+                        },
+                        child: getVehicleImages(image5Url.toString())),
                   ],
                 ),
               ),

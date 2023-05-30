@@ -13,10 +13,11 @@ import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
+import 'package:qaizen_car_rental/ui/pages/view_image.dart';
 
 import '../../db/user.dart';
 import '../../helper/communication.dart';
-import '../../shared/constants.dart';
+import '../../helper/rate_card.dart';
 import '../pages/favorites.dart';
 import '../pages/home_page.dart';
 import '../pages/more_page.dart';
@@ -108,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       updateDbHasData(dataAwaiting);
       updateVerification(dataVerified);
     });
+    getRateCardUrl();
   }
 
   void updateDbHasData(bool value) => setState(() => dbHasData = value);
@@ -174,16 +176,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  var _iconColor = Constants().primaryColor();
-
   @override
   Widget build(BuildContext context) {
-    bool isNightModeOn = Theme.of(context).brightness == Brightness.dark;
-
-    if (isNightModeOn) {
-      _iconColor = Constants().primaryColorDark();
-    }
-
     //if db has data, return this screen
     return Scaffold(
       drawer: Drawer(
@@ -289,8 +283,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Card(
                 child: ListTile(
                   leading: Icon(
+                    Icons.price_change_outlined,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  title: const Text("Rate Card"),
+                  onTap: () {
+                    currentImageUrl = rateCardUrl;
+                    nextPage(context: context, page: const ViewImage());
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
                     Icons.book_outlined,
-                    color: _iconColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   title: const Text("Records"),
                   onTap: () =>
@@ -304,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: ListTile(
                   leading: Icon(
                     Icons.help_outline_rounded,
-                    color: _iconColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   title: const Text("Report Issue"),
                   onTap: () {
@@ -350,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: ListTile(
                   leading: Icon(
                     Icons.policy_outlined,
-                    color: _iconColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   title: const Text("Terms and Conditions"),
                   onTap: () => nextPage(
@@ -492,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 optionMenuItem(
                   position: 2,
                   icon: Icons.help_outline_rounded,
-                  color: _iconColor,
+                  color: Theme.of(context).primaryColor,
                   text: 'Report Issue',
                 ),
                 optionMenuItem(
