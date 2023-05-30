@@ -41,180 +41,214 @@ class _HireSummaryState extends State<HireSummary> {
   }
 
   bool loading = false;
+  String phoneNumber = '';
+  bool editingPhone = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Summary'),
-        centerTitle: true,
-      ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(getUserName())
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              );
-            }
-
-            final document = snapshot.data!;
-            clientName = document['name'];
-            return SingleChildScrollView(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          title: const Text('Summary'),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              summaryItem(name: 'Name: ', data: clientName),
+              Row(
                 children: [
-                  summaryItem(name: 'Name: ', data: document['name']),
-                  summaryItem(name: 'Phone Number: ', data: document['phone']),
-                  summaryItem(
-                      name: 'Email Address: ',
-                      data:
-                          FirebaseAuth.instance.currentUser!.email.toString()),
-                  const SizedBox(height: 20),
-                  StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('vehicles')
-                          .doc(currentVehicleDocID)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        return summaryItem(
-                            name: 'Vehicle: ',
-                            data: snapshot.data!.get('name'));
-                      }),
-                  summaryItem(
-                      name: 'Service starts at: ',
-                      data: ' $selectedTime | $selectedDate'),
-                  delivery
-                      ? summaryItem(
-                          name: 'Delivery Location: ', data: deliveryAddress)
-                      : const SizedBox(),
-                  summaryItem(name: 'Number of Days: ', data: numberOfDays),
-                  summaryItem(
-                      name: "TOTAL COST: ",
-                      data:
-                          "Ksh. $totalCost ${delivery ? '(exclusive of delivery fee)' : ''}"),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
-
-                          Map<String, dynamic> data = {
-                            'name': clientName,
-                            'userId': getUserName(),
-                            'type': 'Self Drive',
-                            'starts': '$selectedTime | $selectedDate',
-                            'duration': numberOfDays,
-                            'vehiclesList': [currentVehicleDocID],
-                            //get vehicle ids
-                            'driversList': [],
-                            //get driver names
-                            'orgName': '',
-                            'delivery': delivery,
-                            'delivery address': deliveryAddress,
-                            'geo-point lat': locationDataLat.toString(),
-                            'geo-point lon': locationDataLon.toString(),
-                            'total cost': totalCost,
-                            'paid': false,
-                            'status': 'Pending',
-                            'hotel/airport name': hotelAirportName,
-                            'transfer desc': transferDescription,
-                          };
-
-                          await userBookings
-                              .doc("${DateTime.now()}")
-                              .set(data)
-                              .whenComplete(() {
-                            setState(() {
-                              loading = false;
-                            });
-
-                            showDialog(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                      title:
-                                          const Text('Submitted Successfully'),
-                                      content: const Text(
-                                        'Your request has been received. We will send you an agreement document that will be signed upon payment. ',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.of(context)
-                                              .popUntil(
-                                                  (route) => route.isFirst),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.home_outlined,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              const SizedBox(width: 20),
-                                              Text(
-                                                'Go to Home Screen',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ));
-                          }).onError(
-                            (error, stackTrace) =>
-                                ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('An error occurred: $error'),
-                              ),
-                            ),
-                          );
-                        },
-                        child: loading
-                            ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Submit Request',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Icon(
-                                      Icons.arrow_forward_outlined,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
+                  summaryItem(name: 'Phone Number: ', data: phoneNumber),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          editingPhone = !editingPhone;
+                        });
+                      },
+                      icon: const Icon(Icons.edit))
                 ],
               ),
-            ));
-          }),
-    );
+              editingPhone
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                          right: 16.0, left: 16.0, bottom: 16.0),
+                      child: TextField(
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (value) {
+                          setState(() {
+                            phoneNumber = value;
+                            editingPhone = !editingPhone;
+                          });
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            phoneNumber = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                editingPhone = !editingPhone;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.done,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+              summaryItem(
+                  name: 'Email Address: ',
+                  data: FirebaseAuth.instance.currentUser!.email.toString()),
+              const SizedBox(height: 20),
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('vehicles')
+                      .doc(currentVehicleDocID)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    return summaryItem(
+                        name: 'Vehicle: ', data: snapshot.data!.get('name'));
+                  }),
+              summaryItem(
+                  name: 'Service starts at: ',
+                  data: ' $selectedTime | $selectedDate'),
+              delivery
+                  ? summaryItem(
+                      name: 'Delivery Location: ', data: deliveryAddress)
+                  : const SizedBox(),
+              summaryItem(name: 'Number of Days: ', data: numberOfDays),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        loading = true;
+                      });
+
+                      Map<String, dynamic> data = {
+                        'name': clientName,
+                        'userId': getUserName(),
+                        'phone': phoneNumber,
+                        'type': 'Self Drive',
+                        'starts': '$selectedTime | $selectedDate',
+                        'duration': numberOfDays,
+                        'vehiclesList': [currentVehicleDocID],
+                        //get vehicle ids
+                        'driversList': [],
+                        //get driver names
+                        'orgName': '',
+                        'delivery': delivery,
+                        'delivery address': deliveryAddress,
+                        'geo-point lat': locationDataLat.toString(),
+                        'geo-point lon': locationDataLon.toString(),
+                        'paid': false,
+                        'status': 'Pending',
+                        'hotel/airport name': hotelAirportName,
+                        'transfer desc': transferDescription,
+                      };
+
+                      await userBookings
+                          .doc("${DateTime.now()}")
+                          .set(data)
+                          .whenComplete(() {
+                        setState(() {
+                          loading = false;
+                        });
+
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  title: const Text('Submitted Successfully'),
+                                  content: const Text(
+                                    'Your request has been received. We will send you an agreement document that will be signed upon payment. ',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.of(context)
+                                          .popUntil((route) => route.isFirst),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.home_outlined,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                          const SizedBox(width: 20),
+                                          Text(
+                                            'Go to Home Screen',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ));
+                      }).onError(
+                        (error, stackTrace) =>
+                            ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('An error occurred: $error'),
+                          ),
+                        ),
+                      );
+                    },
+                    child: loading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Submit Request',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Icon(
+                                  Icons.arrow_forward_outlined,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )));
   }
 }

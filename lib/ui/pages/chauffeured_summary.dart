@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +13,8 @@ class ChauffeuredSummary extends StatefulWidget {
 
 class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
   bool loading = false;
+  String phoneNumber = '';
+  bool editingPhone = false;
 
   TextStyle normalText() {
     return const TextStyle(fontSize: 16);
@@ -51,27 +52,68 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('users')
-                .doc(getUserName())
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                );
-              }
-
-              final document = snapshot.data!;
-              clientName = document['name'];
-
-              return Column(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  summaryItem(name: 'Name: ', data: document['name']),
-                  summaryItem(name: 'Phone Number: ', data: document['phone']),
+                  summaryItem(name: 'Name: ', data: clientName),
+                  Row(
+                    children: [
+                      summaryItem(name: 'Phone Number: ', data: phoneNumber),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              editingPhone = !editingPhone;
+                            });
+                          },
+                          icon: const Icon(Icons.edit))
+                    ],
+                  ),
+                  editingPhone
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              right: 16.0, left: 16.0, bottom: 16.0),
+                          child: TextField(
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.done,
+                            onSubmitted: (value) {
+                              setState(() {
+                                phoneNumber = value;
+                                editingPhone = !editingPhone;
+                              });
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                phoneNumber = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    editingPhone = !editingPhone;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.done,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                   summaryItem(
                       name: 'Email Address: ',
                       data:
@@ -86,8 +128,6 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                       data: ' $selectedTime | $selectedDate'),
                   summaryItem(name: 'Number of Days: ', data: numberOfDays),
                   const SizedBox(height: 30),
-                  summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
-                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -110,7 +150,6 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                             'delivery address': '',
                             'geo-point lat': '',
                             'geo-point lon': '',
-                            'total cost': totalCost,
                             'paid': false,
                             'status': 'Pending',
                             'hotel/airport name': hotelAirportName,
@@ -199,9 +238,7 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
                     ),
                   ),
                 ],
-              );
-            }),
-      )),
+              ))),
     );
   }
 }
