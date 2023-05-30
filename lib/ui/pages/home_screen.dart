@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
+import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
@@ -196,78 +198,165 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             const SizedBox(
               height: 50,
             ),
-            ListTile(
-              //if user created profile, use image
-              //else use icon
-              leading: _getProfile(),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    getUserName(),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  dbHasData
-                      ? StreamBuilder(
-                          stream: fireStoreUserData.snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return CircularProgressIndicator(
-                                color: Theme.of(context).primaryColor,
-                              );
-                            }
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  //if user created profile, use image
+                  //else use icon
+                  leading: _getProfile(),
+                  title: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        getUserName(),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      dbHasData
+                          ? StreamBuilder(
+                              stream: fireStoreUserData.snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  );
+                                }
 
-                            if (snapshot.data!.get('verified')) {
-                              return Icon(
-                                Icons.verified_outlined,
-                                size: 18,
+                                if (snapshot.data!.get('verified')) {
+                                  return Icon(
+                                    Icons.verified_outlined,
+                                    size: 18,
+                                    color: Theme.of(context).primaryColor,
+                                  );
+                                } else {
+                                  return const Text(
+                                    'awaiting verification',
+                                  );
+                                }
+                              })
+                          : const Text(
+                              'click here to verify your profile',
+                            ),
+                    ],
+                  ),
+                  onTap: () {
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      dbHasData
+                          ? nextPage(
+                              context: context, page: const UserProfile())
+                          : nextPage(
+                              context: context, page: const VerificationPage());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              icon: Icon(
+                                Icons.account_circle_outlined,
                                 color: Theme.of(context).primaryColor,
-                              );
-                            } else {
-                              return const Text(
-                                'awaiting verification',
-                              );
-                            }
-                          })
-                      : const Text(
-                          'click here to verify your profile',
-                        ),
-                ],
+                              ),
+                              title: const Text("Authentication Required"),
+                              content:
+                                  const Text("Please sign in to continue."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                      nextPage(
+                                          context: context,
+                                          page: const AuthGate());
+                                    },
+                                    child: const Text("Sign In")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text("Cancel")),
+                              ],
+                            );
+                          });
+                    }
+                  },
+                ),
               ),
-              onTap: () => dbHasData
-                  ? nextPage(context: context, page: const UserProfile())
-                  : nextPage(context: context, page: const VerificationPage()),
             ),
             const SizedBox(height: 20),
-            ListTile(
-              leading: Icon(
-                Icons.book_outlined,
-                color: _iconColor,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.book_outlined,
+                    color: _iconColor,
+                  ),
+                  title: const Text("Records"),
+                  onTap: () =>
+                      nextPage(context: context, page: const RecordsPage()),
+                ),
               ),
-              title: const Text("Records"),
-              onTap: () =>
-                  nextPage(context: context, page: const RecordsPage()),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.help_outline_rounded,
-                color: _iconColor,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.help_outline_rounded,
+                    color: _iconColor,
+                  ),
+                  title: const Text("Report Issue"),
+                  onTap: () {
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      nextPage(context: context, page: const ReportIssuePage());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              icon: Icon(
+                                Icons.account_circle_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: const Text("Authentication Required"),
+                              content:
+                                  const Text("Please sign in to continue."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                      nextPage(
+                                          context: context,
+                                          page: const AuthGate());
+                                    },
+                                    child: const Text("Sign In")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text("Cancel")),
+                              ],
+                            );
+                          });
+                    }
+                  },
+                ),
               ),
-              title: const Text("Report Issue"),
-              onTap: () =>
-                  nextPage(context: context, page: const ReportIssuePage()),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.policy_outlined,
-                color: _iconColor,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.policy_outlined,
+                    color: _iconColor,
+                  ),
+                  title: const Text("Terms and Conditions"),
+                  onTap: () => nextPage(
+                      context: context, page: const TermsConditionsPage()),
+                ),
               ),
-              title: const Text("Terms and Conditions"),
-              onTap: () =>
-                  nextPage(context: context, page: const TermsConditionsPage()),
             ),
           ],
         ),
@@ -350,7 +439,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }
               if (position == 2) {
                 //Report Issue
-                nextPage(context: context, page: const ReportIssuePage());
+                if (FirebaseAuth.instance.currentUser != null) {
+                  nextPage(context: context, page: const ReportIssuePage());
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return AlertDialog(
+                          icon: Icon(
+                            Icons.account_circle_outlined,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          title: const Text("Authentication Required"),
+                          content: const Text("Please sign in to continue."),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                  nextPage(
+                                      context: context, page: const AuthGate());
+                                },
+                                child: const Text("Sign In")),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: const Text("Cancel")),
+                          ],
+                        );
+                      });
+                }
               }
               if (position == 3) {
                 //Settings

@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
+import 'auth_gate.dart';
 import 'hotel_airport_summary.dart';
 
 class HotelAirportPage extends StatefulWidget {
@@ -273,9 +275,42 @@ class _HotelAirportPageState extends State<HotelAirportPage> {
               child: OutlinedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    serviceType = hotelORairport ? "Airport Transfer" : "Hotel Transfer";
-                    nextPage(
-                        context: context, page: const HotelAirportSummary());
+                    serviceType =
+                        hotelORairport ? "Airport Transfer" : "Hotel Transfer";
+
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      nextPage(
+                          context: context, page: const HotelAirportSummary());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              icon: Icon(
+                                Icons.account_circle_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: const Text("Authentication Required"),
+                              content:
+                                  const Text("Please sign in to continue."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                      nextPage(
+                                          context: context,
+                                          page: const AuthGate());
+                                    },
+                                    child: const Text("Sign In")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text("Cancel")),
+                              ],
+                            );
+                          });
+                    }
                   }
                 },
                 child: Padding(

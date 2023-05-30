@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
@@ -5,6 +6,7 @@ import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
+import 'auth_gate.dart';
 
 class ToursSafarisPage extends StatefulWidget {
   const ToursSafarisPage({super.key});
@@ -78,9 +80,9 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
       ),
       body: SingleChildScrollView(
           child: Form(
-            key: _formKey,
-            child: Column(
-        children: [
+        key: _formKey,
+        child: Column(
+          children: [
             const SizedBox(height: 10),
             const Text(
               'Provide details for the following fields:',
@@ -175,42 +177,75 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
               ),
             ),
             const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  serviceType = 'Tours & Safaris';
-                  driversNames?.clear();
-                  selectedVehicleNames?.clear();
-                  selectedVehicles?.clear();
-                  nextPage(context: context, page: const SelectVehicleCat());
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Select vehicle(s) and driver(s)',
-                      style: TextStyle(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    serviceType = 'Tours & Safaris';
+                    driversNames?.clear();
+                    selectedVehicleNames?.clear();
+                    selectedVehicles?.clear();
+
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      nextPage(
+                          context: context, page: const SelectVehicleCat());
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              icon: Icon(
+                                Icons.account_circle_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: const Text("Authentication Required"),
+                              content:
+                                  const Text("Please sign in to continue."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                      nextPage(
+                                          context: context,
+                                          page: const AuthGate());
+                                    },
+                                    child: const Text("Sign In")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: const Text("Cancel")),
+                              ],
+                            );
+                          });
+                    }
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Select vehicle(s) and driver(s)',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_outlined,
                         color: Theme.of(context).primaryColor,
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Icon(
-                      Icons.arrow_forward_outlined,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-          )),
+          ],
+        ),
+      )),
     );
   }
 }

@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/select_vehicle_cat.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
+import 'auth_gate.dart';
 
 class ChauffeuredPage extends StatefulWidget {
   const ChauffeuredPage({super.key});
@@ -159,7 +161,38 @@ class _ChauffeuredPageState extends State<ChauffeuredPage> {
                   selectedVehicleNames?.clear();
                   setState(() {});
                   serviceType = "Chauffeured";
-                  nextPage(context: context, page: const SelectVehicleCat());
+
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    nextPage(context: context, page: const SelectVehicleCat());
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            icon: Icon(
+                              Icons.account_circle_outlined,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            title: const Text("Authentication Required"),
+                            content: const Text("Please sign in to continue."),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(ctx);
+                                    nextPage(
+                                        context: context,
+                                        page: const AuthGate());
+                                  },
+                                  child: const Text("Sign In")),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(ctx);
+                                  },
+                                  child: const Text("Cancel")),
+                            ],
+                          );
+                        });
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Please enter number of days.')));

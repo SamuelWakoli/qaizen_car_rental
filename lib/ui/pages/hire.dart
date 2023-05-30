@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +10,7 @@ import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
 import '../../db/user.dart';
 import '../../shared/hire_vehicle_data.dart';
 import '../widgets/widgets.dart';
+import 'auth_gate.dart';
 
 class HirePage extends StatefulWidget {
   const HirePage({super.key});
@@ -220,7 +222,7 @@ class _HirePageState extends State<HirePage> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 120,
+                        width: 160,
                         child: RadioListTile(
                           title: const Text("Yes"),
                           value: true,
@@ -234,7 +236,7 @@ class _HirePageState extends State<HirePage> {
                         ),
                       ),
                       SizedBox(
-                        width: 120,
+                        width: 160,
                         child: RadioListTile(
                           title: const Text("No"),
                           value: false,
@@ -304,8 +306,45 @@ class _HirePageState extends State<HirePage> {
                                 selectedVehicles?.add(currentVehicleDocID),
                                 totalCost = 0,
                                 totalCost = await getCost(),
-                                nextPage(
-                                    context: context, page: const HireSummary())
+                                if (FirebaseAuth.instance.currentUser != null)
+                                  {
+                                    nextPage(
+                                        context: context,
+                                        page: const HireSummary())
+                                  }
+                                else
+                                  {
+                                    showDialog(
+                                        context: context,
+                                        builder: (ctx) {
+                                          return AlertDialog(
+                                            icon: Icon(
+                                              Icons.account_circle_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            title: const Text(
+                                                "Authentication Required"),
+                                            content: const Text(
+                                                "Please sign in to continue."),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(ctx);
+                                                    nextPage(
+                                                        context: context,
+                                                        page: const AuthGate());
+                                                  },
+                                                  child: const Text("Sign In")),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(ctx);
+                                                  },
+                                                  child: const Text("Cancel")),
+                                            ],
+                                          );
+                                        })
+                                  }
                               }
                             : showSnackbar(
                                 context: context,

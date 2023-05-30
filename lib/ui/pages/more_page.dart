@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/privacy_policy.dart';
@@ -10,6 +11,7 @@ import '../../db/user.dart';
 import '../../shared/constants.dart';
 import '../widgets/widgets.dart';
 import 'account_verification.dart';
+import 'auth_gate.dart';
 import 'lease_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -126,8 +128,42 @@ class _MorePageState extends State<MorePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: () => nextPage(
-                          context: context, page: const ReferralProgramPage()),
+                      onTap: () {
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          nextPage(
+                              context: context,
+                              page: const ReferralProgramPage());
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return AlertDialog(
+                                  icon: Icon(
+                                    Icons.account_circle_outlined,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  title: const Text("Authentication Required"),
+                                  content:
+                                      const Text("Please sign in to continue."),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx);
+                                          nextPageReplace(
+                                              context: context,
+                                              page: const AuthGate());
+                                        },
+                                        child: const Text("Sign In")),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx);
+                                        },
+                                        child: const Text("Cancel")),
+                                  ],
+                                );
+                              });
+                        }
+                      },
                       child: Card(
                           child: ConstrainedBox(
                         constraints: const BoxConstraints(minWidth: 140),

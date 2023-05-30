@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:qaizen_car_rental/db/user.dart';
+import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 Widget availableVehicleCard({
@@ -82,30 +84,56 @@ Widget availableVehicleCard({
                       size: 32,
                     );
                   },
-                  onTap: ((isLiked) async {
-                    if (!isLiked) {
-                      favoriteVehicles.add(id);
-                    } else {
-                      favoriteVehicles.remove(id);
-                    }
-                    Map<String, dynamic> data = {"favorites": favoriteVehicles};
-                    await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(getUserName())
-                        .update(data)
-                        .whenComplete(() {
-                      String likeMessage = "";
-                      isLiked
-                          ? likeMessage = "removed from"
-                          : likeMessage = "added to";
-                      showSnackbar(
-                          context: context,
-                          duration: 3,
-                          message: "$name $likeMessage to favorites");
-                    });
+                  onTap: (isLiked) async {
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      if (!isLiked) {
+                        favoriteVehicles.add(id);
+                      } else {
+                        favoriteVehicles.remove(id);
+                      }
+                      Map<String, dynamic> data = {
+                        "favorites": favoriteVehicles
+                      };
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(getUserName())
+                          .update(data)
+                          .whenComplete(() {
+                        String likeMessage = "";
+                        isLiked
+                            ? likeMessage = "removed from"
+                            : likeMessage = "added to";
+                        showSnackbar(
+                            context: context,
+                            duration: 3,
+                            message: "$name $likeMessage to favorites");
+                      });
 
-                    return !isLiked;
-                  }),
+                      return !isLiked;
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              icon: Icon(
+                                Icons.account_circle_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              title: const Text("Authentication Required"),
+                              content: const Text("To Add favorites, please sign in."),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Navigator.pop(ctx);
+                                  nextPageReplace(context: context, page: const AuthGate());
+                                }, child: const Text("Sign In")),
+                                TextButton(onPressed: (){
+                                  Navigator.pop(ctx);
+                                }, child: const Text("Cancel")),
+                              ],
+                            );
+                          });
+                    }
+                  },
                 ),
                 MaterialButton(
                   onPressed: onClickDetails,

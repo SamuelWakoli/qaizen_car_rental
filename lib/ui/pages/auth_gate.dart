@@ -6,7 +6,6 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../helper/communication.dart';
-import 'home_screen.dart';
 
 /// This is the SignIn Screen created using tha packages: firebase_ui_auth: ^1.1.9
 /// and firebase_ui_oauth_google: ^1.0.16
@@ -96,8 +95,15 @@ class _AuthGateState extends State<AuthGate> {
                   ])));
             },
           );
+        } else {
+          // pop this screen when the user signs in
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pop(context);
+          });
         }
-        return const HomeScreen();
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }
