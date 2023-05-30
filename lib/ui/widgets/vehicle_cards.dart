@@ -115,10 +115,6 @@ Widget availableVehicleCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.info_outline_rounded,
-                          color: Theme.of(context).primaryColor,
-                        ),
                         const SizedBox(width: 8),
                         Text('Details',
                             style: TextStyle(
@@ -229,10 +225,6 @@ Widget favCard({
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.info_outline_rounded,
-                          color: Theme.of(context).primaryColor,
-                        ),
                         const SizedBox(width: 8),
                         Text('Details',
                             style: TextStyle(
@@ -260,172 +252,6 @@ Widget favCard({
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  } else {
-    return const SizedBox();
-  }
-}
-
-Widget returningVehicleCard({
-  required context,
-  required id,
-  required image,
-  required name,
-  required price,
-  required availabilityNotification,
-  required onClickNotifyMe,
-  required onClickDetails,
-  required availability,
-}) {
-  if (!availability) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text.rich(TextSpan(
-                text: name,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: '    Ksh. $price /day',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ])),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                LikeButton(
-                  isLiked: favoriteVehicles.contains(id),
-                  bubblesColor: BubblesColor(
-                      dotPrimaryColor: Theme.of(context).primaryColor,
-                      dotSecondaryColor: Colors.white),
-                  circleColor: CircleColor(
-                    start: Theme.of(context).primaryColor,
-                    end: Colors.white,
-                  ),
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.favorite,
-                      color: isLiked
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey,
-                      size: 32,
-                    );
-                  },
-                  onTap: ((isLiked) async {
-                    if (!isLiked) {
-                      favoriteVehicles.add(id);
-                    } else {
-                      favoriteVehicles.remove(id);
-                    }
-                    Map<String, dynamic> data = {"favorites": favoriteVehicles};
-                    await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(getUserName())
-                        .update(data)
-                        .whenComplete(() {
-                      String likeMessage = "";
-                      isLiked
-                          ? likeMessage = "removed from"
-                          : likeMessage = "added to";
-
-                      showSnackbar(
-                          context: context,
-                          duration: 3,
-                          message: "$name $likeMessage to favorites");
-                    });
-
-                    return !isLiked;
-                    return null;
-                  }),
-                ),
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline_rounded,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                LikeButton(
-                  isLiked: availabilityNotification,
-                  bubblesColor: BubblesColor(
-                      dotPrimaryColor: Theme.of(context).primaryColor,
-                      dotSecondaryColor: Colors.white),
-                  circleColor: CircleColor(
-                    start: Theme.of(context).primaryColor,
-                    end: Colors.white,
-                  ),
-                  likeBuilder: (bool availabilityNotification) {
-                    return Icon(
-                      Icons.notification_add,
-                      color: availabilityNotification
-                          ? Theme.of(context).primaryColor
-                          : Colors.grey,
-                      size: 32,
-                    );
-                  },
-                  onTap: ((availabilityNotification) async {
-                    ///add the vehicle to pending notifications
-                    String notifyMessage = "";
-                    availabilityNotification
-                        ? notifyMessage = "not get"
-                        : notifyMessage = "get";
-
-                    showSnackbar(
-                        context: context,
-                        duration: 2,
-                        message: "Feature under development");
-
-                    // showSnackbar(
-                    //     context: context,
-                    //     duration: 2,
-                    //     message:
-                    //         "You will $notifyMessage a notification when $name is available");
-                    return !availabilityNotification;
-                  }),
                 ),
               ],
             ),

@@ -67,7 +67,7 @@ class _SearchPageState extends State<SearchPage> {
                     icon: const Icon(Icons.clear),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(48.0),
+                    borderRadius: BorderRadius.circular(24.0),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(

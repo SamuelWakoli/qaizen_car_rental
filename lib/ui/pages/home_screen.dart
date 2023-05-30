@@ -276,11 +276,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         title: _titles[_currentPage],
         centerTitle: true,
         actions: [
-          IconButton(
-              tooltip: "Search",
-              onPressed: () =>
-                  nextPage(context: context, page: const SearchPage()),
-              icon: const Icon(Icons.search)),
+          if (_currentPage == 0)
+            IconButton(
+                tooltip: "Search",
+                onPressed: () =>
+                    nextPage(context: context, page: const SearchPage()),
+                icon: const Icon(Icons.search)),
           IconButton(
             onPressed: () =>
                 nextPage(context: context, page: const Emergency()),

@@ -36,7 +36,7 @@ Widget getVehicleImages(image) {
             ),
           ),
         ),
-        errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+        errorWidget: (context, url, error) => const SizedBox(),
       ),
     ),
   );
@@ -151,7 +151,7 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                     Text.rich(
                       TextSpan(
                           text: 'Ksh. ',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                           children: <TextSpan>[
                             TextSpan(text: document.get('priceMonth')),
                             const TextSpan(text: ' /month')
