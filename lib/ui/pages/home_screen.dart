@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
+import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 
@@ -35,10 +36,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   // appbar title:
   final List<Widget> _titles = [
-    CircleAvatar(
-        radius: 22,
-        backgroundColor: Colors.white,
-        child: Image.asset('assets/ic_launcher.png')),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircleAvatar(
+            radius: 22,
+            backgroundColor: Colors.white,
+            child: Image.asset('assets/ic_launcher.png')),
+        const SizedBox(width: 20),
+        const Text("Home")
+      ],
+    ),
     const Text('Services'),
     const Text('Favorites'),
     const Text('More')
@@ -74,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    // TODO: Check this issue
     Timer(Duration.zero, () async {
       var snapshot = await UserData.get();
 
@@ -105,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void updateVerification(bool value) => setState(() => isVerified = value);
 
-  Widget _getImage() {
+  Widget _getProfile() {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100.0),
@@ -139,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 Theme.of(context).primaryColor),
                           ),
                           errorWidget: (context, url, error) =>
-                              const Icon(Icons.error_outline),
+                              const Icon(Icons.account_circle_outlined),
                         );
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
@@ -192,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ListTile(
               //if user created profile, use image
               //else use icon
-              leading: _getImage(),
+              leading: _getProfile(),
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,6 +276,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         title: _titles[_currentPage],
         centerTitle: true,
         actions: [
+          IconButton(
+              tooltip: "Search",
+              onPressed: () =>
+                  nextPage(context: context, page: const SearchPage()),
+              icon: const Icon(Icons.search)),
           IconButton(
             onPressed: () =>
                 nextPage(context: context, page: const Emergency()),

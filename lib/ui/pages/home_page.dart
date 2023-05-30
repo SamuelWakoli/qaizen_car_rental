@@ -15,78 +15,37 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 0,
-          bottom: TabBar(
-            tabs: const [
-              Tab(text: 'Available Vehicles'),
-              Tab(text: 'Returning Vehicles'),
-            ],
-            indicatorColor: Theme.of(context).primaryColor,
-          ),
-        ),
-        body: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection('vehicles').snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                );
-              }
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('vehicles').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            );
+          }
 
-              return TabBarView(
-                children: [
-                  ListView(
-                      children:
-                          snapshot.data!.docs.toList().reversed.map((document) {
-                    return availableVehicleCard(
-                        context: context,
-                        id: document.id,
-                        availability: document['availability'],
-                        image: document['displayImageURL'],
-                        name: document['name'],
-                        price: document['priceDay'],
-                        onClickHire: () {
-                          CurrentVehicleDocID = document.id;
-                          hire(context: context);
-                        },
-                        onClickDetails: () {
-                          setState(() {
-                            CurrentVehicleDocID = document.id;
-                            details(context: context);
-                          });
-                        });
-                  }).toList()),
-                  ListView(
-                      children:
-                          snapshot.data!.docs.toList().reversed.map((document) {
-                    return returningVehicleCard(
-                      context: context,
-                      id: document.id,
-                      availability: document['availability'],
-                      image: document['displayImageURL'],
-                      name: document['name'],
-                      price: document['priceDay'],
-                      onClickDetails: () {
-                        setState(() {
-                          CurrentVehicleDocID = document.id;
-                          details(context: context);
-                        });
-                      },
-                      availabilityNotification: false,
-                      onClickNotifyMe: null,
-                    );
-                  }).toList()),
-                ],
-              );
-            }),
-      ),
-    );
+          return ListView(
+              children: snapshot.data!.docs.toList().reversed.map((document) {
+            return availableVehicleCard(
+                context: context,
+                id: document.id,
+                availability: document['availability'],
+                image: document['displayImageURL'],
+                name: document['name'],
+                price: document['priceDay'],
+                onClickHire: () {
+                  CurrentVehicleDocID = document.id;
+                  hire(context: context);
+                },
+                onClickDetails: () {
+                  setState(() {
+                    CurrentVehicleDocID = document.id;
+                    details(context: context);
+                  });
+                });
+          }).toList());
+        });
   }
 }
