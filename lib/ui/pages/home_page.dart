@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qaizen_car_rental/ui/widgets/vehicle_cards.dart';
 
 import '../../db/user.dart';
 import '../../helper/vehicle_card_func.dart';
+import '../widgets/vehicle_card_available.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

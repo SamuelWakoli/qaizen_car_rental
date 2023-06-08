@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../db/user.dart';
 import '../../helper/vehicle_card_func.dart';
 import '../../shared/hire_vehicle_data.dart';
-import '../widgets/vehicle_cards.dart';
+import '../widgets/select_vehicle_list.dart';
 import '../widgets/widgets.dart';
 import 'corporate_summary.dart';
 import 'select_driver.dart';

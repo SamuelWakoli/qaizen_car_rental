@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 
 import '../../helper/vehicle_card_func.dart';
-import '../widgets/vehicle_cards.dart';
+import '../widgets/vehicle_card_favorite.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);

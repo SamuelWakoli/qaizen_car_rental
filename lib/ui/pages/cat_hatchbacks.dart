@@ -8,7 +8,7 @@ import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 import '../../db/user.dart';
 import '../../helper/vehicle_card_func.dart';
 import '../../shared/hire_vehicle_data.dart';
-import '../widgets/vehicle_cards.dart';
+import '../widgets/select_vehicle_list.dart';
 
 class CatHatchbacks extends StatefulWidget {
   const CatHatchbacks({super.key});

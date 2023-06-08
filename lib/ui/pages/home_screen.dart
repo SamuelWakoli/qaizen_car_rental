@@ -13,7 +13,6 @@ import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
 import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
-import 'package:qaizen_car_rental/ui/pages/view_image.dart';
 
 import '../../db/user.dart';
 import '../../helper/communication.dart';
@@ -278,22 +277,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.price_change_outlined,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: const Text("Rate Card"),
-                  onTap: () {
-                    currentImageUrl = rateCardUrl;
-                    nextPage(context: context, page: const ViewImage());
-                  },
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Card(
+            //     child: ListTile(
+            //       leading: Icon(
+            //         Icons.price_change_outlined,
+            //         color: Theme.of(context).primaryColor,
+            //       ),
+            //       title: const Text("Rate Card"),
+            //       onTap: () {
+            //         currentImageUrl = rateCardUrl;
+            //         nextPage(context: context, page: const ViewImage());
+            //       },
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(

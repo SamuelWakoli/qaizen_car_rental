@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../db/user.dart';
 import '../../helper/vehicle_card_func.dart';
-import '../widgets/vehicle_cards.dart';
+import '../widgets/vehicle_card_available.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
