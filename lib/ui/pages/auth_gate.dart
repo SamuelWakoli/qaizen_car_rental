@@ -6,6 +6,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/home_screen.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../helper/communication.dart';
 
@@ -109,8 +110,37 @@ class _AuthGateState extends State<AuthGate> {
               nextPageReplace(context: context, page: const HomeScreen());
             }
 
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text("Signed in")));
+            // Future.delayed(const Duration(seconds: 4), () async {
+            //   print('==========================rESTARTING');
+            //   Restart.restartApp();
+            //   print('==========================rESTARTING');
+            // });
+
+            showDialog(
+                context: context,
+                builder: (ctx) {
+                  return AlertDialog(
+                    title: Text('Restart Required'),
+                    content: Text(
+                        'To apply the changes, you need to restart the app.'),
+                    actions: [
+                      TextButton(
+                        child: Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                      ),
+                      TextButton(
+                        child: Text('Restart'),
+                        onPressed: () {
+                          print('==========================rESTARTING');
+                          Restart.restartApp();
+                          print('==========================rESTARTING');
+                        },
+                      ),
+                    ],
+                  );
+                });
           });
         }
         return const Scaffold(
