@@ -25,6 +25,7 @@ import '../pages/report_issue.dart';
 import '../pages/services_page.dart';
 import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
+import 'view_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -84,21 +85,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    Timer(Duration.zero, () async {
+    Future.delayed(Duration.zero, () async {
       var snapshot = await fireStoreUserData.get();
 
       bool dataAwaiting = false, dataVerified = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
-        bool isAwaiting = snapshot.get('awaiting verification');
-        bool isUserVerified = snapshot.get('verified');
-        if (isAwaiting) {
-          dataAwaiting = isAwaiting;
-        }
-        if (isUserVerified) {
-          dataVerified = isUserVerified;
-        }
-        favoriteVehicles = snapshot.get('favorites');
-        notificationOn = snapshot.get('notifications');
+        setState(() {
+          bool isAwaiting = snapshot.get('awaiting verification');
+          bool isUserVerified = snapshot.get('verified');
+          if (isAwaiting) {
+            dataAwaiting = isAwaiting;
+          }
+          if (isUserVerified) {
+            dataVerified = isUserVerified;
+          }
+          notificationOn = snapshot.get('notifications');
+        });
       } else {
         dataAwaiting = false;
         dataVerified = false;
@@ -168,8 +170,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       valueColor: AlwaysStoppedAnimation<Color>(
                           Theme.of(context).primaryColor),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error_outline),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.account_circle_outlined,
+                      size: 46,
+                    ),
                   )),
       ),
     );
@@ -231,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 }
                               })
                           : const Text(
-                              'click here to verify your profile',
+                              'Verify your profile',
                             ),
                     ],
                   ),
@@ -277,22 +281,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
             const SizedBox(height: 20),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Card(
-            //     child: ListTile(
-            //       leading: Icon(
-            //         Icons.price_change_outlined,
-            //         color: Theme.of(context).primaryColor,
-            //       ),
-            //       title: const Text("Rate Card"),
-            //       onTap: () {
-            //         currentImageUrl = rateCardUrl;
-            //         nextPage(context: context, page: const ViewImage());
-            //       },
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.price_change_outlined,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  title: const Text("Rate Card"),
+                  onTap: () {
+                    currentImageUrl = rateCardUrl;
+                    nextPage(context: context, page: const ViewImage());
+                  },
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(

@@ -14,6 +14,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () async {
+      var snapshot = await fireStoreUserData.get();
+
+      if (snapshot.exists && snapshot.data()!.isNotEmpty) {
+        setState(() {
+          favoriteVehicles = snapshot['favorites'];
+        });
+      } else {
+        // if user has no favorites or referral code,
+        // create new data to the account
+        Map<String, dynamic> data = {
+          'favorites': favoriteVehicles,
+          "referral code": generateRandomString(10),
+        };
+        await fireStoreUserData.set(data);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance.collection('vehicles').snapshots(),

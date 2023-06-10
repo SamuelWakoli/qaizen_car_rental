@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/db/user.dart';
@@ -24,17 +22,6 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
   String? residence = '';
   String? socMedAccType = '';
   String? socMedAccName = '';
-
-  String generateRandomString(int lengthOfString) {
-    final random = Random();
-    const allChars =
-        'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL234567890';
-    // below statement will generate a random string of length using the characters
-    // and length provided to it
-    final randomString = List.generate(lengthOfString,
-        (index) => allChars[random.nextInt(allChars.length)]).join();
-    return randomString; // return the generated string
-  }
 
   bool loading = false;
 
@@ -269,8 +256,6 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "residence": residence,
                       "social media username": socMedAccName,
                       "social media type": socMedAccType,
-                      "referral code": generateRandomString(10),
-                      "favorites": [],
                       "verified by": "",
                       "notifications": true,
                       "passport URL": "",
@@ -283,7 +268,7 @@ class _AccVerificationPage1State extends State<AccVerificationPage1> {
                       "awaiting verification": null,
                     };
 
-                    await fireStoreUserData.set(userData).whenComplete(() {
+                    await fireStoreUserData.update(userData).whenComplete(() {
                       setState(() {
                         loading = false;
                       });

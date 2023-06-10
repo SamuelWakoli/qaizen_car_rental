@@ -98,14 +98,12 @@ Widget availableVehicleCard({
                               .doc(getUserName())
                               .update(data)
                               .whenComplete(() {
-                            String likeMessage = "";
+                            String? likeMessage;
                             isLiked
                                 ? likeMessage = "removed from"
                                 : likeMessage = "added to";
-                            showSnackbar(
-                                context: context,
-                                duration: 3,
-                                message: "$name $likeMessage to favorites");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("$name $likeMessage bookmarks")));
                           });
 
                           return !isLiked;

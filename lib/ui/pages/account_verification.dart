@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -6,6 +7,7 @@ import 'package:qaizen_car_rental/ui/pages/acc_verification_page1.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../helper/communication.dart';
+import 'auth_gate.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -21,6 +23,20 @@ class _VerificationPageState extends State<VerificationPage> {
       appBar: AppBar(
         title: const Text('Profile Verification'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              tooltip: "Sign Out",
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return const AuthGate();
+                }), (r) {
+                  return false;
+                });
+              },
+              icon: const Icon(Icons.logout_rounded))
+        ],
       ),
       body: SingleChildScrollView(
           child: Padding(

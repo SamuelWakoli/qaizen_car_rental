@@ -98,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             content: const Text(
                                 "You are about to sign out of this app. Do you want to continue?"),
                             actions: [
-                              ElevatedButton(
+                              TextButton(
                                 onPressed: () {
                                   FirebaseAuth.instance.signOut();
                                   Navigator.pushAndRemoveUntil(context,
@@ -111,7 +111,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 },
                                 child: const Text('Yes'),
                               ),
-                              ElevatedButton(
+                              TextButton(
                                 onPressed: () => Navigator.pop(ctx),
                                 child: const Text('No'),
                               ),

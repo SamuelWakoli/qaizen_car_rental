@@ -45,9 +45,12 @@ Widget favCard({
                   style: const TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold),
                   children: <TextSpan>[
+                    const TextSpan(
+                      text: '  |  ',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                     TextSpan(
-                      text:
-                          ' |  ${availability ? "Available" : "Unavailable."}',
+                      text: availability ? "Available" : "Unavailable.",
                       style: TextStyle(
                           fontSize: 16.0,
                           color: Theme.of(context).primaryColor),
