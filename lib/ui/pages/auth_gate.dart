@@ -109,33 +109,24 @@ class _AuthGateState extends State<AuthGate> {
             } else {
               nextPageReplace(context: context, page: const HomeScreen());
             }
-
-            // Future.delayed(const Duration(seconds: 4), () async {
-            //   print('==========================rESTARTING');
-            //   Restart.restartApp();
-            //   print('==========================rESTARTING');
-            // });
-
             showDialog(
                 context: context,
                 builder: (ctx) {
                   return AlertDialog(
-                    title: Text('Restart Required'),
-                    content: Text(
-                        'To apply the changes, you need to restart the app.'),
+                    title: const Text('Restart Required'),
+                    content: const Text(
+                        'To apply the changes after signing in, you need to restart the app.'),
                     actions: [
                       TextButton(
-                        child: Text('Cancel'),
+                        child: const Text('Cancel'),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.pop(ctx); // Close the dialog
                         },
                       ),
                       TextButton(
-                        child: Text('Restart'),
+                        child: const Text('Restart'),
                         onPressed: () {
-                          print('==========================rESTARTING');
                           Restart.restartApp();
-                          print('==========================rESTARTING');
                         },
                       ),
                     ],
