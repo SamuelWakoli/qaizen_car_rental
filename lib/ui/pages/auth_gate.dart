@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qaizen_car_rental/ui/pages/home_screen.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../helper/communication.dart';
 
@@ -98,7 +100,17 @@ class _AuthGateState extends State<AuthGate> {
         } else {
           // pop this screen when the user signs in
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pop(context);
+            // Check if the backstack is empty
+            bool canPopBackstack = Navigator.of(context).canPop();
+
+            if (canPopBackstack) {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            } else {
+              nextPageReplace(context: context, page: const HomeScreen());
+            }
+
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("Signed in")));
           });
         }
         return const Scaffold(

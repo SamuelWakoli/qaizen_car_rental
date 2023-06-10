@@ -27,13 +27,38 @@ class _VerificationPageState extends State<VerificationPage> {
           IconButton(
               tooltip: "Sign Out",
               onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return const AuthGate();
-                }), (r) {
-                  return false;
-                });
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        icon: const Icon(
+                          Icons.logout_rounded,
+                          color: Colors.red,
+                        ),
+                        title: const Text('Sign Out'),
+                        content: const Text(
+                            "You are about to sign out of this app. Do you want to continue?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                return const AuthGate();
+                              }), (r) {
+                                return false;
+                              });
+                            },
+                            child: const Text('Yes'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('No'),
+                          ),
+                        ],
+                      );
+                    });
               },
               icon: const Icon(Icons.logout_rounded))
         ],

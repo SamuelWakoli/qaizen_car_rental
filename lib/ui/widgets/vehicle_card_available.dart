@@ -62,7 +62,7 @@ Widget availableVehicleCard({
                 (currentUser != null)
                     ? LikeButton(
                         isLiked: favoriteVehicles.contains(id),
-                        animationDuration: const Duration(milliseconds: 2000),
+                        animationDuration: const Duration(milliseconds: 2500),
                         bubblesColor: BubblesColor(
                             dotPrimaryColor: Theme.of(context).primaryColor,
                             dotSecondaryColor: Colors.white),
@@ -140,7 +140,10 @@ Widget availableVehicleCard({
                                 );
                               });
                         },
-                        icon: const Icon(Icons.favorite_outline_rounded)),
+                        icon: const Icon(
+                          Icons.favorite_outline_rounded,
+                          size: 30,
+                        )),
                 MaterialButton(
                   onPressed: onClickDetails,
                   child: Padding(
