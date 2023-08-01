@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -181,195 +182,156 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkModeOn = Theme.of(context).brightness == Brightness.dark;
+
     //if db has data, return this screen
     return Scaffold(
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const SizedBox(height: 100),
-            CircleAvatar(
-                radius: 64,
-                backgroundColor: Colors.white,
-                child: Image.asset('assets/ic_launcher.png')),
+            const SizedBox(
+              height: 100,
+            ),
+            Center(
+              child: Card(
+                elevation: 12,
+                shape: CircleBorder(
+                    eccentricity: 1,
+                    side: BorderSide(
+                        style: BorderStyle.solid,
+                        color: Theme.of(context).primaryColor)),
+                child: CircleAvatar(
+                    radius: 64,
+                    backgroundColor: Colors.white,
+                    child: Image.asset('assets/ic_launcher.png')),
+              ),
+            ),
             const SizedBox(
               height: 50,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: Card(
+                elevation: 8,
                 child: ListTile(
                   //if user created profile, use image
                   //else use icon
                   leading: _getProfile(),
-                  title: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        getUserName(),
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      dbHasData
-                          ? StreamBuilder(
-                              stream: fireStoreUserData.snapshots(),
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return CircularProgressIndicator(
-                                    color: Theme.of(context).primaryColor,
-                                  );
-                                }
-
-                                if (snapshot.data!.get('verified')) {
-                                  return Icon(
-                                    Icons.verified_outlined,
-                                    size: 18,
-                                    color: Theme.of(context).primaryColor,
-                                  );
-                                } else {
-                                  return const Text(
-                                    'awaiting verification',
-                                  );
-                                }
-                              })
-                          : const Text(
-                              'Verify your profile',
-                            ),
-                    ],
+                  title: Text(
+                    getUserName(),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    FirebaseAuth.instance.currentUser!.email.toString(),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                   onTap: () {
-                    if (FirebaseAuth.instance.currentUser != null) {
-                      dbHasData
-                          ? nextPage(
-                              context: context, page: const UserProfile())
-                          : nextPage(
-                              context: context, page: const VerificationPage());
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              icon: Icon(
-                                Icons.account_circle_outlined,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              title: const Text("Authentication Required"),
-                              content:
-                                  const Text("Please sign in to continue."),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                      nextPage(
-                                          context: context,
-                                          page: const AuthGate());
-                                    },
-                                    child: const Text("Sign In")),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                    },
-                                    child: const Text("Cancel")),
-                              ],
-                            );
-                          });
-                    }
+                    !dbHasData
+                        ? nextPage(context: context, page: const UserProfile())
+                        : nextPage(
+                            context: context, page: const VerificationPage());
                   },
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 8,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    ListTile(
+                      leading: Icon(
+                        Icons.price_change_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      title: const Text("Rate Card"),
+                      onTap: () {
+                        currentImageUrl = rateCardUrl;
+                        nextPage(context: context, page: const ViewImage());
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.book_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      title: const Text("Records"),
+                      onTap: () =>
+                          nextPage(context: context, page: const RecordsPage()),
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.help_outline_rounded,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      title: const Text("Report Issue"),
+                      onTap: () {
+                        if (FirebaseAuth.instance.currentUser != null) {
+                          nextPage(
+                              context: context, page: const ReportIssuePage());
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return AlertDialog(
+                                  icon: Icon(
+                                    Icons.account_circle_outlined,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  title: const Text("Authentication Required"),
+                                  content:
+                                      const Text("Please sign in to continue."),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx);
+                                          nextPage(
+                                              context: context,
+                                              page: const AuthGate());
+                                        },
+                                        child: const Text("Sign In")),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(ctx);
+                                        },
+                                        child: const Text("Cancel")),
+                                  ],
+                                );
+                              });
+                        }
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.policy_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      title: const Text("Terms and Conditions"),
+                      onTap: () => nextPage(
+                          context: context, page: const TermsConditionsPage()),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
                 ),
               ),
             ),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.price_change_outlined,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: const Text("Rate Card"),
-                  onTap: () {
-                    currentImageUrl = rateCardUrl;
-                    nextPage(context: context, page: const ViewImage());
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.book_outlined,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: const Text("Records"),
-                  onTap: () =>
-                      nextPage(context: context, page: const RecordsPage()),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.help_outline_rounded,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: const Text("Report Issue"),
-                  onTap: () {
-                    if (FirebaseAuth.instance.currentUser != null) {
-                      nextPage(context: context, page: const ReportIssuePage());
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              icon: Icon(
-                                Icons.account_circle_outlined,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              title: const Text("Authentication Required"),
-                              content:
-                                  const Text("Please sign in to continue."),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                      nextPage(
-                                          context: context,
-                                          page: const AuthGate());
-                                    },
-                                    child: const Text("Sign In")),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(ctx);
-                                    },
-                                    child: const Text("Cancel")),
-                              ],
-                            );
-                          });
-                    }
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.policy_outlined,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  title: const Text("Terms and Conditions"),
-                  onTap: () => nextPage(
-                      context: context, page: const TermsConditionsPage()),
-                ),
-              ),
+            ListTile(
+              onTap: () {
+                setState(() {
+                  EasyDynamicTheme.of(context).changeTheme();
+                });
+              },
+              title: Text(isDarkModeOn ? "Light Theme" : "Dark Theme"),
+              leading: Icon(isDarkModeOn ? Icons.sunny : Icons.dark_mode),
             ),
           ],
         ),
