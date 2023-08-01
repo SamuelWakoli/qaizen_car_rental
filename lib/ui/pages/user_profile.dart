@@ -1,232 +1,211 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qaizen_car_rental/ui/pages/about_page.dart';
+import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
 
-import '../../db/user.dart';
-import 'auth_gate.dart';
+import '../widgets/widgets.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final currentUser = FirebaseAuth.instance.currentUser;
+  double tileFontSize = 18.0;
 
-  // static Future<void> pop({bool? animated}) async {
-  //   await SystemChannels.platform
-  //       .invokeMethod<void>('SystemNavigator.pop', animated);
-  // }
+  String userprofileUrl =
+      FirebaseAuth.instance.currentUser!.photoURL.toString();
 
-  String userName = '', phoneNumber = '', emailAddress = '';
-  String getUserName() {
-    if (currentUser?.displayName != null) {
-      userName = currentUser!.displayName.toString();
-      if (userName == 'null') userName = '';
-      return userName;
-    } else {
-      return userName;
-    }
-  }
-
-  String getPhoneNumber() {
-    if (currentUser?.phoneNumber != null) {
-      phoneNumber = currentUser!.phoneNumber.toString();
-      if (phoneNumber == 'null') phoneNumber = '';
-      return phoneNumber;
-    } else {
-      return phoneNumber;
-    }
-  }
-
-  String getEmailAddress() {
-    if (currentUser?.email != null) {
-      emailAddress = currentUser!.email.toString();
-      if (emailAddress == 'null') emailAddress = '';
-      return emailAddress;
-    } else {
-      return emailAddress;
-    }
-  }
+  String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
+  String username = FirebaseAuth.instance.currentUser!.displayName.toString();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Profile"),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
+        title: const Text("Account"),
+        actions: [],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 28.0),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: SizedBox(
+                height: 200,
+                width: 200,
+                child: CachedNetworkImage(
+                  imageUrl: userprofileUrl,
+                  fit: BoxFit.cover,
+                  errorWidget: (cx, url, downloadProgress) {
+                    return Icon(
+                      Icons.account_circle_outlined,
+                      size: 120,
+                      color: Theme.of(context).primaryColor,
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 14.0),
+            ListTile(
+              title: Text(
+                "$username\n$userEmail",
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 18.0),
+            ListTile(
+              title: Text(
+                "Terms of service",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.policy_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const TermsConditionsPage());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "About us",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.info_outline_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const AboutPage());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Sign out",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.logout,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
                 showDialog(
                     context: context,
                     builder: (ctx) {
                       return AlertDialog(
-                        icon: const Icon(
-                          FontAwesomeIcons.arrowRightFromBracket,
-                          color: Colors.red,
+                        icon: Icon(
+                          Icons.logout,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        title: const Text('Sign Out'),
-                        content: const Text(
-                            "You are about to sign out of this app. Do you want to continue?"),
+                        title: const Text("Sign Out"),
+                        content: const Text("You are about to sign out from "
+                            "this app. Please confirm."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(ctx);
+                              FirebaseAuth.instance.signOut();
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                            },
+                            child: const Text(
+                              "Sign Out",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(ctx);
+                              },
+                              child: const Text("Cancel")),
+                        ],
+                      );
+                    });
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Delete Account",
+                style: TextStyle(fontSize: tileFontSize, color: Colors.red),
+              ),
+              leading: const Icon(
+                Icons.person_off_outlined,
+                color: Colors.red,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: const Text('Warning: Account Deletion'),
+                        content: const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Are you sure you want to delete your account?',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Deleting your account will permanently remove all your data.',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Please carefully consider the following before proceeding:',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              '- All your profile information, settings, and preferences will be permanently deleted.',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Text(
+                              '- Any associated data, such as profile image, records, favorites, or other activities, will be irreversibly deleted and cannot be recovered.',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
                         actions: [
                           ElevatedButton(
                             onPressed: () {
-                              FirebaseAuth.instance.signOut();
-                              Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                return const AuthGate();
-                              }), (r) {
-                                return false;
-                              });
+                              // Implement the logic for confirming account deletion
+                              Navigator.of(context).pop();
+                              // Perform account deletion here
                             },
-                            child: const Text('Yes'),
+                            child: const Text(
+                              'Delete Account',
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: const Text('No'),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                            child: const Text('Cancel'),
                           ),
                         ],
                       );
                     });
               },
-              icon: const Icon(FontAwesomeIcons.arrowRightFromBracket))
-        ],
-      ),
-      body: StreamBuilder(
-        stream: fireStoreUserData.snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
-            );
-          } else {
-            String profileImageURL =
-            snapshot.data!.get('passport URL').toString();
-            // if profileImageURL empty, use holder image
-            if (profileImageURL == "") {
-              profileImageURL =
-              "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-            }
-            return SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: SizedBox(
-                            height: 160,
-                            width: 160,
-                            child: StreamBuilder(
-                                stream: fireStoreUserData.snapshots(),
-                                builder: (context, snapshot) {
-                                  String profileImageURL = snapshot.data!
-                                      .get('passport URL')
-                                      .toString();
-                                  // if profileImageURL empty, use holder image
-                                  if (profileImageURL == "") {
-                                    profileImageURL =
-                                        "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-                                  }
-
-                                  return CachedNetworkImage(
-                                    fit: BoxFit.fill,
-                                    imageUrl: profileImageURL,
-                                    progressIndicatorBuilder:
-                                        (context, url, downloadProgress) =>
-                                            CircularProgressIndicator(
-                                      value: downloadProgress.progress,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    errorWidget:
-                                        (context, url, downloadProgress) =>
-                                            const Icon(Icons.error_outline),
-                                  );
-                                })),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      getUserName(),
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            StreamBuilder(
-                                stream: fireStoreUserData.snapshots(),
-                                builder: (context, snapshot) {
-                                  bool verified =
-                                      snapshot.data!.get('verified');
-
-                                  if (verified) {
-                                    return Row(
-                                      children: [
-                                        const Text(
-                                          'Verified',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Icon(
-                                          Icons.verified_outlined,
-                                          size: 18,
-                                          color: Theme.of(context).primaryColor,
-                                        )
-                                      ],
-                                    );
-                                  } else {
-                                    return Text(
-                                      'Awaiting verification',
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    );
-                                  }
-                                }),
-                            const SizedBox(height: 20),
-                            Text.rich(
-                              TextSpan(
-                                text: 'Email address: ',
-                                style: const TextStyle(fontSize: 18),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: getEmailAddress(),
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
