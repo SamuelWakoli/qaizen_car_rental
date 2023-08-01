@@ -43,10 +43,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircleAvatar(
-            radius: 22,
-            backgroundColor: Colors.white,
-            child: Image.asset('assets/ic_launcher.png')),
+        Center(
+          child: Card(
+            elevation: 8,
+            shape: const CircleBorder(
+                eccentricity: 1,
+                side: BorderSide(
+                  style: BorderStyle.solid,
+                  // color: Theme.of(context).primaryColor,
+                )),
+            child: CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.white,
+                child: Image.asset('assets/ic_launcher.png')),
+          ),
+        ),
         const SizedBox(width: 20),
         const Text("Home")
       ],
@@ -117,6 +128,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void updateDbHasData(bool value) => setState(() => dbHasData = value);
 
   void updateVerification(bool value) => setState(() => isVerified = value);
+  String userprofileUrl =
+      FirebaseAuth.instance.currentUser!.photoURL.toString();
 
   Widget _getProfile() {
     return Card(
@@ -128,38 +141,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: SizedBox(
             height: 48,
             width: 48,
-            child: dbHasData
-                ? StreamBuilder(
-                    stream: fireStoreUserData.snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        String profileImageURL =
-                            snapshot.data!.get('passport URL').toString();
-                        // if profileImageURL empty, use holder image
-                        if (profileImageURL.isEmpty) {
-                          profileImageURL =
-                              "https://firebasestorage.googleapis.com/v0/b/qaizen-car-rental-2023.appspot.com/o/app_assets%2FprofileHolder.png?alt=media&token=4eaddbdf-bce9-4421-b2bb-6efd7d570dc9";
-                        }
-
-                        return CachedNetworkImage(
-                          fit: BoxFit.fill,
-                          imageUrl: profileImageURL,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                            value: downloadProgress.progress,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).primaryColor),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.account_circle_outlined),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    },
+            child: userprofileUrl != "null"
+                ? CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: userprofileUrl,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.account_circle_outlined),
                   )
                 : CachedNetworkImage(
                     imageUrl:
@@ -355,6 +349,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             tooltip: 'Emergency',
           ),
           PopupMenuButton(
+            position: PopupMenuPosition.under,
+            elevation: 8,
             onSelected: (position) async {
               if (position == 0) {
                 showDialog(
