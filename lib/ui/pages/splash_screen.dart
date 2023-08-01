@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
 
 import '../widgets/widgets.dart';
-import 'home_screen.dart';
 
 // TODO: Remove this splash screen RE: Android 12+
 class SplashScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 1), () async {
-      nextPageReplace(context: context, page: const HomeScreen());
+      nextPageReplace(context: context, page: const AuthGate());
     });
   }
 

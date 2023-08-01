@@ -35,24 +35,28 @@ class _FavoritesPageState extends State<FavoritesPage> {
               ));
             }
 
-            return ListView(
-                children: snapshot.data!.docs.map((document) {
-              return favCard(
-                  context: context,
-                  id: document.id,
-                  image: document['displayImageURL'],
-                  name: document['name'],
-                  price: document['priceDay'],
-                  availability: document['availability'],
-                  onClickHire: () {
-                    currentVehicleDocID = document.id;
-                    hire(context: context);
-                  },
-                  onClickDetails: () {
-                    currentVehicleDocID = document.id;
-                    details(context: context);
-                  });
-            }).toList());
+            return Scrollbar(
+              thickness: 3,
+              interactive: true,
+              child: ListView(
+                  children: snapshot.data!.docs.map((document) {
+                return favCard(
+                    context: context,
+                    id: document.id,
+                    image: document['displayImageURL'],
+                    name: document['name'],
+                    price: document['priceDay'],
+                    availability: document['availability'],
+                    onClickHire: () {
+                      currentVehicleDocID = document.id;
+                      hire(context: context);
+                    },
+                    onClickDetails: () {
+                      currentVehicleDocID = document.id;
+                      details(context: context);
+                    });
+              }).toList()),
+            );
           }),
     );
   }
