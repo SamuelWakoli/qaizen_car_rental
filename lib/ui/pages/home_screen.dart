@@ -305,10 +305,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const Divider(),
                     ListTile(
                       leading: Icon(
-                        Icons.policy_outlined,
+                        Icons.rule_sharp,
                         color: Theme.of(context).primaryColor,
                       ),
-                      title: const Text("Terms and Conditions"),
+                      title: const Text("Terms of Service"),
                       onTap: () => nextPage(
                           context: context, page: const TermsConditionsPage()),
                     ),

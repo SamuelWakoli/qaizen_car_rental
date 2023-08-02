@@ -12,7 +12,7 @@ class _TermsConditionsPageState extends State<TermsConditionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Terms and Conditions'),
+        title: const Text('Terms of Service'),
         centerTitle: true,
       ),
       body: Center(

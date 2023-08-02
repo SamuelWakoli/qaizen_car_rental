@@ -9,14 +9,18 @@ Widget textFormField({
   required dynamic validator,
   required TextInputType textInputType,
   required TextInputAction? textInputAction,
+  int maxLines = 1,
+  String initialValue = "",
 }) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: TextFormField(
+      initialValue: initialValue,
       keyboardType: textInputType,
       onChanged: onChanged,
       validator: validator,
       minLines: 1,
+      maxLines: maxLines,
       cursorHeight: 22,
       cursorWidth: 2,
       cursorColor: Theme.of(context).primaryColor,

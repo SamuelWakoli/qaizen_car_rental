@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../db/user.dart';
 import '../pages/about_page.dart';
-import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
 import 'auth_gate.dart';
 
@@ -137,12 +136,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: const Text("Our Office"),
                   onPressed: (context) => _openLink(
                       "https://www.google.com/maps/place/Qaizen+Car+Rentals/@-1.3084742,36.907569,17z/data=!3m1!4b1!4m5!3m4!1s0x182f13aac0a7bc05:0x431e46af05249d3e!8m2!3d-1.3084742!4d36.9097631"),
-                ),
-                SettingsTile.navigation(
-                  leading: const Icon(Icons.rule_sharp),
-                  title: const Text("Terms and Conditions"),
-                  onPressed: (context) => nextPage(
-                      context: context, page: const TermsConditionsPage()),
                 ),
                 SettingsTile(
                   leading: const Icon(FontAwesomeIcons.code),
