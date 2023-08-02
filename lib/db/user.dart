@@ -6,23 +6,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 dynamic currentUser = FirebaseAuth.instance.currentUser;
 
-String getUserName() {
-  final user = FirebaseAuth.instance.currentUser;
-
-  String? displayName = user?.displayName;
-  String? email = user?.email;
-
-  if (displayName != null) {
-    return displayName.toString();
-  }
-  return email.toString();
-}
+String userID = FirebaseAuth.instance.currentUser!.email.toString();
 
 final fireStoreUserData =
-    FirebaseFirestore.instance.collection('users').doc(getUserName());
+    FirebaseFirestore.instance.collection('users').doc(userID);
 
 final firebaseStorageUserFolder =
-    FirebaseStorage.instance.ref("users_images/${getUserName()}");
+    FirebaseStorage.instance.ref("users_images/$userID");
 
 final userBookings = FirebaseFirestore.instance.collection('bookings');
 

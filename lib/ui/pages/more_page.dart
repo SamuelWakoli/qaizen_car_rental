@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/privacy_policy.dart';
+import 'package:qaizen_car_rental/ui/pages/profile.dart';
 import 'package:qaizen_car_rental/ui/pages/referral_program.dart';
-import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 

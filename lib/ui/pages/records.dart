@@ -22,7 +22,7 @@ class _RecordsPageState extends State<RecordsPage> {
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('users')
-              .doc(getUserName())
+              .doc(userID)
               .collection('records')
               .snapshots(),
           builder: (context, snapshot) {
@@ -49,15 +49,15 @@ class _RecordsPageState extends State<RecordsPage> {
                 child: Card(
                   child: ListTile(
                       subtitle: Text(
-                        """
+                    """
 Date: ${e['starts']}
 Duration: ${e['duration']} days
 Service: ${e['type']}
 Vehicle(s): ${e['vehicles list']}
 Driver(s): ${e['drivers list']}
 """,
-                        style: const TextStyle(fontSize: 16),
-                      )),
+                    style: const TextStyle(fontSize: 16),
+                  )),
                 ),
               );
             }).toList());

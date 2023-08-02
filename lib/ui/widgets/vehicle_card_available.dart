@@ -124,7 +124,7 @@ Widget availableVehicleCard({
                     Map<String, dynamic> data = {"favorites": favoriteVehicles};
                     await FirebaseFirestore.instance
                         .collection('users')
-                        .doc(getUserName())
+                        .doc(userID)
                         .update(data)
                         .whenComplete(() {
                       String? likeMessage;

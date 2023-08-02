@@ -218,7 +218,7 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
                     });
 
                     Map<String, dynamic> data = {
-                      'client doc id': getUserName(),
+                      'client doc id': userID,
                       "time":
                           "${DateTime.now().hour}H:${DateTime.now().minute}M:${DateTime.now().second}S  Day: ${DateTime.now().day} Month: ${DateTime.now().month}",
                       "friend": friendName,

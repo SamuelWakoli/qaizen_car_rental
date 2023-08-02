@@ -157,7 +157,7 @@ class _AccVerificationPage1bState extends State<AccVerificationPage1b> {
 
                     String passportUrl = "";
                     await firebaseStorageUserFolder
-                        .child('${getUserName()}\'s passport.png')
+                        .child('$userID passport.png')
                         .putFile(image!)
                         .then((snapshot) async {
                       passportUrl = await snapshot.ref.getDownloadURL();

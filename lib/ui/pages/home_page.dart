@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../db/user.dart';
@@ -17,6 +18,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    String authUsername =
+        FirebaseAuth.instance.currentUser!.displayName.toString();
+
+    if (authUsername == 'null') authUsername = '';
+
     Future.delayed(Duration.zero, () async {
       var snapshot = await fireStoreUserData.get();
 
@@ -28,6 +34,8 @@ class _HomePageState extends State<HomePage> {
         // if user has no favorites or referral code,
         // create new data to the account
         Map<String, dynamic> data = {
+          'name': authUsername,
+          'phone': '',
           'favorites': favoriteVehicles,
           "referral code": generateRandomString(10),
         };

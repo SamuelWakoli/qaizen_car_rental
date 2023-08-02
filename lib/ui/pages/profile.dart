@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 import 'package:qaizen_car_rental/ui/pages/edit_account.dart';
 
 import '../widgets/widgets.dart';
@@ -117,6 +118,7 @@ class _UserProfileState extends State<UserProfile> {
                   );
                 }),
           ),
+          const SizedBox(height: 18.0),
           ListTile(
             leading: Icon(
               Icons.email_outlined,
@@ -145,7 +147,6 @@ class _UserProfileState extends State<UserProfile> {
                     child: const Text('Send Verification Email'),
                   ),
           ),
-          const SizedBox(height: 18.0),
           ListTile(
             title: Text(
               "Terms of service",
@@ -272,20 +273,36 @@ class _UserProfileState extends State<UserProfile> {
                             // Implement the logic for confirming account deletion
                             Navigator.of(context).pop();
 
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Deleting account data...'),
+                              ),
+                            );
+
                             await FirebaseFirestore.instance
                                 .collection("users")
-                                .doc(userEmail)
-                                .delete();
-
-                            await FirebaseStorage.instance
-                                .ref('users_images/$userEmail/')
-                                .delete();
-
-                            await FirebaseAuth.instance.currentUser!
+                                .doc(userID)
                                 .delete()
                                 .whenComplete(
-                                  () => Navigator.popUntil(
-                                      context, (route) => route.isFirst),
+                                  () async => await FirebaseStorage.instance
+                                      .ref('users_images/$userID/')
+                                      .delete()
+                                      .whenComplete(
+                                        () async => await FirebaseAuth
+                                            .instance.currentUser!
+                                            .delete()
+                                            .whenComplete(
+                                              () async => await FirebaseAuth
+                                                  .instance
+                                                  .signOut()
+                                                  .whenComplete(
+                                                    () => Navigator.popUntil(
+                                                        context,
+                                                        (route) =>
+                                                            route.isFirst),
+                                                  ),
+                                            ),
+                                      ),
                                 );
                           },
                           child: const Text(

@@ -152,7 +152,7 @@ class _AccVerificationPage2State extends State<AccVerificationPage2> {
                     String nationalIdUrl = '';
 
                     await firebaseStorageUserFolder
-                        .child('${getUserName()}\'s national ID.png')
+                        .child('$userID national ID.png')
                         .putFile(image!)
                         .then((snapshot) async {
                       nationalIdUrl = await snapshot.ref.getDownloadURL();

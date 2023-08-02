@@ -143,7 +143,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
 
                           Map<String, dynamic> data = {
                             'name': clientName,
-                            'userId': getUserName(),
+                            'userId': userID,
                             'type': serviceType,
                             'starts': '$selectedTime | $selectedDate',
                             'duration': '',

@@ -7,9 +7,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qaizen_car_rental/db/user.dart';
 
 import '../widgets/text_form_field.dart';
-import 'user_profile.dart';
+import 'profile.dart';
 
 class EditAccountPage extends StatefulWidget {
   const EditAccountPage({super.key});
@@ -122,11 +123,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Get image from:',
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     OutlinedButton(
                                         onPressed: () async {
                                           Navigator.pop(ctx);
@@ -193,7 +194,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               color: Theme.of(context).primaryColor),
                         ),
                       ),
-                      Icon(Icons.edit_outlined)
+                      const Icon(Icons.edit_outlined)
                     ],
                   ),
                 ),
@@ -273,8 +274,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
 
                         await FirebaseFirestore.instance
                             .collection("users")
-                            .doc(userEmail)
-                            .set(userDetails)
+                            .doc(userID)
+                            .update(userDetails)
                             .whenComplete(() async {
                           setState(() {
                             loading = false;
@@ -287,16 +288,17 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               const SnackBar(
                                 duration: Duration(minutes: 1),
                                 content: Text(
-                                    "Your details have been saved successfully"),
+                                    "Your account has been updated successfully"),
                               ),
                             );
                             Navigator.of(context)
                                 .popUntil((route) => route.isFirst);
+                            Scaffold.of(context).closeDrawer();
                           });
                         });
                       }
 
-                      if (userprofileUrl == "null") {
+                      if (image != null) {
                         await FirebaseStorage.instance
                             .ref("users/$userEmail")
                             .child("ProfilePhoto.png")

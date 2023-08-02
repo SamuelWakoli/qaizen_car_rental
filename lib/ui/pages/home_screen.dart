@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/profile.dart';
@@ -213,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   //else use icon
                   leading: _getProfile(),
                   title: Text(
-                    getUserName(),
+                    FirebaseAuth.instance.currentUser!.displayName.toString(),
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -221,12 +220,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     FirebaseAuth.instance.currentUser!.email.toString(),
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
-                  onTap: () {
-                    !dbHasData
-                        ? nextPage(context: context, page: const UserProfile())
-                        : nextPage(
-                            context: context, page: const VerificationPage());
-                  },
+                  onTap: () =>
+                      nextPage(context: context, page: const UserProfile()),
                 ),
               ),
             ),

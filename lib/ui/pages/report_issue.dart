@@ -27,7 +27,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
       Map<String, dynamic> data = {'issue': text, 'read': false};
       await FirebaseFirestore.instance
           .collection('issues')
-          .doc("${getUserName()} ${DateTime.now()}")
+          .doc("${userID} ${DateTime.now()}")
           .set(data)
           .whenComplete(
         () {

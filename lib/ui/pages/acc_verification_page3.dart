@@ -152,7 +152,7 @@ class _AccVerificationPage3State extends State<AccVerificationPage3> {
                     String drivingLicenceUrl = '';
 
                     await firebaseStorageUserFolder
-                        .child('${getUserName()}\'s driving licence.png')
+                        .child('$userID driving licence.png')
                         .putFile(image!)
                         .then((snapshot) async {
                       drivingLicenceUrl = await snapshot.ref.getDownloadURL();
