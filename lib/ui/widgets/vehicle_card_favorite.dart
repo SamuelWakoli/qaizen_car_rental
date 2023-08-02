@@ -16,50 +16,99 @@ Widget favCard({
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(24.0), // Adjust the radius as needed
+        ),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  topRight: Radius.circular(12.0)),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: image,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).primaryColor),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-              child: Text.rich(TextSpan(
-                  text: name,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
-                  children: <TextSpan>[
-                    const TextSpan(
-                      text: '  |  ',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    TextSpan(
-                      text: availability ? "Available" : "Unavailable.",
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          color: Theme.of(context).primaryColor),
-                    ),
-                    TextSpan(
-                      text: '  |  Ksh. $price /day ',
-                      style: const TextStyle(fontSize: 16.0),
-                    ),
-                  ])),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    children: [
+                      // Back
+                      Text.rich(TextSpan(
+                          text: name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 4
+                              ..color = Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            const TextSpan(
+                              text: '  |  ',
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                            TextSpan(
+                              text: availability ? "Available" : "Unavailable.",
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            TextSpan(
+                              text: '  |  Ksh. $price /day',
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ])),
+
+                      // Front
+                      Text.rich(
+                        TextSpan(
+                            text: name,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                            children: <TextSpan>[
+                              const TextSpan(
+                                text: '  |  ',
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              TextSpan(
+                                text:
+                                    availability ? "Available" : "Unavailable.",
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              TextSpan(
+                                text: '  |  Ksh. $price /day',
+                                style: const TextStyle(
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +149,6 @@ Widget favCard({
                 ),
               ],
             ),
-            const SizedBox(height: 8),
           ],
         ),
       ),

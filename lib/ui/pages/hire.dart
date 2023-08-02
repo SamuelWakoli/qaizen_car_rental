@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qaizen_car_rental/ui/pages/hire_summary.dart';
 import 'package:qaizen_car_rental/ui/pages/pick_location.dart';
-import 'package:qaizen_car_rental/ui/pages/terms_conditions.dart';
 
 import '../../db/user.dart';
 import '../../shared/hire_vehicle_data.dart';
@@ -96,8 +94,6 @@ class _HirePageState extends State<HirePage> {
       return const SizedBox();
     }
   }
-
-  bool acceptedTerms = false;
 
   //
   //
@@ -253,53 +249,11 @@ class _HirePageState extends State<HirePage> {
                   ),
                   const SizedBox(height: 10),
                   showDeliveryLocation(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        value: acceptedTerms,
-                        onChanged: ((value) {
-                          setState(() {
-                            acceptedTerms = value!;
-                          });
-                        }),
-                        fillColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).primaryColor),
-                      ),
-                      Text.rich(TextSpan(
-                        text: "I accept the ",
-                        style: const TextStyle(fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: "terms and conditions",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.underline),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  nextPage(
-                                      context: context,
-                                      page: const TermsConditionsPage());
-                                }),
-                        ],
-                      )),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: OutlinedButton(
                       onPressed: () async {
-                        String messageText = '';
-                        if (acceptedTerms == false) {
-                          messageText =
-                              'Accept the terms and conditions to continue.';
-                        } else {
-                          messageText = 'Please enter number of days.';
-                        }
-                        acceptedTerms && numberOfDays != ''
+                        numberOfDays != ''
                             ? {
                                 selectedVehicles?.clear(),
                                 selectedVehicleNames?.clear(),
@@ -349,7 +303,7 @@ class _HirePageState extends State<HirePage> {
                             : showSnackbar(
                                 context: context,
                                 duration: 4,
-                                message: messageText);
+                                message: 'Please enter number of days.');
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

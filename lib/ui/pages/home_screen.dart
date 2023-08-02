@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       children: [
         Center(
           child: Card(
-            elevation: 8,
+            elevation: 4,
             shape: const CircleBorder(
                 eccentricity: 1,
                 side: BorderSide(
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             Center(
               child: Card(
-                elevation: 12,
+                elevation: 8,
                 shape: CircleBorder(
                     eccentricity: 1,
                     side: BorderSide(

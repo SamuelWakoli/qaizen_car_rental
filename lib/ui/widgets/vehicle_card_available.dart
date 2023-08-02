@@ -45,43 +45,46 @@ Widget availableVehicleCard({
                     ),
                   ),
                 ),
-                Stack(
-                  children: [
-                    Text.rich(TextSpan(
-                        text: name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 4
-                            ..color = Colors.black,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '    Ksh. $price /day',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ])),
-                    Text.rich(TextSpan(
-                        text: name,
-                        style: const TextStyle(
-                            color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    children: [
+                      Text.rich(TextSpan(
+                          text: name,
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '    Ksh. $price /day',
-                            style: const TextStyle(
-                              fontSize: 14,
+                            fontSize: 18,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 4
+                              ..color = Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '    Ksh. $price /day',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ])),
+                      Text.rich(TextSpan(
+                          text: name,
+                          style: const TextStyle(
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ])),
-                  ],
+                              fontSize: 18),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '    Ksh. $price /day',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ])),
+                    ],
+                  ),
                 ),
               ],
             ),
