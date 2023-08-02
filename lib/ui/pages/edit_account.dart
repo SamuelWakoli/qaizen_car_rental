@@ -10,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qaizen_car_rental/db/user.dart';
 
 import '../widgets/text_form_field.dart';
-import 'profile.dart';
 
 class EditAccountPage extends StatefulWidget {
   const EditAccountPage({super.key});
@@ -228,15 +227,15 @@ class _EditAccountPageState extends State<EditAccountPage> {
                     },
                   ),
                   textFormField(
-                    initialValue: phone,
+                    initialValue: phoneNumber,
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.phone,
                     context: context,
                     icon: Icons.phone_outlined,
                     labelText: 'Phone',
-                    hintText: phone,
+                    hintText: phoneNumber,
                     onChanged: (value) {
-                      phone = value;
+                      phoneNumber = value;
                     },
                     // The validator receives the text that the user has entered.
                     validator: (value) {
@@ -269,7 +268,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                               ? photoURL
                               : userprofileUrl,
                           "name": userName,
-                          "phone": phone,
+                          "phone": phoneNumber,
                         };
 
                         await FirebaseFirestore.instance

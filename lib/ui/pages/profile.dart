@@ -17,8 +17,6 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
-String userName = '', phone = '';
-
 class _UserProfileState extends State<UserProfile> {
   String userprofileUrl =
       FirebaseAuth.instance.currentUser!.photoURL.toString();
@@ -68,7 +66,7 @@ class _UserProfileState extends State<UserProfile> {
                   }
 
                   userName = snapshot.data!["name"];
-                  phone = snapshot.data!["phone"];
+                  phoneNumber = snapshot.data!["phone"];
 
                   return Column(
                     children: [
@@ -109,7 +107,7 @@ class _UserProfileState extends State<UserProfile> {
                       const SizedBox(height: 14.0),
                       ListTile(
                         title: Text(
-                          "$userName\n$userEmail\n$phone",
+                          "$userName\n$userEmail\n$phoneNumber",
                           style: const TextStyle(fontSize: 22),
                           textAlign: TextAlign.center,
                         ),

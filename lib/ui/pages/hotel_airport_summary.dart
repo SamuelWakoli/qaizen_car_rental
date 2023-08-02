@@ -13,7 +13,6 @@ class HotelAirportSummary extends StatefulWidget {
 
 class _HotelAirportSummaryState extends State<HotelAirportSummary> {
   bool loading = false;
-  String phoneNumber = '';
   bool editingPhone = false;
 
   TextStyle normalText() {
@@ -168,6 +167,9 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                               loading = false;
                             });
 
+                            Navigator.popUntil(
+                                context, (route) => route.isFirst);
+
                             showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
@@ -179,27 +181,13 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () => Navigator.of(context)
-                                              .popUntil(
-                                                  (route) => route.isFirst),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.home_outlined,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              const SizedBox(width: 20),
-                                              Text(
-                                                'Go to Home Screen',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                            ],
+                                          onPressed: () => Navigator.pop(ctx),
+                                          child: Text(
+                                            'Okay',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
                                           ),
                                         ),
                                       ],

@@ -4,7 +4,7 @@ import 'package:qaizen_car_rental/db/user.dart';
 
 ///This data will be used to generate agreement pdf
 ///shared var
-String clientName = userID;
+String clientName = userName;
 bool driverNeeded = false;
 String serviceType = "";
 dynamic locationDataLat;

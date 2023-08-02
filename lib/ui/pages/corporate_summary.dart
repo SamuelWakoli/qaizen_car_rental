@@ -13,7 +13,6 @@ class CorporateSummary extends StatefulWidget {
 
 class _CorporateSummaryState extends State<CorporateSummary> {
   bool loading = false;
-  String phoneNumber = '';
   bool editingPhone = false;
 
   TextStyle normalText() {
@@ -167,6 +166,8 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                             setState(() {
                               loading = false;
                             });
+                            Navigator.popUntil(
+                                context, (route) => route.isFirst);
 
                             showDialog(
                                 context: context,
@@ -179,27 +180,13 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () => Navigator.of(context)
-                                              .popUntil(
-                                                  (route) => route.isFirst),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.home_outlined,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              const SizedBox(width: 20),
-                                              Text(
-                                                'Go to Home Screen',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                            ],
+                                          onPressed: () => Navigator.pop(ctx),
+                                          child: Text(
+                                            'Okay',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
                                           ),
                                         ),
                                       ],

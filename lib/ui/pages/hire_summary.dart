@@ -41,7 +41,6 @@ class _HireSummaryState extends State<HireSummary> {
   }
 
   bool loading = false;
-  String phoneNumber = '';
   bool editingPhone = false;
 
   @override
@@ -176,6 +175,8 @@ class _HireSummaryState extends State<HireSummary> {
                           loading = false;
                         });
 
+                        Navigator.popUntil(context, (route) => route.isFirst);
+
                         showDialog(
                             context: context,
                             builder: (ctx) => AlertDialog(
@@ -186,26 +187,12 @@ class _HireSummaryState extends State<HireSummary> {
                                   ),
                                   actions: [
                                     TextButton(
-                                      onPressed: () => Navigator.of(context)
-                                          .popUntil((route) => route.isFirst),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.home_outlined,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                          const SizedBox(width: 20),
-                                          Text(
-                                            'Go to Home Screen',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                          ),
-                                        ],
+                                      onPressed: () => Navigator.pop(ctx),
+                                      child: Text(
+                                        'Okay',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -221,8 +208,12 @@ class _HireSummaryState extends State<HireSummary> {
                     },
                     child: loading
                         ? Center(
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
+                            child: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           )
                         : Padding(

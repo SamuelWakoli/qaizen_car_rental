@@ -29,6 +29,8 @@ class _HomePageState extends State<HomePage> {
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
         setState(() {
           favoriteVehicles = snapshot['favorites'];
+          userName = snapshot['name'];
+          phoneNumber = snapshot['phone'];
         });
       } else {
         // if user has no favorites or referral code,

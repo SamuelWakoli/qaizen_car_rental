@@ -24,6 +24,7 @@ Future<String> getUserProfileImageURL() async {
 }
 
 List favoriteVehicles = [];
+String phoneNumber = '', userName = '';
 
 bool dbHasData = false;
 bool userDocExists = false;
