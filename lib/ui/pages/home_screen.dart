@@ -11,9 +11,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
 import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
 import 'package:qaizen_car_rental/ui/pages/emergency.dart';
+import 'package:qaizen_car_rental/ui/pages/profile.dart';
 import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
-import 'package:qaizen_car_rental/ui/pages/user_profile.dart';
 
 import '../../db/user.dart';
 import '../../helper/communication.dart';

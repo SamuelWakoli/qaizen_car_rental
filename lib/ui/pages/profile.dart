@@ -25,6 +25,8 @@ class _UserProfileState extends State<UserProfile> {
   String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
   double tileFontSize = 18.0;
 
+  bool isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,56 +69,81 @@ class _UserProfileState extends State<UserProfile> {
                   userName = snapshot.data!["name"];
                   phone = snapshot.data!["phone"];
 
-                  return SizedBox(
-                    width: 320,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 26.0),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: SizedBox(
-                            height: 160,
-                            width: 160,
-                            child: CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: userprofileUrl,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(
-                                  value: downloadProgress.progress,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                  return Column(
+                    children: [
+                      const SizedBox(height: 26.0),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: SizedBox(
+                          height: 160,
+                          width: 160,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: userprofileUrl,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                              child: CircularProgressIndicator(
+                                value: downloadProgress.progress,
+                                color: Theme.of(context).primaryColor,
                               ),
-                              errorWidget: (cx, url, downloadProgress) {
-                                return Center(
-                                  child: OutlinedButton(
-                                    onPressed: () => nextPage(
-                                        context: context,
-                                        page: const EditAccountPage()),
-                                    child: const Text(
-                                      "Set Details",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                );
-                              },
                             ),
+                            errorWidget: (cx, url, downloadProgress) {
+                              return Center(
+                                child: OutlinedButton(
+                                  onPressed: () => nextPage(
+                                      context: context,
+                                      page: const EditAccountPage()),
+                                  child: const Text(
+                                    "Set Details",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                        const SizedBox(height: 14.0),
-                        ListTile(
-                          title: Text(
-                            "$userName\n$userEmail\n$phone",
-                            style: const TextStyle(fontSize: 22),
-                            textAlign: TextAlign.center,
-                          ),
+                      ),
+                      const SizedBox(height: 14.0),
+                      ListTile(
+                        title: Text(
+                          "$userName\n$userEmail\n$phone",
+                          style: const TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.email_outlined,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: const Text('Email Verification'),
+            subtitle: isEmailVerified
+                ? const Text('Email verified')
+                : const Text('Email not verified'),
+            trailing: isEmailVerified
+                ? null
+                : TextButton(
+                    onPressed: () async {
+                      if (isEmailVerified) {
+                        await FirebaseAuth.instance.currentUser!
+                            .sendEmailVerification()
+                            .whenComplete(
+                              () => ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Verification email sent'),
+                                ),
+                              ),
+                            );
+                      }
+                    },
+                    child: const Text('Send Verification Email'),
+                  ),
           ),
           const SizedBox(height: 18.0),
           ListTile(
