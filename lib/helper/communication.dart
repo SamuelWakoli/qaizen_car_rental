@@ -1,3 +1,5 @@
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> makePhoneCall() async {
@@ -6,6 +8,15 @@ Future<void> makePhoneCall() async {
     path: "+254726371714",
   );
   await launchUrl(launchUri);
+}
+
+Future<void> makeDirectPhoneCall() async {
+  //when call permission is granted:
+  await FlutterPhoneDirectCaller.callNumber('+254726371714');
+  //else not granted, just show phone number
+  if (await Permission.phone.isDenied) {
+    makePhoneCall();
+  }
 }
 
 Future<void> openWhatsApp() async {

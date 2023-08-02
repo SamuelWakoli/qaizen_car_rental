@@ -9,7 +9,6 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qaizen_car_rental/ui/pages/auth_gate.dart';
-import 'package:qaizen_car_rental/ui/pages/emergency.dart';
 import 'package:qaizen_car_rental/ui/pages/profile.dart';
 import 'package:qaizen_car_rental/ui/pages/search_page.dart';
 import 'package:qaizen_car_rental/ui/pages/settings_screen.dart';
@@ -335,14 +334,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 onPressed: () =>
                     nextPage(context: context, page: const SearchPage()),
                 icon: const Icon(Icons.search)),
-          IconButton(
-            onPressed: () =>
-                nextPage(context: context, page: const Emergency()),
-            icon: const Icon(
-              Icons.emergency_outlined,
-            ),
-            tooltip: 'Emergency',
-          ),
           PopupMenuButton(
             position: PopupMenuPosition.under,
             elevation: 8,
