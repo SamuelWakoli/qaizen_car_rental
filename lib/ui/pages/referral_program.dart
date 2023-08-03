@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qaizen_car_rental/ui/pages/account_verification.dart';
-import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../db/user.dart';
 import '../widgets/text_form_field.dart';
@@ -86,25 +84,11 @@ class _ReferralProgramPageState extends State<ReferralProgramPage> {
                   );
                 }
 
-                //so as to allow [containsKey()]
-                Map<String, dynamic> dataMap =
-                    snapshot.data!.data() as Map<String, dynamic>;
-                if (snapshot.hasData && dataMap.containsKey('referral code')) {
-                  return Text(
-                    snapshot.data!['referral code'].toString(),
-                    style: TextStyle(
-                        fontSize: 20, color: Theme.of(context).primaryColor),
-                  );
-                } else {
-                  return TextButton(
-                    onPressed: () {
-                      nextPage(
-                          context: context, page: const VerificationPage());
-                    },
-                    child:
-                        const Text('Verify your account to get referral code'),
-                  );
-                }
+                return Text(
+                  snapshot.data!['referral code'].toString(),
+                  style: TextStyle(
+                      fontSize: 20, color: Theme.of(context).primaryColor),
+                );
               }),
           const SizedBox(height: 20),
           const Text(
