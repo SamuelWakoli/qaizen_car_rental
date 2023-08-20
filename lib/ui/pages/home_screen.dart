@@ -36,34 +36,38 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const int totalPage = 4;
 
-  // appbar title:
-  final List<Widget> _titles = [
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Card(
-            elevation: 4,
-            shape: const CircleBorder(
-                eccentricity: 1,
-                side: BorderSide(
-                  style: BorderStyle.solid,
-                  // color: Theme.of(context).primaryColor,
-                )),
-            child: CircleAvatar(
-                radius: 22,
-                backgroundColor: Colors.white,
-                child: Image.asset('assets/ic_launcher.png')),
+  Widget _titles({required BuildContext context, required int currentIndex}) {
+    // appbar title:
+    final List<Widget> _titles = [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Card(
+              elevation: 4,
+              shape: CircleBorder(
+                  eccentricity: 1,
+                  side: BorderSide(
+                    style: BorderStyle.solid,
+                    color: Theme.of(context).primaryColor,
+                  )),
+              child: CircleAvatar(
+                  radius: 22,
+                  backgroundColor: Colors.white,
+                  child: Image.asset('assets/ic_launcher.png')),
+            ),
           ),
-        ),
-        const SizedBox(width: 20),
-        const Text("Home")
-      ],
-    ),
-    const Text('Services'),
-    const Text('Favorites'),
-    const Text('More')
-  ];
+          const SizedBox(width: 20),
+          const Text("Home")
+        ],
+      ),
+      const Text('Services'),
+      const Text('Favorites'),
+      const Text('More')
+    ];
+
+    return _titles[currentIndex];
+  }
 
   // icons for bottomNav
   List<IconData> icons = [
@@ -325,7 +329,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       appBar: AppBar(
-        title: _titles[_currentPage],
+        elevation: 2,
+        title: _titles(context: context, currentIndex: _currentPage),
         centerTitle: true,
         actions: [
           if (_currentPage == 0)
@@ -476,21 +481,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _getBottomBar() {
     return BottomNavigationBar(
-        currentIndex: _currentPage,
-        onTap: (index) {
-          setState(() {
-            _currentPage = index;
-          });
-        },
-        backgroundColor:
-            Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-        type: BottomNavigationBarType.fixed,
-        items: List.generate(
-            totalPage,
-            (index) => BottomNavigationBarItem(
-                  icon: Icon(icons[index]),
-                  label: names[index],
-                )));
+      currentIndex: _currentPage,
+      onTap: (index) {
+        setState(() {
+          _currentPage = index;
+        });
+      },
+      backgroundColor:
+          Colors.transparent,
+      type: BottomNavigationBarType.shifting,
+      landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+      selectedLabelStyle: const TextStyle(fontSize: 12),
+      items: List.generate(
+        totalPage,
+        (index) => BottomNavigationBarItem(
+          icon: Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(icons[index]),
+              )),
+          label: names[index],
+          tooltip: names[index],
+        ),
+      ),
+    );
   }
 
   Widget _getBody(int index) {
