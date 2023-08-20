@@ -32,8 +32,8 @@ Future<void> sendWhatsAppMessage({required String message}) async {
   final encodedMessage = Uri.encodeComponent(message);
   final uri = Uri.parse("https://wa.me/254726371714?text=$encodedMessage");
 
-  if (await canLaunch(uri.toString())) {
-    await launch(uri.toString(), forceSafariVC: false, forceWebView: false);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   } else {
     // Can't launch URL
   }

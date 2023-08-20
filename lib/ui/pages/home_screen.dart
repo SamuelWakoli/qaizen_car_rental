@@ -24,6 +24,7 @@ import '../pages/report_issue.dart';
 import '../pages/services_page.dart';
 import '../pages/terms_conditions.dart';
 import '../widgets/widgets.dart';
+import 'current_service.dart';
 import 'view_image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  static const int totalPage = 4;
+  static const int totalPage = 5;
 
   Widget _titles({required BuildContext context, required int currentIndex}) {
     // appbar title:
@@ -62,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ],
       ),
       const Text('Services'),
+      const Text('Current Service'),
       const Text('Favorites'),
       const Text('More')
     ];
@@ -73,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<IconData> icons = [
     Icons.car_rental_outlined,
     Icons.cases_outlined,
+    Icons.fact_check_outlined,
     Icons.favorite_outline_rounded,
     Icons.more_outlined,
   ];
@@ -81,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const List<String> names = [
     'Home',
     'Services',
+    'Current',
     'Favorites',
     'More',
   ];
@@ -89,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Widget> _pages = const [
     HomePage(),
     ServicesPage(),
+    CurrentServicePage(),
     FavoritesPage(),
     MorePage()
   ];
@@ -183,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     //if db has data, return this screen
     return Scaffold(
       drawer: Drawer(
+        elevation: 16,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -209,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: Card(
-                elevation: 8,
+                elevation: 0,
                 child: ListTile(
                   //if user created profile, use image
                   //else use icon
@@ -232,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
-                elevation: 8,
+                elevation: 0,
                 child: Column(
                   children: [
                     const SizedBox(height: 8),
@@ -472,7 +478,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentIndex: _currentPage,
         totalLength: totalPage,
         transitionType: TransitionType.fade,
-        transitionDuration: const Duration(milliseconds: 1500),
+        transitionDuration: const Duration(seconds: 1),
         transitionCurve: Curves.ease,
       ),
       bottomNavigationBar: _getBottomBar(),
@@ -490,14 +496,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       backgroundColor: Colors.transparent,
       type: BottomNavigationBarType.shifting,
       landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-      selectedLabelStyle: const TextStyle(fontSize: 12),
+      //selectedLabelStyle: const TextStyle(fontSize: 12),
       items: List.generate(
         totalPage,
         (index) => BottomNavigationBarItem(
           icon: Card(
-              elevation: 2,
+              elevation: 1,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Icon(icons[index]),
               )),
           label: names[index],

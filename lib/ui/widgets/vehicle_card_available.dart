@@ -18,6 +18,7 @@ Widget availableVehicleCard({
   return Padding(
     padding: const EdgeInsets.all(2.0),
     child: Card(
+      elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.circular(24.0), // Adjust the radius as needed

@@ -8,6 +8,7 @@ import 'package:qaizen_car_rental/ui/pages/weddings_events.dart';
 import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../widgets/services_card.dart';
+import 'contact_us.dart';
 import 'self_drive.dart';
 
 class ServicesPage extends StatefulWidget {
@@ -137,14 +138,31 @@ class _ServicesPageState extends State<ServicesPage> {
             ],
           ),
           const Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(top: 12.0, left: 8, right: 8, bottom: 4),
             child: Text(
               "Didn't find the service you're looking "
               "for? We've got you covered! Contact us "
               "for a customized solution.",
               style: TextStyle(fontSize: 16.0),
             ),
-          )
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 4.0, bottom: 4, left: 8, right: 8),
+            child: ElevatedButton(
+              onPressed: () {
+                nextPage(context: context, page: const ContactUsPage());
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.contact_support_outlined),
+                  SizedBox(width: 8),
+                  Text("Contact Us"),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
