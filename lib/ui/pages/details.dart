@@ -22,23 +22,30 @@ String? displayImageUrl = "",
 
 Widget getVehicleImages(image) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(12.0),
-      child: CachedNetworkImage(
-        fit: BoxFit.fill,
-        imageUrl: image,
-        progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircularProgressIndicator(
-              value: downloadProgress.progress,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+    padding: const EdgeInsets.only(top: 4, bottom: 4),
+    child: Card(
+      elevation: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: image,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
+                ),
+              ),
             ),
+            errorWidget: (context, url, error) => const SizedBox(),
           ),
         ),
-        errorWidget: (context, url, error) => const SizedBox(),
       ),
     ),
   );
@@ -49,24 +56,24 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
     if (displayImageUrl != null) {
       return Center(
         child: Card(
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: CachedNetworkImage(
-                  fit: BoxFit.fill,
-                  imageUrl: displayImageUrl.toString(),
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                    value: downloadProgress.progress,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).primaryColor),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.error_outline),
+          elevation: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: displayImageUrl.toString(),
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor),
                 ),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error_outline),
               ),
-            ],
+            ),
           ),
         ),
       );
@@ -120,59 +127,21 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                           nextPage(context: context, page: const ViewImage());
                         },
                         child: displayImage()),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Text(
-                          'Category: ',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          document.get('category'),
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
+                    Card(
+                      elevation: 1,
+                      child: ListTile(
+                        title: Text("${document.get('category')}\nPrice"),
+                        subtitle: Text("Ksh. ${document.get('priceDay')} /day\n"
+                            "Ksh. ${document.get('priceWeek')} /day\n"
+                            "Ksh. ${document.get('priceMonth')} /day"),
+                      ),
                     ),
-                    const Center(
-                        child: Text('Price',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))),
-                    Text.rich(
-                      TextSpan(
-                          text: 'Ksh. ',
-                          style: const TextStyle(fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(text: document.get('priceDay')),
-                            const TextSpan(text: ' /day')
-                          ]),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                          text: 'Ksh. ',
-                          style: const TextStyle(fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(text: document.get('priceWeek')),
-                            const TextSpan(text: ' /week')
-                          ]),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                          text: 'Ksh. ',
-                          style: const TextStyle(fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(text: document.get('priceMonth')),
-                            const TextSpan(text: ' /month')
-                          ]),
-                    ),
-                    const SizedBox(height: 10),
-                    const Center(
-                        child: Text('Description',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))),
-                    Text(
-                      document.get('shortDesc'),
-                    ),
-                    const SizedBox(height: 10),
+                    (document.get('shortDesc') != "" &&
+                            document.get('shortDesc') != " ")
+                        ? Card(elevation: 1,
+                            child: ListTile(
+                                title: Text(document.get('shortDesc'))))
+                        : SizedBox(),
                     GestureDetector(
                         onTap: () {
                           currentImageUrl = image1Url!;

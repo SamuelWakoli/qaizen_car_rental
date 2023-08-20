@@ -40,6 +40,7 @@ class _MorePageState extends State<MorePage> {
     required String text,
   }) =>
       Card(
+        elevation: 0,
         surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
@@ -98,6 +99,7 @@ class _MorePageState extends State<MorePage> {
             ),
             const SizedBox(height: 8),
             Card(
+              surfaceTintColor: null,
               elevation: 2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

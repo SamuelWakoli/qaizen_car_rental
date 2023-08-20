@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _titles({required BuildContext context, required int currentIndex}) {
     // appbar title:
-    final List<Widget> _titles = [
+    final List<Widget> titles = [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       const Text('More')
     ];
 
-    return _titles[currentIndex];
+    return titles[currentIndex];
   }
 
   // icons for bottomNav
@@ -487,8 +487,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           _currentPage = index;
         });
       },
-      backgroundColor:
-          Colors.transparent,
+      backgroundColor: Colors.transparent,
       type: BottomNavigationBarType.shifting,
       landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
       selectedLabelStyle: const TextStyle(fontSize: 12),

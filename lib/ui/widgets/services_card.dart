@@ -10,11 +10,11 @@ Widget servicesCard({
     height: 140,
     width: 180,
 
-    child: GestureDetector(
-      onTap: onTap,
-      child: Card(
-        surfaceTintColor: Colors.transparent,
-        elevation: 1,
+    child: Card(
+      surfaceTintColor: Colors.transparent,
+      elevation: 1,
+      child: InkWell(
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

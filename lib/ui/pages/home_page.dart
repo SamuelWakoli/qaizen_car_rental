@@ -80,6 +80,10 @@ class _HomePageState extends State<HomePage> {
                       currentVehicleDocID = document.id;
                       details(context: context);
                     });
+                  },
+                  onClickBook: () {
+                    currentVehicleDocID = document.id;
+                    book(context: context);
                   });
             }).toList()),
           );

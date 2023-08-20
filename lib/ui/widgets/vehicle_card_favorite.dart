@@ -22,77 +22,51 @@ Widget favCard({
         ),
         child: Column(
           children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: image,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).primaryColor),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: image,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).primaryColor),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(
-                    children: [
-                      // Back
-                      Text.rich(TextSpan(
-                          text: name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 4
-                              ..color = Colors.black,
-                          ),
-                          children: <TextSpan>[
-                            const TextSpan(
-                              text: '  |  ',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            TextSpan(
-                              text: availability ? "Available" : "Unavailable.",
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            TextSpan(
-                              text: '  |  Ksh. $price /day',
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ])),
-
-                      // Front
-                      Text.rich(
-                        TextSpan(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        // Back
+                        Text.rich(TextSpan(
                             text: name,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 4
+                                ..color = Colors.black,
+                            ),
                             children: <TextSpan>[
                               const TextSpan(
                                 text: '  |  ',
                                 style: TextStyle(fontSize: 16.0),
                               ),
                               TextSpan(
-                                text:
-                                    availability ? "Available" : "Unavailable.",
+                                text: availability ? "Available" : "Unavailable.",
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     color: Theme.of(context).primaryColor),
@@ -100,15 +74,44 @@ Widget favCard({
                               TextSpan(
                                 text: '  |  Ksh. $price /day',
                                 style: const TextStyle(
-                                  fontSize: 14.0,
+                                  fontSize: 14,
                                 ),
                               ),
-                            ]),
-                      ),
-                    ],
+                            ])),
+
+                        // Front
+                        Text.rich(
+                          TextSpan(
+                              text: name,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                              children: <TextSpan>[
+                                const TextSpan(
+                                  text: '  |  ',
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                TextSpan(
+                                  text:
+                                      availability ? "Available" : "Unavailable.",
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                TextSpan(
+                                  text: '  |  Ksh. $price /day',
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -126,6 +126,10 @@ class _SearchPageState extends State<SearchPage> {
                           currentVehicleDocID = document.id;
                           hire(context: context);
                         },
+                        onClickBook: () {
+                          currentVehicleDocID = document.id;
+                          book(context: context);
+                        },
                         onClickDetails: () {
                           setState(() {
                             currentVehicleDocID = document.id;
