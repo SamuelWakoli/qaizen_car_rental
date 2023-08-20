@@ -145,6 +145,11 @@ class _HireSummaryState extends State<HireSummary> {
                         loading = true;
                       });
 
+                      Map<String, dynamic> phoneData = {
+                        'phone': phoneNumber,
+                      };
+                      await fireStoreUserData.update(phoneData);
+
                       Map<String, dynamic> data = {
                         'name': clientName,
                         'userId': userID,
@@ -166,7 +171,6 @@ class _HireSummaryState extends State<HireSummary> {
                         'hotel/airport name': hotelAirportName,
                         'transfer desc': transferDescription,
                       };
-
                       await userBookings
                           .doc("${DateTime.now()}")
                           .set(data)

@@ -157,7 +157,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                         ],
                       ),
                       const SizedBox(height: 4),
-                      ElevatedButton(
+                      OutlinedButton(
                           onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +166,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                             ],
                           )),
                       const SizedBox(height: 4),
-                      ElevatedButton(
+                      OutlinedButton(
                           onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

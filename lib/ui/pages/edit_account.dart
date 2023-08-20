@@ -264,7 +264,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                         // setting data to firestore
 
                         Map<String, dynamic> userDetails = {
-                          "profile img url": (userprofileUrl == "null")
+                          "photoURL": (userprofileUrl == "null")
                               ? photoURL
                               : userprofileUrl,
                           "name": userName,

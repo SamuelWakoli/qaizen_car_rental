@@ -140,6 +140,11 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                             loading = true;
                           });
 
+                          Map<String, dynamic> phoneData = {
+                            'phone': phoneNumber,
+                          };
+                          await fireStoreUserData.update(phoneData);
+
                           Map<String, dynamic> data = {
                             'name': clientName,
                             'userId': userID,

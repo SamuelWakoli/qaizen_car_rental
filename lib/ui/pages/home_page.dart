@@ -19,7 +19,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     String authUsername =
-        FirebaseAuth.instance.currentUser!.displayName.toString();
+            FirebaseAuth.instance.currentUser!.displayName.toString(),
+        photoURL = FirebaseAuth.instance.currentUser!.photoURL.toString();
 
     if (authUsername == 'null') authUsername = '';
 
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
         // create new data to the account
         Map<String, dynamic> data = {
           'name': authUsername,
+          'photoURL': photoURL,
           'phone': '',
           'favorites': favoriteVehicles,
           "referral code": generateRandomString(10),

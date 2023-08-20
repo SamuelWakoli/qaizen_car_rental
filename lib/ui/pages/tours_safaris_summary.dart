@@ -138,6 +138,11 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                             loading = true;
                           });
 
+                          Map<String, dynamic> phoneData = {
+                            'phone': phoneNumber,
+                          };
+                          await fireStoreUserData.update(phoneData);
+
                           Map<String, dynamic> data = {
                             'name': clientName,
                             'userId': userID,

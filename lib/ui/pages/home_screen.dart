@@ -110,14 +110,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       bool dataAwaiting = false, dataVerified = false;
       if (snapshot.exists && snapshot.data()!.isNotEmpty) {
         setState(() {
-          bool isAwaiting = snapshot.get('awaiting verification');
-          bool isUserVerified = snapshot.get('verified');
-          if (isAwaiting) {
-            dataAwaiting = isAwaiting;
-          }
-          if (isUserVerified) {
-            dataVerified = isUserVerified;
-          }
           notificationOn = snapshot.get('notifications');
         });
       } else {
