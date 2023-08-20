@@ -20,7 +20,6 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   String userprofileUrl =
       FirebaseAuth.instance.currentUser!.photoURL.toString();
-  String? writersUsername, writersPhone, writersEmail;
   String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
   double tileFontSize = 18.0;
 
