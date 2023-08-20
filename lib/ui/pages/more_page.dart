@@ -39,31 +39,34 @@ class _MorePageState extends State<MorePage> {
     required IconData iconData,
     required String text,
   }) =>
-      InkWell(
-        onTap: onTap, // Call the onTap function here
-        splashColor: Theme.of(context).primaryColor,
-        child: Card(
-          surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
-          child: SizedBox(
-            height: 126,
-            width: 160,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    iconData,
-                    color: Theme.of(context).primaryColor,
-                    size: 56,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    text,
-                    style: const TextStyle(fontSize: 16),
-                  )
-                ],
+      Card(
+        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: InkWell(
+            onTap: onTap,
+            highlightColor: Colors.transparent,
+            child: SizedBox(
+              height: 126,
+              width: 160,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      iconData,
+                      color: Theme.of(context).primaryColor,
+                      size: 56,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      text,
+                      style: const TextStyle(fontSize: 16),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -79,11 +82,18 @@ class _MorePageState extends State<MorePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(height: 4),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Image.asset(
-                'assets/slide4.png',
-                fit: BoxFit.cover,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: SizedBox(
+                    child: Image.asset(
+                      'assets/slide4.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -159,7 +169,8 @@ class _MorePageState extends State<MorePage> {
             ),
             const SizedBox(height: 8),
             Card(
-              elevation: 2,
+              elevation: 1,
+              surfaceTintColor: Colors.transparent,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -171,41 +182,61 @@ class _MorePageState extends State<MorePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () => _openLink(
-                              "https://www.instagram.com/qaizencarrental/?hl=en"),
-                          child: const FaIcon(
-                            FontAwesomeIcons.instagram,
-                            size: 32,
+                        Card(
+                          child: InkWell(
+                            onTap: () => _openLink(
+                                "https://www.instagram.com/qaizencarrental/?hl=en"),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: FaIcon(
+                                FontAwesomeIcons.instagram,
+                                size: 32,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 30),
-                        GestureDetector(
-                            onTap: () =>
-                                _openLink("https://wa.me/254797228948"),
-                            child: const FaIcon(
-                              FontAwesomeIcons.whatsapp,
-                              color: Colors.green,
-                              size: 32,
-                            )),
+                        Card(
+                          child: InkWell(
+                              onTap: () =>
+                                  _openLink("https://wa.me/254797228948"),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.whatsapp,
+                                  color: Colors.green,
+                                  size: 32,
+                                ),
+                              )),
+                        ),
                         const SizedBox(width: 30),
-                        GestureDetector(
-                          onTap: () => _openLink(
-                              'https://www.facebook.com/qaizen.carrental/'),
-                          child: const FaIcon(
-                            FontAwesomeIcons.facebook,
-                            color: Colors.indigo,
-                            size: 32,
+                        Card(
+                          child: InkWell(
+                            onTap: () => _openLink(
+                                'https://www.facebook.com/qaizen.carrental/'),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: FaIcon(
+                                FontAwesomeIcons.facebook,
+                                color: Colors.indigo,
+                                size: 32,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 30),
-                        GestureDetector(
-                          onTap: () =>
-                              _openLink('https://twitter.com/qaizencarrental'),
-                          child: const FaIcon(
-                            FontAwesomeIcons.twitter,
-                            color: Colors.blue,
-                            size: 32,
+                        Card(
+                          child: InkWell(
+                            onTap: () => _openLink(
+                                'https://twitter.com/qaizencarrental'),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: FaIcon(
+                                FontAwesomeIcons.twitter,
+                                color: Colors.blue,
+                                size: 32,
+                              ),
+                            ),
                           ),
                         ),
                       ],

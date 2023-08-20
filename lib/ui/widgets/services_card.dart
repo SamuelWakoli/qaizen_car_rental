@@ -6,35 +6,38 @@ Widget servicesCard({
   required String label,
   required dynamic onTap,
 }) {
-  return ConstrainedBox(
-    constraints: const BoxConstraints(minHeight: 190, minWidth: 180),
+  return SizedBox(
+    height: 140,
+    width: 180,
+
     child: GestureDetector(
       onTap: onTap,
       child: Card(
-        color: Colors.white,
-        shadowColor: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 140, maxHeight: 120),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+        surfaceTintColor: Colors.transparent,
+        elevation: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 60,
                 child: Image.asset(
                   image,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+              Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: 8),
-          ],
+            ],
+          ),
         ),
       ),
     ),

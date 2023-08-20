@@ -25,6 +25,24 @@ class _ServicesPageState extends State<ServicesPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(height: 4),
+          Card(
+            surfaceTintColor: Colors.transparent,
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: SizedBox(
+                  child: Image.asset(
+                    'assets/slide5.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -56,14 +74,14 @@ class _ServicesPageState extends State<ServicesPage> {
                   }),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               servicesCard(
                   context: context,
                   image: 'assets/teamwork.png',
-                  label: 'Corporate Service',
+                  label: 'Corporate \nService',
                   onTap: () {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
@@ -76,7 +94,7 @@ class _ServicesPageState extends State<ServicesPage> {
               servicesCard(
                   context: context,
                   image: 'assets/couple.png',
-                  label: 'Weddings & Events',
+                  label: 'Weddings \n& Events',
                   onTap: () {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
@@ -88,14 +106,14 @@ class _ServicesPageState extends State<ServicesPage> {
                   }),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               servicesCard(
                   context: context,
                   image: 'assets/photographer.png',
-                  label: 'Tours & Safaris',
+                  label: 'Tours \n& Safaris',
                   onTap: () {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
@@ -107,7 +125,7 @@ class _ServicesPageState extends State<ServicesPage> {
               servicesCard(
                   context: context,
                   image: 'assets/airport.png',
-                  label: "        Hotel &\nAirport Transfer",
+                  label: "Hotel / Airport \n Transfer",
                   onTap: () {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
@@ -118,7 +136,6 @@ class _ServicesPageState extends State<ServicesPage> {
                   }),
             ],
           ),
-          const SizedBox(height: 10),
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
