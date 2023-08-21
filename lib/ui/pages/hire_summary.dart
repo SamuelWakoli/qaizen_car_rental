@@ -153,6 +153,7 @@ class _HireSummaryState extends State<HireSummary> {
                       Map<String, dynamic> data = {
                         'name': clientName,
                         'userId': userID,
+                        'fCMToken': fCMToken,
                         'phone': phoneNumber,
                         'type': 'Self Drive',
                         'starts': '$selectedTime | $selectedDate',

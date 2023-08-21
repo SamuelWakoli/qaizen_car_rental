@@ -67,7 +67,8 @@ Widget favCard({
                                 style: TextStyle(fontSize: 16.0),
                               ),
                               TextSpan(
-                                text: availability ? "Available" : "Unavailable.",
+                                text:
+                                    availability ? "Available" : "Unavailable.",
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     color: Theme.of(context).primaryColor),
@@ -94,8 +95,9 @@ Widget favCard({
                                   style: TextStyle(fontSize: 16.0),
                                 ),
                                 TextSpan(
-                                  text:
-                                      availability ? "Available" : "Unavailable.",
+                                  text: availability
+                                      ? "Available"
+                                      : "Unavailable.",
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       color: Theme.of(context).primaryColor),
