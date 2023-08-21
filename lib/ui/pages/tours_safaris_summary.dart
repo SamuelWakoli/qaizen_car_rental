@@ -146,6 +146,7 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                           Map<String, dynamic> data = {
                             'name': clientName,
                             'userId': userID,
+                            'phone': phoneNumber,
                             'type': serviceType,
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,

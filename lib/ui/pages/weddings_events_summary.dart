@@ -147,6 +147,7 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
                           Map<String, dynamic> data = {
                             'name': clientName,
                             'userId': userID,
+                            'phone': phoneNumber,
                             'type': serviceType,
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,

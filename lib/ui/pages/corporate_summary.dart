@@ -148,6 +148,7 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                           Map<String, dynamic> data = {
                             'name': clientName,
                             'userId': userID,
+                            'phone': phoneNumber,
                             'type': serviceType,
                             'starts': '$selectedTime | $selectedDate',
                             'duration': numberOfDays,

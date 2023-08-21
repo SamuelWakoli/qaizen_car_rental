@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/widgets.dart';
 import 'profile.dart';
@@ -24,6 +27,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
         stream: FirebaseFirestore.instance
             .collection("users")
             .doc(userEmail)
+            .collection('records')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -32,11 +36,40 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
             );
           }
 
-          if (!snapshot.data!.exists) {
+          if (snapshot.data!.docs.isEmpty) {
             return const Text("No active service");
           }
 
-          Widget _getProfile() {
+          dynamic document = snapshot.data!.docs.last;
+
+          List<String> vehicleIDs = (document['vehicles list'] as String)
+              .split(',')
+              .map((e) => e.trim())
+              .toList();
+
+          Future<String> getVehicleNames() async {
+            String names = "";
+            for (var id in vehicleIDs) {
+              var snapshot = await FirebaseFirestore.instance
+                  .collection('vehicles')
+                  .doc(id)
+                  .get();
+              String currentName = snapshot["name"];
+
+              names = "$names$currentName, ";
+            }
+
+            // Remove trailing comma and any leading/trailing whitespace
+            return names.trim().replaceAll(RegExp(r',\s*$'), '');
+          }
+
+          String formatDateTime(String dateTimeString) {
+            final DateTime dateTime = DateTime.parse(dateTimeString);
+            final DateFormat formatter = DateFormat('hh:mm a | dd/MM/yyyy');
+            return formatter.format(dateTime);
+          }
+
+          Widget getProfile() {
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100.0),
@@ -95,7 +128,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                         child: ListTile(
                           //if user created profile, use image
                           //else use icon
-                          leading: _getProfile(),
+                          leading: getProfile(),
                           title: Text(
                             FirebaseAuth.instance.currentUser!.displayName
                                 .toString(),
@@ -115,36 +148,57 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                       Card(
                           elevation: 0,
                           child: ListTile(
-                            title: Text("Type"),
-                            subtitle: Text("Self Drive"),
+                            title: const Text("Type"),
+                            subtitle: Text(document['type']),
                           )),
+                      const SizedBox(height: 4),
+                      Card(
+                        elevation: 0,
+                        child: ListTile(
+                          title: const Text("Vehicle(s)"),
+                          subtitle: FutureBuilder<String>(
+                            future: getVehicleNames(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Text("Loading...");
+                              } else if (snapshot.hasError) {
+                                return const Text(
+                                    "Error loading vehicle names.");
+                              } else {
+                                return Text(snapshot.data ?? "");
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Card(
+                        elevation: 0,
+                        child: ListTile(
+                          title: const Text("Approved on:"),
+                          subtitle: Text(formatDateTime(document['starts'])),
+                        ),
+                      ),
                       const SizedBox(height: 4),
                       Card(
                           elevation: 0,
                           child: ListTile(
-                            title: Text("Vehicle"),
-                            subtitle: Text("Honda Vezel"),
+                            title: const Text("Duration"),
+                            subtitle: Text(document['duration'] + " Day(s)"),
                           )),
                       const SizedBox(height: 4),
-                      Card(
-                          elevation: 0,
-                          child: ListTile(
-                            title: Text("Approved on Date"),
-                            subtitle: Text("11/02/2024 | 11:33"),
-                          )),
-                      const SizedBox(height: 4),
-                      Card(
-                          elevation: 0,
-                          child: ListTile(
-                            title: Text("Days"),
-                            subtitle: Text("2"),
-                          )),
+                      RemainingTimeWidget(
+                        starts: document['starts'],
+                        duration: int.parse(document['duration']),
+                        currentServiceDocID: document['docID'],
+                      ),
                       const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(width: 100, child: Divider()),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 100, child: Divider()),
+                          const SizedBox(width: 20),
                           Text(
                             "Requests",
                             style: TextStyle(
@@ -152,37 +206,38 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                           ),
-                          SizedBox(width: 20),
-                          SizedBox(width: 100, child: Divider()),
+                          const SizedBox(width: 20),
+                          const SizedBox(width: 100, child: Divider()),
                         ],
                       ),
                       const SizedBox(height: 4),
                       OutlinedButton(
                           onPressed: () {},
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text("Extend Service"),
+                              Text("Extend Service"),
                             ],
                           )),
                       const SizedBox(height: 4),
                       OutlinedButton(
                           onPressed: () {},
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text("Swap Vehicle"),
+                              Text("Swap Vehicle"),
                             ],
                           )),
                       const SizedBox(height: 4),
                       OutlinedButton(
                           onPressed: () {},
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text("Terminate Service"),
+                              Text("Terminate Service"),
                             ],
                           )),
+                      const SizedBox(height: 4),
                     ],
                   ),
                 ),
@@ -190,5 +245,111 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
             ),
           );
         });
+  }
+}
+
+class RemainingTimeWidget extends StatefulWidget {
+  final String starts;
+  final int duration;
+  final String currentServiceDocID;
+
+  const RemainingTimeWidget(
+      {super.key,
+      required this.starts,
+      required this.duration,
+      required this.currentServiceDocID});
+
+  @override
+  _RemainingTimeWidgetState createState() => _RemainingTimeWidgetState();
+}
+
+class _RemainingTimeWidgetState extends State<RemainingTimeWidget> {
+  late DateTime startTime;
+  late int durationInDays;
+  late Duration remainingDuration;
+  late Color textColor;
+  String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
+
+  @override
+  void initState() {
+    super.initState();
+    startTime = DateTime.parse(widget.starts);
+    durationInDays = widget.duration;
+    remainingDuration = calculateRemainingDuration();
+    updateFireStore(remainingDuration);
+    textColor = determineTextColor(remainingDuration);
+    updateRemainingDuration();
+  }
+
+  Duration calculateRemainingDuration() {
+    final DateTime serviceEndTime =
+        startTime.add(Duration(days: durationInDays));
+    return serviceEndTime.difference(DateTime.now());
+  }
+
+  Color determineTextColor(Duration duration) {
+    if (duration < const Duration(hours: 2)) {
+      return Colors.red;
+    } else {
+      return Colors.green;
+    }
+  }
+
+  updateFireStore(Duration duration) async {
+    if (duration < const Duration(hours: 0)) {
+      // use < sign because Duration is never equal
+      Map<String, dynamic> data = {
+        'ended': true,
+      };
+
+      if (widget.currentServiceDocID != '') {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userEmail)
+            .collection('records')
+            .doc(widget.currentServiceDocID)
+            .update(data);
+      }
+    }
+  }
+
+  String formatRemainingDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = (duration.inMinutes % 60);
+    int seconds = (duration.inSeconds % 60);
+    return '$hours hrs $minutes mins $seconds secs';
+  }
+
+  void updateRemainingDuration() {
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        remainingDuration = calculateRemainingDuration();
+        textColor = determineTextColor(remainingDuration);
+        updateRemainingDuration();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      child: ListTile(
+          title: const Text("Remaining Time"),
+          subtitle: RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                  text: formatRemainingDuration(remainingDuration),
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }
