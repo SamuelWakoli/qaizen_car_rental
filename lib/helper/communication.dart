@@ -38,3 +38,12 @@ Future<void> sendWhatsAppMessage({required String message}) async {
     // Can't launch URL
   }
 }
+
+
+sendEmail() async {
+  String email = Uri.encodeComponent("info@qaizen.co.ke");
+  String subject = Uri.encodeComponent("[Insert Subject]");
+  String body = Uri.encodeComponent("");
+  Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+  await launchUrl(mail);
+}
