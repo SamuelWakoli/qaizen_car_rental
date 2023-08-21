@@ -1,9 +1,11 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qaizen_car_rental/firebase_api.dart';
 import 'package:qaizen_car_rental/shared/theming.dart';
 import 'package:qaizen_car_rental/ui/pages/splash_screen.dart';
 
@@ -15,6 +17,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseApi().initNotifications();
 
   /// The app uses Email and GoogleProvider to sign in.
   FirebaseUIAuth.configureProviders([
@@ -33,6 +37,9 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -43,6 +50,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // The navigator key is necessary to allow to navigate through static methods
+      navigatorKey: MyApp.navigatorKey,
       title: 'Qaizen Car Rental',
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),

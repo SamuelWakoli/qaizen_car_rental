@@ -34,6 +34,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+int currentPage = 0;
+
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const int totalPage = 5;
 
@@ -97,8 +99,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     FavoritesPage(),
     MorePage()
   ];
-
-  int _currentPage = 0;
 
   @override
   void initState() {
@@ -328,10 +328,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       appBar: AppBar(
         elevation: 2,
-        title: _titles(context: context, currentIndex: _currentPage),
+        title: _titles(context: context, currentIndex: currentPage),
         centerTitle: true,
         actions: [
-          if (_currentPage == 0)
+          if (currentPage == 0)
             IconButton(
                 tooltip: "Search",
                 onPressed: () =>
@@ -467,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       body: BottomBarPageTransition(
         builder: (_, index) => _getBody(index),
-        currentIndex: _currentPage,
+        currentIndex: currentPage,
         totalLength: totalPage,
         transitionType: TransitionType.fade,
         transitionDuration: const Duration(seconds: 1),
@@ -479,10 +479,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _getBottomBar() {
     return BottomNavigationBar(
-      currentIndex: _currentPage,
+      currentIndex: currentPage,
       onTap: (index) {
         setState(() {
-          _currentPage = index;
+          currentPage = index;
         });
       },
       backgroundColor: Colors.transparent,
@@ -507,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _getBody(int index) {
     return Scaffold(
-      body: _pages[_currentPage],
+      body: _pages[currentPage],
     );
   }
 }
