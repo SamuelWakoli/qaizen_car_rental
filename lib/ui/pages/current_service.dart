@@ -37,7 +37,47 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return const Text("No active service");
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.filter_none_rounded,
+                  size: 64,
+                  color: Theme.of(context).primaryColor,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "No active service",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor),
+                ),
+              ],
+            );
+          }
+
+          if (snapshot.data!.docs.last['ended'] == true) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.filter_none_rounded,
+                    size: 64,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "No active service",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                ],
+              ),
+            );
           }
 
           dynamic document = snapshot.data!.docs.last;

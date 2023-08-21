@@ -28,11 +28,26 @@ class _FavoritesPageState extends State<FavoritesPage> {
             }
 
             if (favoriteVehicles.isEmpty) {
-              return const Center(
-                  child: Text(
-                'Like vehicles to add them to Favorites',
-                style: TextStyle(fontSize: 18),
-              ));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.favorite_border,
+                      size: 64,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Like vehicles to add them to Favorites',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor),
+                    ),
+                  ],
+                ),
+              );
             }
 
             return Scrollbar(
