@@ -142,6 +142,7 @@ class _CorporateSummaryState extends State<CorporateSummary> {
 
                           Map<String, dynamic> phoneData = {
                             'phone': phoneNumber,
+                            'fCMToken': fCMToken,
                           };
                           await fireStoreUserData.update(phoneData);
 

@@ -142,6 +142,7 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
 
                           Map<String, dynamic> phoneData = {
                             'phone': phoneNumber,
+                            'fCMToken': fCMToken,
                           };
                           await fireStoreUserData.update(phoneData);
 

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:qaizen_car_rental/helper/communication.dart';
 
 import '../widgets/widgets.dart';
 import 'profile.dart';
@@ -39,6 +41,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
           if (snapshot.data!.docs.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.filter_none_rounded,
@@ -61,6 +64,7 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.filter_none_rounded,
@@ -234,49 +238,28 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
                         currentServiceDocID: document['docID'],
                       ),
                       const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(width: 100, child: Divider()),
-                          const SizedBox(width: 20),
-                          Text(
-                            "Requests",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          const SizedBox(width: 20),
-                          const SizedBox(width: 100, child: Divider()),
-                        ],
+                      Text.rich(
+                        TextSpan(
+                          text: "Tip: ",
+                          children: [
+                            TextSpan(
+                                text: "Call us",
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => makePhoneCall()),
+                            const TextSpan(text: " to "),
+                            const TextSpan(
+                                text:
+                                    "extend, terminate a service or swap a vehicle.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      OutlinedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Extend Service"),
-                            ],
-                          )),
-                      const SizedBox(height: 4),
-                      OutlinedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Swap Vehicle"),
-                            ],
-                          )),
-                      const SizedBox(height: 4),
-                      OutlinedButton(
-                          onPressed: () {},
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Terminate Service"),
-                            ],
-                          )),
                       const SizedBox(height: 4),
                     ],
                   ),

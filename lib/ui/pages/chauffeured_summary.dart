@@ -138,6 +138,7 @@ class _ChauffeuredSummaryState extends State<ChauffeuredSummary> {
 
                           Map<String, dynamic> phoneData = {
                             'phone': phoneNumber,
+                            'fCMToken': fCMToken,
                           };
                           await fireStoreUserData.update(phoneData);
 

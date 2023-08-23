@@ -21,34 +21,36 @@ String? displayImageUrl = "",
     image5Url = "";
 
 Widget getVehicleImages(image) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 4, bottom: 4),
-    child: Card(
-      elevation: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12.0),
-          child: CachedNetworkImage(
-            fit: BoxFit.cover,
-            imageUrl: image,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
+  return (image != "")
+      ? Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 4),
+          child: Card(
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: image,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const SizedBox(),
                 ),
               ),
             ),
-            errorWidget: (context, url, error) => const SizedBox(),
           ),
-        ),
-      ),
-    ),
-  );
+        )
+      : const SizedBox();
 }
 
 class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
@@ -130,18 +132,18 @@ class _VehicleDetailsPageState extends State<VehicleDetailsPage> {
                     Card(
                       elevation: 1,
                       child: ListTile(
-                        title: Text("${document.get('category')}\nPrice"),
-                        subtitle: Text("Ksh. ${document.get('priceDay')} /day\n"
-                            "Ksh. ${document.get('priceWeek')} /day\n"
-                            "Ksh. ${document.get('priceMonth')} /day"),
+                        title: Text("${document.get('category')}"),
+                        subtitle: Text(
+                            "Price: Ksh. ${document.get('priceDay')} /day"),
                       ),
                     ),
                     (document.get('shortDesc') != "" &&
                             document.get('shortDesc') != " ")
-                        ? Card(elevation: 1,
+                        ? Card(
+                            elevation: 1,
                             child: ListTile(
                                 title: Text(document.get('shortDesc'))))
-                        : SizedBox(),
+                        : const SizedBox(),
                     GestureDetector(
                         onTap: () {
                           currentImageUrl = image1Url!;

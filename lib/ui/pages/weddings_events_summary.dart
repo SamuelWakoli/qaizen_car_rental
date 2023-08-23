@@ -141,6 +141,7 @@ class _WeddingsEventsSummaryState extends State<WeddingsEventsSummary> {
 
                           Map<String, dynamic> phoneData = {
                             'phone': phoneNumber,
+                            'fCMToken': fCMToken,
                           };
                           await fireStoreUserData.update(phoneData);
 

@@ -140,6 +140,7 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
 
                           Map<String, dynamic> phoneData = {
                             'phone': phoneNumber,
+                            'fCMToken': fCMToken,
                           };
                           await fireStoreUserData.update(phoneData);
 
