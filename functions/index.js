@@ -30,7 +30,7 @@ exports.monitorRecordsSize = functions.firestore
             const payload = {
                 notification: {
                     title: "Requested Service Approved",
-                    body: "Hello ${userName}. Your requested service has been approved. Please review the details and enjoy your experience with us.",
+                    body: `Hello ${userName}. Your requested service has been approved. Please review the details and enjoy your experience with us.`,
                 },
             };
 
