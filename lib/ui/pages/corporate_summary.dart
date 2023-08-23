@@ -119,17 +119,19 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                           FirebaseAuth.instance.currentUser!.email.toString()),
                   summaryItem(name: 'Organisation Name: ', data: orgName),
                   const SizedBox(height: 20),
+                  summaryItem(name: "Service: ", data: serviceType),
+                  if (selectedVehicleNames!.join(", ").characters.isNotEmpty)
+                    summaryItem(
+                        name: 'Vehicle(s): ',
+                        data: selectedVehicleNames?.join(", ")),
+                  if (driversNames!.join(", ").characters.isNotEmpty)
+                    summaryItem(
+                        name: 'Driver(s): ', data: driversNames?.join(", ")),
                   summaryItem(
-                      name: 'Vehicle(s): ',
-                      data: selectedVehicleNames?.join(", ")),
-                  summaryItem(
-                      name: 'Driver(s): ', data: driversNames?.join(", ")),
-                  summaryItem(
-                      name: 'Service starts at: ',
-                      data: ' $selectedTime | $selectedDate'),
+                      name: 'Requested at: ',
+                      data: ' $selectedTime H | Date $selectedDate'),
                   summaryItem(name: 'Number of Days: ', data: numberOfDays),
                   const SizedBox(height: 30),
-                  summaryItem(name: "TOTAL COST: ", data: "Ksh. $totalCost"),
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -210,8 +212,12 @@ class _CorporateSummaryState extends State<CorporateSummary> {
                         },
                         child: loading
                             ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Theme.of(context).primaryColor,
+                                child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                               )
                             : Padding(

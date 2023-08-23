@@ -283,10 +283,10 @@ class RemainingTimeWidget extends StatefulWidget {
       required this.currentServiceDocID});
 
   @override
-  _RemainingTimeWidgetState createState() => _RemainingTimeWidgetState();
+  RemainingTimeWidgetState createState() => RemainingTimeWidgetState();
 }
 
-class _RemainingTimeWidgetState extends State<RemainingTimeWidget> {
+class RemainingTimeWidgetState extends State<RemainingTimeWidget> {
   late DateTime startTime;
   late int durationInDays;
   late Duration remainingDuration;

@@ -84,16 +84,7 @@ Widget driverCard({
               ),
               OutlinedButton(
                 onPressed: onClickSelect,
-                child: const SizedBox(
-                  height: 40,
-                  child: Row(
-                    children: [
-                      Icon(Icons.assignment_outlined),
-                      SizedBox(width: 8),
-                      Text('Select', style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
+                child: const Text('Select', style: TextStyle(fontSize: 18)),
               )
             ],
           ),

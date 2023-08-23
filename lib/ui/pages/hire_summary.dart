@@ -118,6 +118,7 @@ class _HireSummaryState extends State<HireSummary> {
                   name: 'Email Address: ',
                   data: FirebaseAuth.instance.currentUser!.email.toString()),
               const SizedBox(height: 20),
+              summaryItem(name: "Service: ", data: serviceType),
               StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('vehicles')
@@ -128,8 +129,8 @@ class _HireSummaryState extends State<HireSummary> {
                         name: 'Vehicle: ', data: snapshot.data!.get('name'));
                   }),
               summaryItem(
-                  name: 'Service starts at: ',
-                  data: ' $selectedTime | $selectedDate'),
+                  name: 'Requested at: ',
+                  data: ' $selectedTime H | Date $selectedDate'),
               delivery
                   ? summaryItem(
                       name: 'Delivery Location: ', data: deliveryAddress)

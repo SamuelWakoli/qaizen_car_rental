@@ -119,14 +119,16 @@ class _HotelAirportSummaryState extends State<HotelAirportSummary> {
                           FirebaseAuth.instance.currentUser!.email.toString()),
                   const SizedBox(height: 20),
                   summaryItem(name: 'Service: ', data: serviceType),
-                  summaryItem(name: 'Name: ', data: hotelAirportName),
+                  if (hotelAirportName!.isNotEmpty)
+                    summaryItem(name: 'Name: ', data: hotelAirportName),
                   summaryItem(
                       name: 'Service description: ', data: transferDescription),
                   const SizedBox(height: 20),
                   if (!hotelORairport)
-                    summaryItem(name: 'Location: ', data: deliveryAddress)
-                  else
-                    const SizedBox(),
+                    if (deliveryAddress.isNotEmpty)
+                      summaryItem(name: 'Location: ', data: deliveryAddress)
+                    else
+                      const SizedBox(),
                   summaryItem(
                       name: 'Duration: ',
                       data: "From $selectedTime $selectedDate"),

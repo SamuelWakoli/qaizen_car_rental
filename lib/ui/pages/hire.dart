@@ -201,7 +201,7 @@ class _HirePageState extends State<HirePage> {
                               ListTile(
                                 title: Text(document['category']),
                                 subtitle:
-                                    Text("Price: Ksh. ${document["priceDay"]}"),
+                                    Text("Price: Ksh. ${document["priceDay"]} /day"),
                                 trailing: IconButton(
                                   onPressed: () {
                                     nextPage(

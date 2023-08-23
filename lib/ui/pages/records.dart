@@ -19,49 +19,73 @@ class _RecordsPageState extends State<RecordsPage> {
         title: const Text('Records'),
         centerTitle: true,
       ),
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(userID)
-              .collection('records')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                  child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ));
-            }
+      body: Card(
+        child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(userID)
+                .collection('records')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ));
+              }
 
-            if (snapshot.data!.docs.toList().isEmpty) {
-              return const Center(
-                  child: Text(
-                'No records found',
-                style: TextStyle(fontSize: 18),
-              ));
-            }
+              if (snapshot.data!.docs.toList().isEmpty) {
+                return const Center(
+                    child: Text(
+                  'No records found',
+                  style: TextStyle(fontSize: 18),
+                ));
+              }
 
-            return ListView(
-                children:
-                    snapshot.data!.docs.reversed.toList().reversed.map((e) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: ListTile(
-                      subtitle: Text(
-                    """
-Date: ${e['starts']}
-Duration: ${e['duration']} days
-Service: ${e['type']}
-Vehicle(s): ${e['vehicles list']}
-Driver(s): ${e['drivers list']}
-""",
-                    style: const TextStyle(fontSize: 16),
-                  )),
-                ),
-              );
-            }).toList());
-          }),
+              return ListView(
+                  children:
+                      snapshot.data!.docs.reversed.toList().reversed.map((e) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:Card(
+                    elevation: 0,
+                    child: ListTile(
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (e['starts'] != null)
+                            Text(
+                              "Date: ${e['starts']}",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          if (e['duration'] != null)
+                            Text(
+                              "Duration: ${e['duration']} days",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          Text(
+                            "Service: ${e['type']}",
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          if (e['vehicles list'].isNotEmpty)
+                            Text(
+                              "Vehicle(s): ${e['vehicles list']}",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          if (e['drivers list'].isNotEmpty)
+                            Text(
+                              "Driver(s): ${e['drivers list']}",
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                );
+              }).toList());
+            }),
+      ),
     );
   }
 }

@@ -13,897 +13,152 @@ Widget selectVehiclesList({
   required onClickSelect,
   required onClickDetails,
 }) {
+
+  vehicleCard() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(24.0), // Adjust the radius as needed
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: image,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        // Back
+                        Text.rich(TextSpan(
+                            text: name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 4
+                                ..color = Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              const TextSpan(
+                                text: '  |  ',
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              TextSpan(
+                                text: availability ? "Available" : "Unavailable.",
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              TextSpan(
+                                text: '  |  Ksh. $price /day',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ])),
+
+                        // Front
+                        Text.rich(
+                          TextSpan(
+                              text: name,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                              children: <TextSpan>[
+                                const TextSpan(
+                                  text: '  |  ',
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                                TextSpan(
+                                  text:
+                                  availability ? "Available" : "Unavailable.",
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                TextSpan(
+                                  text: '  |  Ksh. $price /day',
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: onClickDetails,
+                  child: Text('Details',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColor)),
+                ),
+                OutlinedButton(
+                  onPressed: onClickSelect,
+                  child: Text('Select',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColor)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   if (appBarTitle == 'Hatchbacks' && category == 'Hatchback') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+    return vehicleCard();
   } else if (appBarTitle == 'Wagons' && category == 'Wagon') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Sedans' && category == 'Sedan') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Premium Sedans' && category == 'Premium Sedan') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Vans' && category == 'Van') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Compact SUVs' && category == 'Compact SUV') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Premium SUVs' && category == 'Premium SUV') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == 'Luxury' && category == 'Luxury') {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else if (appBarTitle == "All Vehicles") {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Ksh. ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(' /day'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-              child: Text(availability
-                  ? "Available"
-                  : "Not available. Please call us to request it when available."),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onClickDetails,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.info_outline_rounded),
-                        const SizedBox(width: 8),
-                        Text('Details',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onClickSelect,
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.assignment_outlined),
-                        const SizedBox(width: 8),
-                        Text('Select',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).primaryColor))
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
+   return vehicleCard();
   } else {
     if (appBarTitle == 'Hatchbacks' && category != 'Hatchback') {
       return const SizedBox();

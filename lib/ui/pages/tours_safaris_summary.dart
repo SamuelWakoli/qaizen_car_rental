@@ -118,15 +118,18 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                       data:
                           FirebaseAuth.instance.currentUser!.email.toString()),
                   const SizedBox(height: 20),
-                  summaryItem(name: 'Destination: ', data: deliveryAddress),
+                  if (deliveryAddress.isNotEmpty)
+                    summaryItem(name: 'Destination: ', data: deliveryAddress),
+                  summaryItem(name: "Service: ", data: serviceType),
                   summaryItem(
                       name: 'Vehicle(s): ',
                       data: selectedVehicleNames?.join(", ")),
+                  if (driversNames!.join(", ").characters.isNotEmpty)
+                    summaryItem(
+                        name: 'Driver(s): ', data: driversNames?.join(", ")),
                   summaryItem(
-                      name: 'Driver(s): ', data: driversNames?.join(", ")),
-                  summaryItem(
-                      name: 'Service starts at: ',
-                      data: ' $selectedTime | $selectedDate'),
+                      name: 'Requested at: ',
+                      data: ' $selectedTime H | Date $selectedDate'),
                   summaryItem(name: 'Number of Days: ', data: numberOfDays),
                   const SizedBox(height: 30),
                   Padding(
@@ -208,8 +211,12 @@ class _ToursSafarisSummaryState extends State<ToursSafarisSummary> {
                         },
                         child: loading
                             ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Theme.of(context).primaryColor,
+                                child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                               )
                             : Padding(
