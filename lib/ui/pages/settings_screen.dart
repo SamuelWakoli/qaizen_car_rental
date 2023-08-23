@@ -196,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SettingsTile(
                   leading: const Icon(Icons.perm_device_info_outlined),
                   title: const Text("Application Version"),
-                  description: const Text('1.2.2'),
+                  description: const Text('1.3.1'),
                 ),
               ],
             )

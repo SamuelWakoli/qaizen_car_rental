@@ -39,24 +39,26 @@ class _CurrentServicePageState extends State<CurrentServicePage> {
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.filter_none_rounded,
-                  size: 64,
-                  color: Theme.of(context).primaryColor,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  "No active service",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor),
-                ),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.filter_none_rounded,
+                    size: 64,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "No active service",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                ],
+              ),
             );
           }
 
