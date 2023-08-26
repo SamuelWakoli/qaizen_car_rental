@@ -15,10 +15,11 @@ class _PickLocationState extends State<PickLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FlutterLocationPicker(
+            initPosition: LatLong(-1.3028, 36.8848), //Nairobi
             initZoom: 11,
             minZoomLevel: 5,
             maxZoomLevel: 16,
-            trackMyPosition: true,
+            // trackMyPosition: true,
             searchBarBackgroundColor: Colors.white,
             mapLoadingBackgroundColor: Colors.white,
             searchBarHintColor: Theme.of(context).primaryColor,
