@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:qaizen_car_rental/ui/pages/chauffeured.dart';
+import 'package:qaizen_car_rental/ui/pages/corporate_service.dart';
+import 'package:qaizen_car_rental/ui/pages/hire.dart';
+import 'package:qaizen_car_rental/ui/pages/hotel_airport.dart';
+import 'package:qaizen_car_rental/ui/pages/tours_safaris.dart';
+import 'package:qaizen_car_rental/ui/pages/weddings_events.dart';
+import 'package:qaizen_car_rental/ui/widgets/widgets.dart';
 
 import '../../shared/hire_vehicle_data.dart';
 
@@ -95,6 +102,31 @@ class _PickLocationState extends State<PickLocation> {
                     locationDataLat = _pickedLocation!.latitude;
                     locationDataLon = _pickedLocation!.longitude;
                   });
+
+                  // using this logic to rebuild a page;
+                  late Widget currentService;
+                  switch (serviceType) {
+                    case "Self Drive":
+                      currentService = const HirePage();
+                      break;
+                    case "Chauffeured":
+                      currentService = const ChauffeuredPage();
+                      break;
+                    case "Corporate Service":
+                      currentService = const CorporateServicePage();
+                      break;
+                    case "Weddings & Events":
+                      currentService = const WeddingsEventsPage();
+                      break;
+                    case "Tours & Safaris":
+                      currentService = const ToursSafarisPage();
+                      break;
+                    case "Hotel / Airport Transfer":
+                      currentService = const HotelAirportPage();
+                      break;
+                  }
+
+                  nextPageReplace(context: context, page: currentService);
                 }
               },
             ),

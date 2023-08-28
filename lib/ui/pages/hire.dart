@@ -22,6 +22,7 @@ class HirePage extends StatefulWidget {
 
 class _HirePageState extends State<HirePage> {
   String displayImageUrl = "";
+  bool editingAddress = false;
 
   Widget displayImage() {
     if (displayImageUrl != "") {
@@ -109,18 +110,72 @@ class _HirePageState extends State<HirePage> {
             size: 32,
             color: Theme.of(context).primaryColor,
           ),
+          trailing: editingAddress
+              ? const SizedBox()
+              : IconButton(
+                  tooltip: "Edit Address",
+                  onPressed: () {
+                    setState(() {
+                      editingAddress = !editingAddress;
+                    });
+                  },
+                  icon: const Icon(Icons.edit)),
           title: Text(
             'Select delivery location:',
             style: TextStyle(
               color: Theme.of(context).primaryColor,
             ),
           ),
-          subtitle: Text(
-            deliveryAddress,
-            style: const TextStyle(fontSize: 16),
-          ),
+          subtitle: editingAddress
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                      right: 16.0, left: 16.0, bottom: 16.0),
+                  child: TextField(
+                    keyboardType: TextInputType.phone,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      setState(() {
+                        deliveryAddress = value;
+                        editingAddress = !editingAddress;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        deliveryAddress = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            editingAddress = !editingAddress;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.done,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                )
+              : Text(
+                  deliveryAddress,
+                  style: const TextStyle(fontSize: 16),
+                ),
           onTap: () {
-            nextPage(context: context, page: const PickLocation());
+            nextPageReplace(context: context, page: const PickLocation());
           });
     } else {
       return const SizedBox();
@@ -200,8 +255,8 @@ class _HirePageState extends State<HirePage> {
                                   child: displayImage()),
                               ListTile(
                                 title: Text(document['category']),
-                                subtitle:
-                                    Text("Price: Ksh. ${document["priceDay"]} /day"),
+                                subtitle: Text(
+                                    "Price: Ksh. ${document["priceDay"]} /day"),
                                 trailing: IconButton(
                                   onPressed: () {
                                     nextPage(

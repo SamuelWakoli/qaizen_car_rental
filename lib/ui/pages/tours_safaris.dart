@@ -16,7 +16,8 @@ class ToursSafarisPage extends StatefulWidget {
 }
 
 class _ToursSafarisPageState extends State<ToursSafarisPage> {
-  //
+  bool editingAddress = false;
+
 // start date time
   DateTime currentDate = DateTime.now();
 
@@ -89,25 +90,78 @@ class _ToursSafarisPageState extends State<ToursSafarisPage> {
               style: TextStyle(fontSize: 18),
             ),
             ListTile(
-              onTap: () {
-                nextPage(context: context, page: const PickLocation());
-              },
-              leading: Icon(
-                Icons.location_on_outlined,
-                color: Theme.of(context).primaryColor,
-                size: 32,
-              ),
-              title: Text(
-                'Select Destination',
-                style: TextStyle(
+                leading: Icon(
+                  Icons.location_on_outlined,
+                  size: 32,
                   color: Theme.of(context).primaryColor,
                 ),
-              ),
-              subtitle: Text(
-                deliveryAddress,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
+                trailing: editingAddress
+                    ? const SizedBox()
+                    : IconButton(
+                        tooltip: "Edit Address",
+                        onPressed: () {
+                          setState(() {
+                            editingAddress = !editingAddress;
+                          });
+                        },
+                        icon: const Icon(Icons.edit)),
+                title: Text(
+                  'Select delivery location:',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                subtitle: editingAddress
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16.0, bottom: 16.0),
+                        child: TextField(
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.done,
+                          onSubmitted: (value) {
+                            setState(() {
+                              deliveryAddress = value;
+                              editingAddress = !editingAddress;
+                            });
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              deliveryAddress = value;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  editingAddress = !editingAddress;
+                                });
+                              },
+                              icon: Icon(
+                                Icons.done,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Text(
+                        deliveryAddress,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                onTap: () {
+                  nextPageReplace(context: context, page: const PickLocation());
+                }),
             ListTile(
               leading: Icon(FontAwesomeIcons.clock,
                   size: 32, color: Theme.of(context).primaryColor),

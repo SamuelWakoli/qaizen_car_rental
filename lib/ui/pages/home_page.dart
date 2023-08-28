@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../db/user.dart';
 import '../../helper/vehicle_card_func.dart';
+import '../../shared/hire_vehicle_data.dart';
 import '../widgets/vehicle_card_available.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                   name: document['name'],
                   price: document['priceDay'],
                   onClickHire: () {
+                    serviceType = 'Self Drive';
                     currentVehicleDocID = document.id;
                     hire(context: context);
                   },

@@ -88,6 +88,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    serviceType = 'Corporate Service';
                     deliveryAddress = '';
                     nextPage(
                         context: context, page: const CorporateServicePage());
@@ -101,6 +102,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
                     numberOfDays = '';
+                    serviceType = 'Weddings & Events';
                     deliveryAddress = '';
                     nextPage(
                         context: context, page: const WeddingsEventsPage());
@@ -119,6 +121,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
+                    serviceType = 'Tours & Safaris';
                     numberOfDays = '';
                     deliveryAddress = '';
                     nextPage(context: context, page: const ToursSafarisPage());
@@ -131,6 +134,7 @@ class _ServicesPageState extends State<ServicesPage> {
                     selectedVehicles?.clear();
                     selectedVehicleNames?.clear();
                     driversNames?.clear();
+                    serviceType = "Hotel / Airport Transfer";
                     numberOfDays = '';
                     deliveryAddress = '';
                     nextPage(context: context, page: const HotelAirportPage());
