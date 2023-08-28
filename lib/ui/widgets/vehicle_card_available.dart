@@ -159,7 +159,7 @@ Widget availableVehicleCard({
                         ? likeMessage = "removed from"
                         : likeMessage = "added to";
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("$name $likeMessage bookmarks")));
+                        content: Text("$name $likeMessage favorites")));
                   });
 
                   return !isLiked;
