@@ -110,70 +110,16 @@ class _HirePageState extends State<HirePage> {
             size: 32,
             color: Theme.of(context).primaryColor,
           ),
-          trailing: editingAddress
-              ? const SizedBox()
-              : IconButton(
-                  tooltip: "Edit Address",
-                  onPressed: () {
-                    setState(() {
-                      editingAddress = !editingAddress;
-                    });
-                  },
-                  icon: const Icon(Icons.edit)),
           title: Text(
             'Select delivery location:',
             style: TextStyle(
               color: Theme.of(context).primaryColor,
             ),
           ),
-          subtitle: editingAddress
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                      right: 16.0, left: 16.0, bottom: 16.0),
-                  child: TextField(
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (value) {
-                      setState(() {
-                        deliveryAddress = value;
-                        editingAddress = !editingAddress;
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        deliveryAddress = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            editingAddress = !editingAddress;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.done,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                )
-              : Text(
-                  deliveryAddress,
-                  style: const TextStyle(fontSize: 16),
-                ),
+          subtitle: Text(
+            deliveryAddress,
+            style: const TextStyle(fontSize: 16),
+          ),
           onTap: () {
             nextPageReplace(context: context, page: const PickLocation());
           });
@@ -181,10 +127,6 @@ class _HirePageState extends State<HirePage> {
       return const SizedBox();
     }
   }
-
-  //
-  //
-  //
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +265,7 @@ class _HirePageState extends State<HirePage> {
                                   onChanged: (value) {
                                     numberOfDays = value;
                                   },
+                                  initialValue: numberOfDays,
                                   minLines: 1,
                                   cursorHeight: 22,
                                   cursorWidth: 2,
