@@ -45,3 +45,5 @@ app.*.map.json
 
 # Ignore map key
 /android/app/src/main/res/values/map_key.xml
+/android/app/google-services.json
+/lib/firebase_options.dart
